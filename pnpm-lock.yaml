@@ -29,12 +29,20 @@ importers:
       tsx: 3.11.0
       typescript: 4.8.4
 
+  packages/adapters:
+    specifiers:
+      todo-domain: workspace:*
+    dependencies:
+      todo-domain: link:../domain
+
   packages/app:
     specifiers:
       '@types/node': ^18.11.9
-      domain: workspace:*
+      adapters: workspace:*
+      todo-domain: workspace:*
     dependencies:
-      domain: link:../domain
+      adapters: link:../adapters
+      todo-domain: link:../domain
     devDependencies:
       '@types/node': 18.11.9
 

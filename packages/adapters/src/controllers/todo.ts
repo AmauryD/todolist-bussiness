@@ -1,3 +1,4 @@
+import { CreateTodoRequest, CreateTodoUseCaseInterface } from "todo-domain";
 
 export class TodoController {
     constructor(
