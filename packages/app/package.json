@@ -7,8 +7,8 @@
     "test": ""
   },
   "dependencies": {
-    "adapters": "workspace:*",
-    "domain": "workspace:*"
+    "domain": "workspace:*",
+    "adapters": "workspace:*"
   },
   "keywords": [],
   "author": "",

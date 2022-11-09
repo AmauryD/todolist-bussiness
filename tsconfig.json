@@ -5,7 +5,11 @@
     "moduleResolution": "node",
     "strict": true,
     "experimentalDecorators": true,
-    "noEmit": true,
-    "skipLibCheck": true                          
-  }
+    "skipLibCheck": true
+  },
+  "references": [
+    { "path": "./packages/adapters/tsconfig.json" },
+    { "path": "./packages/app/tsconfig.json" },
+    { "path": "./packages/domain/tsconfig.json" }
+  ]
 }

@@ -29,19 +29,11 @@ importers:
       tsx: 3.11.0
       typescript: 4.8.4
 
-  packages/adapters:
-    specifiers:
-      '@types/node': ^18.11.9
-    devDependencies:
-      '@types/node': 18.11.9
-
   packages/app:
     specifiers:
       '@types/node': ^18.11.9
-      adapters: workspace:*
       domain: workspace:*
     dependencies:
-      adapters: link:../adapters
       domain: link:../domain
     devDependencies:
       '@types/node': 18.11.9
