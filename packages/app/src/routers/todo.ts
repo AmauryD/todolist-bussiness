@@ -1,7 +1,7 @@
+import { TodoController, TodoRepository } from "adapters";
+import { CreateTodoUseCase } from "todo-domain";
 import { Router } from "express";
-import { TodoController } from "~/adapters/controllers/todo";
-import { TodoRepository } from "~/adapters/repository/todo";
-import { CreateTodoUseCase } from "~/domain/use-case/create-todo";
+
 import { createTodo } from "../controller/todo";
 
 const router = Router();

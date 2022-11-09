@@ -31,9 +31,12 @@ importers:
 
   packages/adapters:
     specifiers:
+      '@types/node': ^18.11.9
       todo-domain: workspace:*
     dependencies:
       todo-domain: link:../domain
+    devDependencies:
+      '@types/node': 18.11.9
 
   packages/app:
     specifiers:

@@ -6,20 +6,14 @@
     "moduleResolution": "node",
     "declaration": true,
     "noImplicitAny": false,
+    "esModuleInterop": true,
     "removeComments": true,
-    "noLib": false,
     "emitDecoratorMetadata": true,
     "strict": true,
     "composite": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true
+    "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules", "**/*/lib", "**/*/dist"],
-  "references": [
-    { "path": "./packages/adapters/" },
-    { "path": "./packages/app/" },
-    { "path": "./packages/domain/" }
-  ]
+  "exclude": ["node_modules"]
 }
