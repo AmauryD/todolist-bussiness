@@ -1,4 +1,3 @@
-import { CreateTodoRequest, CreateTodoUseCaseInterface } from "~/domain/interfaces/use-case/create-todo";
 
 export class TodoController {
     constructor(

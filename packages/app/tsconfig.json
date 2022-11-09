@@ -1,9 +1,8 @@
 {
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "outDir": "./dist",
-        "composite": true,
-        "rootDir": ".",
-        "emitDeclarationOnly": true,
-    }
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "."
+  },
+  "references": [{ "path": "../domain" }, { "path": "../adapters" }]
 }
