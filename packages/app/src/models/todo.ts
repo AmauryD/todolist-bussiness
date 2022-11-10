@@ -9,5 +9,5 @@ export class TodoModel {
     declare title: string;
 
     @Property()
-    declare status: string;
+    declare done: boolean;
 }
