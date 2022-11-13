@@ -6,12 +6,12 @@ describe('Todo controller', () => {
     let usecase: CreateTodoUseCaseInterface;
 
     class FakeTodoUseCase implements CreateTodoUseCaseInterface {
-        execute(todo: CreateTodoRequest): Todo {
+        async execute(todo: CreateTodoRequest) {
             return todo;
         }
     }
 
-    it('creates a todo for the web', () => {
+    it('creates a todo for the web', async () => {
         const controller = new TodoController(
             new FakeTodoUseCase()
         );
@@ -20,6 +20,6 @@ describe('Todo controller', () => {
             done: false,
             id: 'aaa'
         };
-        expect(controller.create(todo)).toStrictEqual(todo);
+        expect(await controller.create(todo)).toStrictEqual(todo);
     });
 });

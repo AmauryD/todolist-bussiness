@@ -10,5 +10,5 @@ export interface CreateTodoRequest {
 
 // this is an interactor
 export interface CreateTodoUseCaseInterface extends UseCaseInterface {
-    execute(todo: CreateTodoRequest): Todo;
+    execute(todo: CreateTodoRequest): Promise<Todo>;
 }

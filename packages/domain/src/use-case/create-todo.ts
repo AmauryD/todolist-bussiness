@@ -7,7 +7,7 @@ export class CreateTodoUseCase implements CreateTodoUseCaseInterface  {
         public repository: TodoRepositoryInterface
     ) {}
 
-    execute(todo: CreateTodoRequest): Todo {
+    async execute(todo: CreateTodoRequest): Promise<Todo> {
         return this.repository.createTodo(todo);
     }
 }

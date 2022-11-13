@@ -13,7 +13,7 @@ describe('Create Todo', () => {
         repository = new FakeRepository();
     });
 
-    it("Repository is used by use case", () => {
+    it("Repository is used by use case", async () => {
         const todoUseCase = new CreateTodoUseCase(repository);
         const createTodo = jest.spyOn(repository, 'createTodo');
 
@@ -23,7 +23,7 @@ describe('Create Todo', () => {
             done: false
         };
 
-        expect(todoUseCase.execute(todo)).toStrictEqual(todo);
+        expect(await todoUseCase.execute(todo)).toStrictEqual(todo);
         expect(createTodo).toBeCalledWith(todo);
     });
 })
