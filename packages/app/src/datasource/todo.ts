@@ -24,4 +24,14 @@ export class TodoDataSource implements TodoDataSourceInterface {
             id: newTodo.id
         };
     }
+
+    async list(): Promise<Todo[]> {
+       const todos = await this.repository.findAll();
+
+       return todos.map((t) => ({
+            id : t.id,
+            title: t.title,
+            done: t.done
+       }));
+    }
 }

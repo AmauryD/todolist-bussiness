@@ -1,4 +1,4 @@
-import { boolean, date, number, object, string } from "yup";
+import { boolean, object, string } from "yup";
 
 export const createTodoSchema = object().shape({
     id: string().required(),

@@ -13,12 +13,11 @@ export class WebTodoController {
 
     @GET('/')
     public  async get() {        
-        return [];
+        return this.controller.list();
     }
 
     @POST('/')
     public  async create(@Body() body: unknown) {   
-        console.log(body);
         const validate = await createTodoSchema.validate(body);     
         const todo = await this.controller.create(validate);
         return todo;

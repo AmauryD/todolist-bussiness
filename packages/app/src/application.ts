@@ -6,7 +6,7 @@ import { TodoModel } from "./models/todo.js";
 import { WebTodoController } from "./controller/todo.js";
 import { container } from "tsyringe";
 import { TodoController, TodoRepository } from "adapters";
-import { CreateTodoUseCase } from "todo-domain";
+import { CreateTodoUseCase, ListTodoUseCase } from "todo-domain";
 import { TodoDataSource } from "./datasource/todo.js";
 import {koaBody} from "koa-body";
 
@@ -41,11 +41,16 @@ async function setupDatabase() {
 }
 
 function registerInstancesToContainer() {
+    const repository =  new TodoRepository(
+        container.resolve(TodoDataSource)
+    );
+
     const todoController = new TodoController(
         new CreateTodoUseCase(
-            new TodoRepository(
-                container.resolve(TodoDataSource)
-            )
+            repository
+        ),
+        new ListTodoUseCase(
+            repository
         )
     );
 
