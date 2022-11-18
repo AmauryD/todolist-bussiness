@@ -1,8 +1,8 @@
-import { Entity, Property } from "@mikro-orm/core";
+import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 
 @Entity()
 export class TodoModel {
-    @Property()
+    @PrimaryKey()
     declare id: string;
 
     @Property()

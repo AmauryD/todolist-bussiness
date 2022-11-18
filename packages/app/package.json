@@ -4,29 +4,33 @@
   "description": "",
   "main": "src/application.ts",
   "scripts": {
-    "start": "ts-node ./src/application.ts"
+    "start": "NODE_ENV=development nodemon --watch './src/**/*.ts' --exec 'node --loader ts-node/esm' ./src/application.ts",
+    "build": "tsc -p tsconfig.build.json"
   },
   "type": "module",
   "dependencies": {
-    "todo-domain": "workspace:*",
+    "@koa/router": "12.0.0",
+    "@mikro-orm/core": "^5.5.3",
+    "@mikro-orm/sqlite": "^5.5.3",
+    "@triptyk/nfw-core": "~4.0.0-alpha.27",
+    "@triptyk/nfw-http": "~4.0.0-alpha.27",
+    "@triptyk/nfw-mikro-orm": "~4.0.0-alpha.27",
     "adapters": "workspace:*",
     "koa": "^2.13.4",
-    "koa-body": "^6.0.1",
-    "@koa/router": "12.0.0",
-    "@triptyk/nfw-core": "~4.0.0-alpha.22",
-    "@triptyk/nfw-http": "~4.0.0-alpha.22",
-    "@triptyk/nfw-mikro-orm": "~4.0.0-alpha.22",
+    "reflect-metadata": "^0.1.13",
+    "todo-domain": "workspace:*",
+    "ts-node": "^10.9.1",
     "tsyringe": "^4.7.0",
-    "@mikro-orm/core": "^5.5.0",
-    "@mikro-orm/sqlite": "^5.5.0"
+    "yup": "^0.32.11"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/koa": "2.13.4",
-    "@types/koa__router": "12.0.0",
     "@types/express": "^4.17.14",
-    "@types/node": "^18.11.9"
+    "@types/koa": "2.13.5",
+    "@types/koa__router": "12.0.0",
+    "@types/node": "^18.11.9",
+    "koa-body": "^6.0.1"
   }
 }

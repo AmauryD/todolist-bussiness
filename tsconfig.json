@@ -1,19 +1,14 @@
 {
+  "extends": "./tsconfig.build.json",
+  "exclude": ["./examples/*","./dist"],
   "compilerOptions": {
-    "target": "ESNext",  
-    "lib": ["ESNext"],
-    "outDir": "./dist",
-    "moduleResolution": "node",
-    "declaration": true,
-    "noImplicitAny": false,
-    "esModuleInterop": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "strict": true,
-    "composite": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "exclude": ["node_modules","dist"]
+    "paths": {
+      "@triptyk/nfw-core/*": ["./packages/core/src"],
+      "@triptyk/nfw-http/*": ["./packages/http/src"],
+      "@triptyk/nfw-jsonapi/*": ["./packages/jsonapi/tests/src"],
+      "@triptyk/nfw-mikro-orm/*": ["./packages/mikro-orm/src"],
+      "*" : ["./node_modules/*"]
+    },
+    "noEmit": true
+  }
 }
