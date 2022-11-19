@@ -6,6 +6,10 @@ export class TodoRepository implements TodoRepositoryInterface {
         public dataSource: TodoDataSourceInterface
     ) {}
 
+    getTodo(todoId: string): Promise<Todo> {
+        return this.dataSource.getOne(todoId);
+    }
+
     listTodos(): Promise<Todo[]> {
         return this.dataSource.list();
     }

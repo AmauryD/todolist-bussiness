@@ -1,4 +1,4 @@
-import { CreateTodoRequest, CreateTodoUseCase, CreateTodoUseCaseInterface, ListTodoUseCase, Todo } from "todo-domain";
+import { CreateTodoRequest, CreateTodoUseCase, CreateTodoUseCaseInterface, GetOneTodoUseCase, ListTodoUseCase, Todo } from "todo-domain";
 import { ListTodoUseCaseInterface } from "todo-domain/src/interfaces/use-case/list-todo.js";
 import { TodoController } from "../src/controllers/todo";
 import { TodoDataSourceInterface, TodoRepository } from "../src/index.js";
@@ -9,6 +9,14 @@ describe('Todo controller', () => {
     let controller: TodoController;
 
     class FakeTodoDatasource  implements TodoDataSourceInterface {
+        async getOne(id: string): Promise<Todo> {
+            return {
+                title: '',
+                done: false,
+                id
+            };
+        }
+
         createOne(contactData: Todo): Todo | Promise<Todo> {
             return contactData;
         }
@@ -22,7 +30,8 @@ describe('Todo controller', () => {
         const repository = new TodoRepository(datasource);
         controller = new TodoController(
             new CreateTodoUseCase(repository),
-            new ListTodoUseCase(repository)
+            new ListTodoUseCase(repository),
+            new GetOneTodoUseCase(repository)
         );
     });
 

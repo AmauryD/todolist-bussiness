@@ -11,6 +11,10 @@ export class TodoDataSource implements TodoDataSourceInterface {
         @injectRepository(TodoModel) public repository: EntityRepository<TodoModel>
     ) {}
 
+    async getOne(id: string): Promise<Todo> {
+        return this.repository.findOneOrFail({ id });
+    }
+
     async createOne(todo: Todo): Promise<Todo> {
         const newTodo = this.repository.create({
             title: todo.title,

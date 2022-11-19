@@ -4,3 +4,4 @@ export * from "./interfaces/repository/todo.js";
 
 export * from "./use-case/create-todo.js";
 export * from "./use-case/list-todo.js";
+export * from "./use-case/get-todo.js";

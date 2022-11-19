@@ -1,5 +1,5 @@
 import { TodoController } from "adapters";
-import { Body, Controller, GET, POST } from "@triptyk/nfw-http";
+import { Body, Controller, GET, Param, POST } from "@triptyk/nfw-http";
 import { inject } from "tsyringe";
 import { createTodoSchema } from "../validation/create-todo.js";
 
@@ -11,8 +11,13 @@ export class WebTodoController {
         @inject(TodoController) public controller: TodoController,
     ) {}
 
+    @GET('/:id')
+    public  async getOne(@Param('id') id: string) {        
+        return this.controller.getOne(id);
+    }
+
     @GET('/')
-    public  async get() {        
+    public  async list() {        
         return this.controller.list();
     }
 
