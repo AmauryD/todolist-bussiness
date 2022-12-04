@@ -1,8 +1,8 @@
-import { CreateTodoUseCase, TodoRepositoryInterface } from "../src";
+import { CreateTodoUseCase, TodoReadRepositoryInterface } from "../src";
 import { FakeRepository } from "../__mocks__/fake-repository.js";
 
 describe('Create Todo', () => {
-    let repository: TodoRepositoryInterface;
+    let repository: TodoReadRepositoryInterface;
 
     beforeEach(() => {
         repository = new FakeRepository();

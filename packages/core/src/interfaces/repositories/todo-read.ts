@@ -1,7 +1,6 @@
 import { Todo } from "../entities/todo";
 
-export interface TodoRepositoryInterface {
-    createTodo(todo: Todo): Todo | Promise<Todo>;
+export interface TodoReadRepositoryInterface {
     listTodos(): Promise<Todo[]>;
     getTodo(todoId: string): Promise<Todo>;
 }

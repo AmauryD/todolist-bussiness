@@ -1,6 +1,6 @@
-import { TodoRepositoryInterface, Todo } from "../src/index.js";
+import { TodoReadRepositoryInterface, Todo } from "../src/index.js";
 
-export class FakeRepository implements TodoRepositoryInterface {
+export class FakeRepository implements TodoReadRepositoryInterface {
     async getTodo(todoId: string): Promise<Todo> {
         return {
             title: '',

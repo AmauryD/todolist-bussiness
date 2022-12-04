@@ -1,10 +1,10 @@
 import { Todo } from "../interfaces/entities/todo.js";
-import { TodoRepositoryInterface } from "../interfaces/repository/todo.js";
+import { TodoReadRepositoryInterface } from "../interfaces/repositories/todo-read.js";
 import { GetTodoUseCaseInterface } from "../interfaces/use-case/get-todo.js";
 
 export class GetOneTodoUseCase implements GetTodoUseCaseInterface {
     constructor(
-        public todoRepository : TodoRepositoryInterface
+        public todoRepository : TodoReadRepositoryInterface
     ) {}
 
     execute(todoId: string): Promise<Todo> {
