@@ -53,3 +53,19 @@ Utilisation de commandes pour écrire des données et de queries pour lire les d
   - Changement d'état du système.
 
 Dans ce cas un use case ne pourra pas read/write en même temps.
+
+## Aggregates
+
+## Use cases
+
+# Create TodoList
+
+# Add Todo to TodoList
+
+# Complete Todo From TodoList
+
+# Delete Todo From TodoList
+
+# List TodoLists
+
+# Get TodoList and their Todos
