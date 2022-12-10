@@ -10,8 +10,8 @@
   "type": "module",
   "dependencies": {
     "@koa/router": "12.0.0",
-    "@mikro-orm/core": "^5.5.3",
-    "@mikro-orm/sqlite": "^5.5.3",
+    "@mikro-orm/core": "^5.6.0",
+    "@mikro-orm/sqlite": "^5.6.0",
     "@triptyk/nfw-core": "~4.0.0-alpha.27",
     "@triptyk/nfw-http": "~4.0.0-alpha.27",
     "@triptyk/nfw-mikro-orm": "~4.0.0-alpha.27",
@@ -32,5 +32,8 @@
     "@types/koa__router": "12.0.0",
     "@types/node": "^18.11.9",
     "koa-body": "^6.0.1"
+  },
+  "volta": {
+    "node": "18.12.1"
   }
 }

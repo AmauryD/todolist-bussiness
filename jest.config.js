@@ -1,17 +1,18 @@
+const esmModules = ["@triptyk/nfw-core"];
+
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 export default {
-  preset: "ts-jest",
+  preset: "ts-jest/presets/default-esm",
   extensionsToTreatAsEsm: [".ts"],
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
+  transformIgnorePatterns: [
+    `<rootDir>/node_modules/.pnpm/(?!(${esmModules.join("|")})@)`,
+  ],
   transform: {
-    "^.+\\.tsx?$": [
-      "ts-jest",
-      {
-        useESM: true,
-      },
-    ],
+    "^.+\\.(t|j)sx?$": ["ts-jest"],
   },
+  testMatch: ["<rootDir>/packages/*/__tests__/**/*.test.ts"],
   testEnvironment: "node",
 };

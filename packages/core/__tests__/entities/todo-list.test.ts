@@ -1,5 +1,5 @@
-import { TodoListAggregateRoot } from "../src/entities/todo-list.js";
-import { TodoListNameRequiredError } from "../src/errors/todo-list-name-required.js";
+import { TodoListAggregateRoot } from "../../src/entities/todo-list.js";
+import { TodoListNameRequiredError } from "../../src/errors/todo-list-name-required.js";
 
 let todoList : TodoListAggregateRoot;
 const todoStructure = {
@@ -16,7 +16,7 @@ beforeEach(() => {
 });
 
 it("Throws an error when todo-list name is not provided", () => {
-	expect(() => TodoListAggregateRoot.create({ name: undefined } as any)).toThrowError(TodoListNameRequiredError);
+	expect(() => TodoListAggregateRoot.create({ name: undefined } as never)).toThrowError(TodoListNameRequiredError);
 });
 
 it("Creates a todo-list with title and id", () => {
@@ -38,10 +38,18 @@ it("Deletes a task by its id", () => {
 
 it("has a value of done when all sub-tasks are done", () => {
 	todoList.addTodo(todoStructure);
-	expect(todoList.isDone()).toStrictEqual(true);
+	expect(todoList.isDone).toStrictEqual(true);
 });
 
 it("has a value of not done when all sub-tasks are not done", () => {
 	todoList.addTodo({...todoStructure, isDone: false });
-	expect(todoList.isDone()).toStrictEqual(false);
+	expect(todoList.isDone).toStrictEqual(false);
+});
+
+it("Creates a snapshot of a todo-list", () => {
+	expect(todoList.snapshot()).toStrictEqual({
+		id: "1",
+		name: "Coucou",
+		todos: []
+	});
 });

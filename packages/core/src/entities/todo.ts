@@ -1,4 +1,5 @@
 import { TodoTitleRequiredError } from "../errors/todo-title-required.js";
+import { EntityInterface } from "../interfaces/entity.js";
 
 export interface TodoPropertiesInterface {
     title: string;
@@ -6,7 +7,13 @@ export interface TodoPropertiesInterface {
     id: string;
 }
 
-export class Todo {
+export interface TodoSnapshot {
+	id: string,
+    title: string,
+	isDone: boolean
+}
+
+export class Todo implements EntityInterface<TodoSnapshot> {
 	private constructor(private props: TodoPropertiesInterface) {}
 
 	public get title() {
@@ -26,5 +33,13 @@ export class Todo {
 			throw new TodoTitleRequiredError();
 		}
 		return new Todo(props);
+	}
+
+	public snapshot() {
+		return {
+			id: this.id,
+			isDone: this.isDone,
+			title: this.title
+		};
 	}
 }

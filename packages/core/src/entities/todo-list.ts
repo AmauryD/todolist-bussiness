@@ -1,21 +1,24 @@
 import { TodoListNameRequiredError } from "../errors/todo-list-name-required.js";
-import { Todo, TodoPropertiesInterface } from "./todo.js";
+import { EntityInterface } from "../interfaces/entity.js";
+import { Todo, TodoPropertiesInterface, TodoSnapshot } from "./todo.js";
 
 export interface TodoListProperties {
     id: string,
     name: string
 }
 
-export class TodoListAggregateRoot {
+export interface TodoListSnapshot {
+	id: string,
+    name: string,
+	todos: TodoSnapshot[]
+}
+
+export class TodoListAggregateRoot implements EntityInterface<TodoListSnapshot> {
 	private _todos: Set<Todo> = new Set();
 
 	private constructor(
         private props: TodoListProperties
 	) {}
-
-	public isDone() {
-		return [...this.todos.values()].every((todo) => todo.isDone);
-	}
 
 	public get name() {
 		return this.props.name;
@@ -27,6 +30,17 @@ export class TodoListAggregateRoot {
 
 	public get todos(): ReadonlySet<Todo> {
 		return this._todos;
+	}
+
+	public get isDone() {
+		return [...this.todos.values()].every((todo) => todo.isDone);
+	}
+
+	public static create(props: TodoListProperties): TodoListAggregateRoot {
+		if (!props.name) {
+			throw new TodoListNameRequiredError();
+		}
+		return new TodoListAggregateRoot(props);
 	}
 
 	public addTodo(todo: TodoPropertiesInterface) {
@@ -43,10 +57,11 @@ export class TodoListAggregateRoot {
 		}
 	}
 
-	public static create(props: TodoListProperties): TodoListAggregateRoot {
-		if (!props.name) {
-			throw new TodoListNameRequiredError();
-		}
-		return new TodoListAggregateRoot(props);
+	public snapshot(): TodoListSnapshot {
+		return {
+			id: this.id,
+			name: this.name,
+			todos: [...this.todos.values()].map((todo) => todo.snapshot())
+		};
 	}
 }
