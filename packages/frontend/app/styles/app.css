@@ -1,0 +1,11 @@
+@import 'tailwindcss/base';
+
+@import 'tailwindcss/components';
+@import 'components.css';
+
+@import 'tailwindcss/utilities';
+@import 'utilities.css';
+
+@import 'flash-messages.css';
+
+@import 'loading.css';
