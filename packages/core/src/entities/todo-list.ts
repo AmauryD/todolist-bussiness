@@ -10,7 +10,8 @@ export interface TodoListProperties {
 export interface TodoListSnapshot {
 	id: string,
     name: string,
-	todos: TodoSnapshot[]
+	todos: TodoSnapshot[],
+	isDone: boolean
 }
 
 export class TodoListAggregateRoot implements EntityInterface<TodoListSnapshot> {
@@ -61,7 +62,8 @@ export class TodoListAggregateRoot implements EntityInterface<TodoListSnapshot> 
 		return {
 			id: this.id,
 			name: this.name,
-			todos: [...this.todos.values()].map((todo) => todo.snapshot())
+			todos: [...this.todos.values()].map((todo) => todo.snapshot()),
+			isDone: this.isDone
 		};
 	}
 }

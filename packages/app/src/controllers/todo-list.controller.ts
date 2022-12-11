@@ -3,7 +3,7 @@ import { Controller, GET } from "@triptyk/nfw-http";
 import { TodoListController as AdapterTodoListController } from "adapters";
 
 @Controller({
-	routeName: "/todo-list"
+	routeName: "/api/v1/todo-lists"
 })
 export class TodoListController {
 	public constructor(

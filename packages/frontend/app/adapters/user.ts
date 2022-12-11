@@ -1,4 +1,4 @@
-import JSONAPIAdapter from '../adapters/application';
+import JSONAPIAdapter from './application';
 
 export default class User extends JSONAPIAdapter {
   urlForQueryRecord(

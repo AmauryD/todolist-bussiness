@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (environment) {
-  const host = 'http://localhost:8080';
+  const host = 'http://localhost:8000';
   const namespace = 'api/v1';
 
   let ENV = {

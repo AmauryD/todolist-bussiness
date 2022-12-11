@@ -1,4 +1,5 @@
 import { CreateTodoListUseCase, ListTodoListsUseCase } from "todo-domain";
+import { SerializerInterface } from "../interfaces/serializer.interface.js";
 
 export interface TodoListWeb {
 	name: string;
@@ -7,16 +8,17 @@ export interface TodoListWeb {
 export class TodoListController {
 	public constructor(
 		private listTodoListsUseCase: ListTodoListsUseCase,
-		private createTodoListUseCase: CreateTodoListUseCase
+		private createTodoListUseCase: CreateTodoListUseCase,
+		private serializer: SerializerInterface
 	) {}
 
-	public list() {
-		const todos = this.listTodoListsUseCase.execute();
-		return todos;
+	public async list() {
+		const todos = await this.listTodoListsUseCase.execute();
+		return this.serializer.serialize(todos);
 	}
 
-	public create(todoList: TodoListWeb) {
-		const todos = this.createTodoListUseCase.execute(todoList);
-		return todos;
+	public async create(todoList: TodoListWeb) {
+		const todos = await this.createTodoListUseCase.execute(todoList);
+		return this.serializer.serialize(todos);
 	}
 }

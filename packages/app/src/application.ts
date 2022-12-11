@@ -9,7 +9,8 @@ import Koa from "koa";
 import { TodoListController } from "./controllers/todo-list.controller.js";
 import { requestContext } from "@triptyk/nfw-mikro-orm";
 import { MikroORM } from "@mikro-orm/core";
-
+import cors from "@koa/cors";
+import { TodoListSeeder } from "./database/seeders/todo-list.js";
 
 @singleton()
 export class Application {
@@ -17,6 +18,9 @@ export class Application {
 		const koa = new Koa();
 		this.refreshDatabase();
 		koa.use(requestContext);
+		koa.use(cors({
+			origin: "*"
+		}));
         
 		await createApplication({
 			server: koa,
@@ -27,9 +31,15 @@ export class Application {
 		});
 	}
 
-	private refreshDatabase() {
+	private async refreshDatabase() {
 		const schema = container.resolve(MikroORM).getSchemaGenerator();
-		schema.refreshDatabase();
+		await schema.refreshDatabase();
+		await this.seedDatabase();
+	}
+
+	private async seedDatabase() {
+		const orm = container.resolve(MikroORM).getSeeder();
+		await orm.seed(TodoListSeeder);
 	}
 }
 

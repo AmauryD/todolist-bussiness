@@ -1,10 +1,12 @@
 import { container } from "@triptyk/nfw-core";
 import { init } from "@triptyk/nfw-mikro-orm";
 import { TodoListController as AdapterTodoListController } from "adapters";
-import { ListTodoListsUseCase } from "todo-domain";
-import { todoListSchema } from "./models/todo-list.js";
-import { todoSchema } from "./models/todo.js";
-import { SQLTodoListRepository } from "./repositories/todo-list.repository.js";
+import { CreateTodoListUseCase, ListTodoListsUseCase } from "todo-domain";
+import { todoListSchema } from "./database/models/todo-list.js";
+import { todoSchema } from "./database/models/todo.js";
+import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
+import { TodoListsJsonApiSerializer } from "./serializers/json-api.serializer.js";
+import { UUIDGenerator } from "./utils/id-generator.js";
 
 export async function setupDI() {
 	await init(
@@ -17,7 +19,8 @@ export async function setupDI() {
 
 	const todoListRepository = new SQLTodoListRepository();
 	const useCase = new ListTodoListsUseCase(todoListRepository);
-	const controller = new AdapterTodoListController(useCase);
+	const createUseCase = new CreateTodoListUseCase(new UUIDGenerator(),todoListRepository);
+	const controller = new AdapterTodoListController(useCase, createUseCase, new TodoListsJsonApiSerializer());
 
 	container.register(AdapterTodoListController, {
 		useValue: controller
