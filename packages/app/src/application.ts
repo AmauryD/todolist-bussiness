@@ -15,8 +15,7 @@ import { MikroORM } from "@mikro-orm/core";
 export class Application {
 	public async init() {
 		const koa = new Koa();
-		const schema = container.resolve(MikroORM).getSchemaGenerator();
-		schema.refreshDatabase();
+		this.refreshDatabase();
 		koa.use(requestContext);
         
 		await createApplication({
@@ -26,6 +25,11 @@ export class Application {
 		koa.listen(8000, () => {
 			console.log("listening on port 8000");
 		});
+	}
+
+	private refreshDatabase() {
+		const schema = container.resolve(MikroORM).getSchemaGenerator();
+		schema.refreshDatabase();
 	}
 }
 

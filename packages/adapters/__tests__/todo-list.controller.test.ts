@@ -1,5 +1,6 @@
-import { ListTodoListsUseCase, TodoListAggregateRoot } from "todo-domain";
+import { CreateTodoListUseCase, ListTodoListsUseCase, TodoListAggregateRoot, TodoListRepositoryInterface } from "todo-domain";
 import { TodoListController } from "../src/controllers/todo-list.controller.js";
+import { DummyIdGenerator } from "./utils/id-generator.js";
 import { TodoListInMemoryRepository } from "./utils/todolist-memory-repository.js";
 
 function addAnAggregateToRepositoryList(repository: TodoListInMemoryRepository) {
@@ -11,18 +12,44 @@ function addAnAggregateToRepositoryList(repository: TodoListInMemoryRepository) 
 	return firstAggregate;
 }
 
+let repository: TodoListRepositoryInterface;
+let listTodoListsUseCase: ListTodoListsUseCase;
+let createTodoListsUseCase: CreateTodoListUseCase;
 
-it("Lists todo-lists", () => {
-	const repository = new TodoListInMemoryRepository();
-	const todoListUseCase = new ListTodoListsUseCase(
+beforeEach(() => {
+	repository = new TodoListInMemoryRepository();
+	listTodoListsUseCase = new ListTodoListsUseCase(
 		repository
 	);
+	createTodoListsUseCase = new CreateTodoListUseCase(
+		new DummyIdGenerator(),
+		repository
+	);
+});
+
+it("Lists todo-lists", async () => {
 	const todoListController = new TodoListController(
-		todoListUseCase
+		listTodoListsUseCase,
+		undefined as never
 	);
 
-	const firstAggregate = addAnAggregateToRepositoryList(repository);
+	const firstAggregate = addAnAggregateToRepositoryList(repository as TodoListInMemoryRepository);
 
     
-	expect(todoListController.list()).toStrictEqual([firstAggregate.snapshot()]);
+	expect(await todoListController.list()).toStrictEqual([firstAggregate.snapshot()]);
+});
+
+it("Creates todo-list", async () => {
+	const todoListController = new TodoListController(
+		listTodoListsUseCase,
+		createTodoListsUseCase
+	);
+    
+	expect(await todoListController.create({
+		name: "Remove kebab"
+	})).toStrictEqual({
+		"id": "1",
+		"name": "Remove kebab",
+		"todos": [],
+	});
 });

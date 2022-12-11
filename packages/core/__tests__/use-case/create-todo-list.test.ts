@@ -9,12 +9,12 @@ class IdGenerator implements IdGeneratorInterface {
 }
 
 
-test("It creates a todo-list", () => {
+test("It creates a todo-list", async () => {
 	const createTodoListUseCase = new CreateTodoListUseCase(
 		new IdGenerator(),
 		new FakeTodoListRepository()
 	);
-	const todoSnapshot = createTodoListUseCase.execute({
+	const todoSnapshot = await createTodoListUseCase.execute({
 		name: "name"
 	});
 	expect(todoSnapshot).toStrictEqual({

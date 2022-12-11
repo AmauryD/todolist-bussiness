@@ -7,7 +7,6 @@ export interface Todo {
 }
 
 export const todoSchema = new EntitySchema<Todo>({
-	// name should be used only with interfaces
 	name: "Todo",
 	properties: {
 		id: { type: "string", primary: true },
