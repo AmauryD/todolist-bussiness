@@ -19,6 +19,9 @@ export class TodoListController {
 
 	public async create(todoList: TodoListWeb) {
 		const todos = await this.createTodoListUseCase.execute(todoList);
-		return this.serializer.serialize(todos);
+		if (todos.isErr) {
+			return todos.error;
+		}
+		return this.serializer.serialize(todos.value.snapshot());
 	}
 }

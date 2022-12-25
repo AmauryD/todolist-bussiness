@@ -19,6 +19,7 @@
     "koa": "^2.13.4",
     "reflect-metadata": "^0.1.13",
     "todo-domain": "workspace:*",
+    "true-myth": "^6.2.0",
     "ts-node": "^10.9.1",
     "tsyringe": "^4.7.0",
     "yup": "^0.32.11"

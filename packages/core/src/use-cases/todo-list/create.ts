@@ -13,10 +13,10 @@ export class CreateTodoListUseCase implements UseCaseInterface {
 	) {}
 
 	public async execute(todoListInput: CreateTodoListUseCaseInputInterface) {
-		const todoList = await this.todoListRepository.create({
+		const todoList =  this.todoListRepository.create({
 			name: todoListInput.name,
 			id: this.idGenerator.generate()
 		});
-		return todoList.snapshot();
+		return todoList;
 	}
 }

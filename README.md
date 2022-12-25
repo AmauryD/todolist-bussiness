@@ -54,18 +54,34 @@ Utilisation de commandes pour écrire des données et de queries pour lire les d
 
 Dans ce cas un use case ne pourra pas read/write en même temps.
 
-## Aggregates
-
 ## Use cases
 
-# Create TodoList
+### Create TodoList
 
-# Add Todo to TodoList
+### Add Todo to TodoList
 
-# Complete Todo From TodoList
+### Complete Todo From TodoList
 
-# Delete Todo From TodoList
+### Delete Todo From TodoList
 
-# List TodoLists
+### List TodoLists
 
-# Get TodoList and their Todos
+### Get TodoList and their Todos
+
+## Using DDD
+
+### Concepts
+
+#### AggregateRoots
+
+Entités gérants plusieurs entités qui ne savent exister sans celles-ci.
+
+La validation doit se trouver le plus proche de l'entité. Pour ne pas que l'entité devienne.
+
+La majeure partie de la logique domaine doit se trouver dans les entités. Pour ne pas que ceux-ci deviennent anémiques.
+
+#### Value Objects
+
+Représente un type et encapsule la logique de validation d'un type.
+
+## Using functionnal programming

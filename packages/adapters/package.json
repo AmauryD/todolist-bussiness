@@ -10,7 +10,8 @@
     "build": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "todo-domain": "workspace:*"
+    "todo-domain": "workspace:*",
+    "true-myth": "^6.2.0"
   },
   "keywords": [],
   "author": "",

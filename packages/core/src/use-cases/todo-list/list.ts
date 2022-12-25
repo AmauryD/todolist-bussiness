@@ -1,3 +1,4 @@
+
 import { TodoListRepositoryInterface } from "../../interfaces/repositories/todo-list.js";
 import { UseCaseInterface } from "../../interfaces/use-case.js";
 
@@ -8,6 +9,6 @@ export class ListTodoListsUseCase implements UseCaseInterface {
 
 	public async execute() {
 		const list = await this.todoListRepository.list();
-		return list.map((todoList) => todoList.snapshot());
+		return list.unwrapOr([]).map((e) => e.snapshot());
 	}
 }

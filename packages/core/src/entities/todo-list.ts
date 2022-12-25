@@ -1,3 +1,4 @@
+import Result, { err, ok } from "true-myth/result";
 import { TodoListNameRequiredError } from "../errors/todo-list-name-required.js";
 import { EntityInterface } from "../interfaces/entity.js";
 import { Todo, TodoPropertiesInterface, TodoSnapshot } from "./todo.js";
@@ -37,11 +38,11 @@ export class TodoListAggregateRoot implements EntityInterface<TodoListSnapshot> 
 		return [...this.todos.values()].every((todo) => todo.isDone);
 	}
 
-	public static create(props: TodoListProperties): TodoListAggregateRoot {
+	public static create(props: TodoListProperties): Result<TodoListAggregateRoot, TodoListNameRequiredError> {
 		if (!props.name) {
-			throw new TodoListNameRequiredError();
+			return err(new TodoListNameRequiredError());
 		}
-		return new TodoListAggregateRoot(props);
+		return ok(new TodoListAggregateRoot(props));
 	}
 
 	public addTodo(todo: TodoPropertiesInterface) {
