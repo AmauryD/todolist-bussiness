@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "node --loader tsx --test packages/*/__tests__/**/*.ts",
+    "test:watch": "node --loader tsx --test --watch packages/*/__tests__/**/*.ts",
     "lint": "eslint ./packages/**/src/**/*.ts",
     "build": "pnpm recursive build"
   },
@@ -23,7 +24,7 @@
     "typescript": "^4.9.3"
   },
   "volta": {
-    "node": "18.12.1"
+    "node": "19.3.0"
   },
   "dependencies": {
     "tsconfig-to-swcconfig": "^2.0.1"
