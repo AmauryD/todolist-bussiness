@@ -5,6 +5,8 @@ import { JsonSerializer } from "./utils/json.serializer.js";
 import { TodoListInMemoryRepository } from "./utils/todolist-memory-repository.js";
 import { beforeEach, it } from "node:test";
 import  assert  from "node:assert";
+import { unwrapOr } from "true-myth/result";
+
 
 function addAnAggregateToRepositoryList(repository: TodoListInMemoryRepository) {
 	const firstAggregate = TodoListAggregateRoot.create({
@@ -64,7 +66,7 @@ it("Creates todo-list", async () => {
 		name: "Remove kebab"
 	});
     
-	assert.strictEqual(created,JSON.stringify({
+	assert.strictEqual(unwrapOr("",created),JSON.stringify({
 		"id": "1",
 		"name": "Remove kebab",
 		"todos": [],

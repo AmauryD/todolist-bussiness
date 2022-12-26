@@ -1,14 +1,10 @@
-import type emberData__store from '@ember-data/store';
 import Route from '@ember/routing/route';
+import type RouterService from '@ember/routing/router-service.js';
 import { service } from '@ember/service';
 
 export default class Index extends Route {
-  @service declare store: emberData__store;
-
-  public async model() {
-    const todoLists = await this.store.query('todo-list', {});
-    return {
-      todoLists,
-    };
+  @service declare router: RouterService;
+  beforeModel() {
+    this.router.transitionTo('dashboard');
   }
 }

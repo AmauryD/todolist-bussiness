@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node --loader tsx --test packages/*/__tests__/**/*.ts",
-    "test:watch": "node --loader tsx --test --watch packages/*/__tests__/**/*.ts",
+    "test": "node --loader tsx tests.ts",
     "lint": "eslint ./packages/**/src/**/*.ts",
     "build": "pnpm recursive build"
   },
@@ -14,14 +13,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/glob": "^8.0.0",
     "@types/node": "^18.11.17",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
+    "chalk": "^5.2.0",
     "eslint": "^8.30.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "glob": "^8.0.3",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "yaml": "^2.2.0"
   },
   "volta": {
     "node": "19.3.0"

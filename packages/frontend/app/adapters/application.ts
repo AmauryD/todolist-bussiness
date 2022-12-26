@@ -1,10 +1,13 @@
-import JSONAPIAdapter from '@ember-data/adapter/json-api';
+import RESTAdapter from '@ember-data/adapter/rest';
+import type { Snapshot } from '@ember-data/store';
 import { service } from '@ember/service';
 import type Session from 'ember-boilerplate/services/session';
 import type FlashMessageService from 'ember-cli-flash/services/flash-messages';
+import type ModelRegistry from 'ember-data/types/registries/model';
 import config from '../config/environment';
+import { dasherize } from '@ember/string';
 
-export default class ApplicationAdapter extends JSONAPIAdapter {
+export default class ApplicationAdapter extends RESTAdapter {
   @service declare session: Session;
   @service declare flashMessages: FlashMessageService;
 
@@ -23,6 +26,18 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
       ] = `Bearer ${this.session.data.authenticated.accessToken}`;
     }
     return headers;
+  }
+
+  buildURL<K extends keyof ModelRegistry>(
+    modelName?: K,
+    id?: string | unknown[] | {} | null,
+    snapshot?: Snapshot<K> | unknown[] | null,
+    requestType?: string,
+    query?: {}
+  ): string {
+    return dasherize(
+      super.buildURL(modelName, id, snapshot, requestType, query)
+    );
   }
 
   handleResponse(

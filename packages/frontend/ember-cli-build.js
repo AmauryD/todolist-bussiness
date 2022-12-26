@@ -17,13 +17,6 @@ module.exports = function (defaults) {
         }),
       ],
     },
-    '@embroider/macros': {
-      setConfig: {
-        '@ember-data/store': {
-          polyfillUUID: true,
-        },
-      },
-    },
     sourcemaps: {
       enabled: true,
       extensions: ['js'],
@@ -59,6 +52,5 @@ module.exports = function (defaults) {
     staticAddonTrees: true,
     staticHelpers: true,
     staticComponents: true,
-    splitAtRoutes: [/^(?!(application)$).*$/], // can also be a RegExp
   });
 };

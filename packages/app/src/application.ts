@@ -1,22 +1,29 @@
 import "reflect-metadata";
 import { setupDI } from "./setup-di.js";
-
-await setupDI();
-
 import { container, singleton } from "@triptyk/nfw-core";
 import { createApplication } from "@triptyk/nfw-http";
 import Koa from "koa";
-import { TodoListController } from "./controllers/todo-list.controller.js";
-import { requestContext } from "@triptyk/nfw-mikro-orm";
 import { MikroORM } from "@mikro-orm/core";
+import { TodoListController } from "./controllers/todo-list.controller.js";
+import { init, requestContext } from "@triptyk/nfw-mikro-orm";
 import cors from "@koa/cors";
 import { TodoListSeeder } from "./database/seeders/todo-list.js";
+import { todoListSchema } from "./database/models/todo-list.js";
+import { todoSchema } from "./database/models/todo.js";
 
 @singleton()
 export class Application {
 	public async init() {
 		const koa = new Koa();
-		this.refreshDatabase();
+		await init(
+			{
+				type: "sqlite",
+				dbName: ":memory:",
+				entities: [todoSchema, todoListSchema]
+			}
+		);
+		await setupDI();
+		await this.refreshDatabase();
 		koa.use(requestContext);
 		koa.use(cors({
 			origin: "*"
