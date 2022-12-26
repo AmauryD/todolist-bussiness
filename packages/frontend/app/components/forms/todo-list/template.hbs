@@ -1,0 +1,11 @@
+<form {{on "click" this.submit}}>
+    <TpkValidationInput 
+        @changeset={{@changeset}}
+        @validationField="name"
+        @label="Name"
+    as |I|>
+        <I.Input />
+        <I.Label>Name</I.Label>
+    </TpkValidationInput>
+    <button type="submit">Create</button>
+</form>
