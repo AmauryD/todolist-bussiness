@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import assert from "node:assert";
-import test, { afterEach, beforeEach } from "node:test";
+import test, { afterEach, beforeEach, it } from "node:test";
 import { container } from "tsyringe";
 import { TodoListController } from "../src/controllers/todo-list.controller.js";
 import { setupDI } from "../src/setup-di.js";
@@ -8,6 +8,11 @@ import { MikroORM } from "@mikro-orm/core";
 import { init } from "@triptyk/nfw-mikro-orm";
 import { todoListSchema } from "../src/database/models/todo-list.js";
 import { todoSchema } from "../src/database/models/todo.js";
+import { err, ok } from "true-myth/result";
+import { BodyMustNotBeEmptyError } from "../src/errors/body-must-not-be-empty.js";
+import { ValidationError } from "yup";
+
+let controller: TodoListController;
 
 beforeEach(async () => {
 	await init({
@@ -18,14 +23,22 @@ beforeEach(async () => {
 	});
 	await setupDI();
 	await container.resolve(MikroORM).getSchemaGenerator().updateSchema();
+	controller = container.resolve(TodoListController);
 });
 
-test("It creates a todo-list", async () => {
-	const controller = container.resolve(TodoListController);
-	const todoLists: any = await controller.create({
+test("Creates a todo-list", async () => {
+	const todoLists: any = await controller.create(ok({
 		name: "Coucou"
-	});
+	}));
 	assert.strictEqual(todoLists.todoLists.name, "Coucou");
+});
+
+it("Rejects when bad result", async () => {
+	await assert.rejects(controller.create(err(new BodyMustNotBeEmptyError())), BodyMustNotBeEmptyError);
+});
+
+it("Rejects when validation error", async () => {
+	await assert.rejects(controller.create(err(new ValidationError("truc"))), ValidationError);
 });
 
 afterEach(async () => {

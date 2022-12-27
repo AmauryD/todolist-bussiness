@@ -17,7 +17,6 @@ export class DefaultErrorHandlerMiddleware implements MiddlewareInterface {
 		try {
 			await next();
 		}catch(e) {
-			console.log(e);
 			if (e instanceof Error) {
 				context.body = {
 					code: e.name,
