@@ -68,7 +68,7 @@ importers:
       tsyringe: ^4.7.0
       type-fest: ^3.5.0
       typescript: ^4.9.4
-      yup: ^0.32.11
+      yup: 1.0.0-beta.8
     dependencies:
       '@koa/router': 12.0.0
       '@mikro-orm/core': 5.5.3_dutr33mnaa6fhcbj7xnsrkdnqi
@@ -82,7 +82,7 @@ importers:
       true-myth: 6.2.0
       ts-node: 10.9.1_moeqx3xmzxqxagf2sz6mqkbb7m
       tsyringe: 4.7.0
-      yup: 0.32.11
+      yup: 1.0.0-beta.8
     devDependencies:
       '@koa/cors': 4.0.0
       '@mikro-orm/seeder': 5.5.3_@mikro-orm+core@5.5.3
@@ -1599,6 +1599,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+    dev: true
 
   /@babel/template/7.20.7:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}
@@ -3566,10 +3567,6 @@ packages:
     dependencies:
       '@types/koa': 2.13.5
     dev: true
-
-  /@types/lodash/4.14.191:
-    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
-    dev: false
 
   /@types/mime/3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
@@ -11610,10 +11607,6 @@ packages:
       p-locate: 6.0.0
     dev: true
 
-  /lodash-es/4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: false
-
   /lodash._baseassign/3.2.0:
     resolution: {integrity: sha512-t3N26QR2IdSN+gqSy9Ds9pBu/J1EAFEshKlUHpJG3rvyJOYgcELIxcIeKKfZk7sjOz11cFfzJRsyFry/JyabJQ==}
     dependencies:
@@ -12303,10 +12296,6 @@ packages:
   /mute-stream/0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
     dev: true
-
-  /nanoclone/0.2.1:
-    resolution: {integrity: sha512-wynEP02LmIbLpcYw8uBKpcfF6dmg2vcpKqxeH5UcoKEYdExslsdUA4ugFauuaeYdTB76ez6gJW8XAZ6CgkXYxA==}
-    dev: false
 
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
@@ -13931,6 +13920,7 @@ packages:
 
   /regenerator-runtime/0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: true
 
   /regenerator-transform/0.10.1:
     resolution: {integrity: sha512-PJepbvDbuK1xgIgnau7Y90cwaAmO/LCLMI2mPvaXq2heGMR3aWW5/BQvYrhJ8jgmQjXewXvBjzfqKcVOmhjZ6Q==}
@@ -15359,6 +15349,10 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /tiny-case/1.0.3:
+    resolution: {integrity: sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==}
+    dev: false
+
   /tiny-glob/0.2.9:
     resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
     dependencies:
@@ -15652,7 +15646,6 @@ packages:
   /type-fest/2.19.0:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
-    dev: true
 
   /type-fest/3.5.0:
     resolution: {integrity: sha512-bI3zRmZC8K0tUz1HjbIOAGQwR2CoPQG68N5IF7gm0LBl8QSNXzkmaWnkWccCUL5uG9mCsp4sBwC8SBrNSISWew==}
@@ -16403,17 +16396,13 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /yup/0.32.11:
-    resolution: {integrity: sha512-Z2Fe1bn+eLstG8DRR6FTavGD+MeAwyfmouhHsIUgaADz8jvFKbO/fXc2trJKZg+5EBjh4gGm3iU/t3onKlXHIg==}
-    engines: {node: '>=10'}
+  /yup/1.0.0-beta.8:
+    resolution: {integrity: sha512-vczv/4dfMGp47A4cS633mrp6bLIIIFL113bSmnAWajKLXzRlEENNaTNRbQyr6iwlCincjvFAeYXwRsURq7vp+A==}
     dependencies:
-      '@babel/runtime': 7.20.7
-      '@types/lodash': 4.14.191
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      nanoclone: 0.2.1
       property-expr: 2.0.5
+      tiny-case: 1.0.3
       toposort: 2.0.2
+      type-fest: 2.19.0
     dev: false
 
   /zod/3.20.2:

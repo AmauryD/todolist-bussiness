@@ -10,7 +10,6 @@ class IdGenerator implements IdGeneratorInterface {
 	}
 }
 
-
 test("It creates a todo-list", async () => {
 	const createTodoListUseCase = new CreateTodoListUseCase(
 		new IdGenerator(),

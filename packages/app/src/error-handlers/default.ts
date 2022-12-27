@@ -3,11 +3,13 @@ import { MiddlewareInterface } from "@triptyk/nfw-http";
 import { DefaultState, DefaultContext, Next } from "koa";
 import { TodoListNameRequiredError } from "todo-domain";
 import { Class } from "type-fest";
+import { ValidationError } from "yup";
 import { BodyMustNotBeEmptyError } from "../errors/body-must-not-be-empty.js";
 
 const errorsStatuses = new Map<Class<Error>, number>([
 	[TodoListNameRequiredError, 400],
-	[BodyMustNotBeEmptyError, 400]
+	[BodyMustNotBeEmptyError, 400],
+	[ValidationError, 400]
 ]);
 
 export class DefaultErrorHandlerMiddleware implements MiddlewareInterface {
