@@ -1,11 +1,12 @@
 import { CreateTodoListUseCase, ListTodoListsUseCase, TodoListAggregateRoot, TodoListRepositoryInterface, TodoListSnapshot } from "todo-domain";
 import { TodoListController } from "../src/controllers/todo-list.controller.js";
-import { DummyIdGenerator } from "./utils/id-generator.js";
-import { JsonSerializer } from "./utils/json.serializer.js";
-import { TodoListInMemoryRepository } from "./utils/todolist-memory-repository.js";
+import { DummyIdGenerator } from "./fixtures/id-generator.js";
+import { JsonSerializer } from "./fixtures/json.serializer.js";
+import { TodoListInMemoryRepository } from "./fixtures/todolist-memory-repository.js";
 import { beforeEach, it } from "node:test";
 import  assert  from "node:assert";
 import { unwrapOr } from "true-myth/result";
+import { SuccessAuthorizer } from "./fixtures/success-authorizer.js";
 
 
 function addAnAggregateToRepositoryList(repository: TodoListInMemoryRepository) {
@@ -26,7 +27,8 @@ let createTodoListsUseCase: CreateTodoListUseCase;
 beforeEach(() => {
 	repository = new TodoListInMemoryRepository();
 	listTodoListsUseCase = new ListTodoListsUseCase(
-		repository
+		repository,
+		new SuccessAuthorizer()
 	);
 	createTodoListsUseCase = new CreateTodoListUseCase(
 		new DummyIdGenerator(),
@@ -50,7 +52,10 @@ it("Lists todo-lists", async () => {
 		Err() { return {} as TodoListSnapshot; },
 	});
 
-	assert.strictEqual(await todoListController.list(),
+	const list = await todoListController.list("someUser");
+	
+	assert.strictEqual(list.isOk, true);
+	assert.strictEqual(list.unwrapOr({}),
 		JSON.stringify([snapshot])
 	);
 });

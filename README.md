@@ -95,6 +95,14 @@ Use can view his todolists and their todos
 - isDone (from all todos)
 - owner
 
+## Event Sourcing
+
+Ne pas confondre avec les évènements du DDD.
+
+- Accumulation d'events, qui rendent l'application immutable.
+- L'on peut restaurer l'état de l'application à un instant T grâce à l'ES.
+- Seulement Create/Read.
+
 ## Using DDD
 
 ### Concepts
@@ -119,6 +127,19 @@ La majeure partie de la logique domaine doit se trouver dans les entités. Pour 
 
 Représente un type et encapsule la logique de validation d'un type.
 
+#### Domain Services
+
+Ces services peuvent être également des use-case dans la Clean Archi.
+
+- The operation relates to a domain concept that is not a natural part of an Entity or Value Object
+- The interface is defined in terms of other elements in the domain model
+- The operation is stateless
+
+#### Domain Events
+
+
+#### Application Services
+
 ## Using functionnal programming
 
 Dans ce projet, j'ai commencé à utiliser un peu de programmation fonctionnelle via la librairie `true-myth`. Permettant de gérer les erreurs/undefined/null de manière efficace et Typescript-Aware.
@@ -140,8 +161,15 @@ L'authentication doit être agnostique du métier, que l'on se connecte avec du 
 
 (Les paroles ci-dessus ne sont pas absolues)
 
-### Sources
+## Sources
 
 <https://martinfowler.com>
 <https://github.com/VaughnVernon/IDDD_Samples/tree/master/iddd_identityaccess/src/main/java/com/saasovation/identityaccess>
 <https://www.schneier.com/blog/archives/2011/04/schneiers_law.html>
+<https://lostechies.com/jimmybogard/2010/02/04/strengthening-your-domain-a-primer/>
+<https://www.entropywins.wtf/blog/2016/11/24/implementing-the-clean-architecture/>
+
+### Github
+
+<https://github.com/wmde/fundraising-application>
+<https://github.com/wmde/fundraising-donations>

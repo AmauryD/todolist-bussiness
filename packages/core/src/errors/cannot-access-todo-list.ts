@@ -1,0 +1,1 @@
+export class CannotAccessTodoListError extends Error {}
