@@ -1,11 +1,4 @@
-<form {{on "click" this.submit}}>
-    <TpkValidationInput 
-        @changeset={{@changeset}}
-        @validationField="name"
-        @label="Name"
-    as |I|>
-        <I.Input />
-        <I.Label>Name</I.Label>
-    </TpkValidationInput>
-    <button type="submit">Create</button>
+<form {{on "submit" this.submit}} ...attributes>
+  <Inputs::Validation::Input @label="Nom" @validationField="name" @changeset={{@changeset}} />
+  <Inputs::Button @type="submit">Envoyer</Inputs::Button>
 </form>

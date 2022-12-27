@@ -2,7 +2,7 @@ import { container } from "@triptyk/nfw-core";
 import { TodoListController as AdapterTodoListController } from "adapters";
 import { CreateTodoListUseCase, ListTodoListsUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
-import { TodoListsRESTSerializer } from "./serializers/rest.serializer.js";
+import { TodoListsRESTSerializer } from "./serializers/rest.js";
 import { UUIDGenerator } from "./utils/id-generator.js";
 
 export async function setupDI() {

@@ -38,6 +38,7 @@
     "json-api-serializer": "^2.6.6",
     "koa-body": "^6.0.1",
     "reflect-metadata": "^0.1.13",
+    "type-fest": "^3.5.0",
     "typescript": "^4.9.4"
   },
   "volta": {

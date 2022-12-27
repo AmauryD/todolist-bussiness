@@ -10,6 +10,7 @@ import cors from "@koa/cors";
 import { TodoListSeeder } from "./database/seeders/todo-list.js";
 import { todoListSchema } from "./database/models/todo-list.js";
 import { todoSchema } from "./database/models/todo.js";
+import {koaBody} from "koa-body";
 
 @singleton()
 export class Application {
@@ -25,6 +26,7 @@ export class Application {
 		await setupDI();
 		await this.refreshDatabase();
 		koa.use(requestContext);
+		koa.use(koaBody());
 		koa.use(cors({
 			origin: "*"
 		}));

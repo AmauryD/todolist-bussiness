@@ -1,4 +1,5 @@
 import { action } from '@ember/object';
+import type RouterService from '@ember/routing/router-service.js';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type { TodoListChangeset } from 'ember-boilerplate/changesets/todo-list';
@@ -9,6 +10,7 @@ export default class PagesDashboardCreateComponent extends Component {
   @service('changesets/todo-list')
   declare changesetsTodoList: ChangesetsTodoListService;
   @service declare flashMessages: FlashMessageService;
+  @service declare router: RouterService;
   public changeset: TodoListChangeset;
 
   public constructor(owner: unknown, args: {}) {
@@ -20,8 +22,10 @@ export default class PagesDashboardCreateComponent extends Component {
   async createTodoList(changeset: TodoListChangeset) {
     const saved = await this.changesetsTodoList.saveChangeset(changeset);
     if (saved.isOk) {
-      return this.flashMessages.success('Success !');
+      this.flashMessages.success('Success !');
+      return this.router.transitionTo('dashboard.index');
     }
-    this.flashMessages.danger('Danger');
+
+    this.flashMessages.danger(saved.error.message);
   }
 }
