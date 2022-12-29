@@ -1,6 +1,6 @@
 import { ok } from "true-myth/result";
-import { TodoListProperties, TodoListAggregateRoot } from "../../src/entities/todo-list.js";
-import { TodoListRepositoryInterface } from "../../src/interfaces/repositories/todo-list.js";
+import { TodoListRepositoryInterface } from "../../src/domain/todos/repositories/todo-list.js";
+import { TodoListAggregateRoot, TodoListProperties } from "../../src/index.js";
 
 export class FakeTodoListRepository implements TodoListRepositoryInterface {
 	public async list() {

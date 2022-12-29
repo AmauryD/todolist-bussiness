@@ -1,5 +1,5 @@
 import { IdGeneratorInterface } from "../../interfaces/id-generator.js";
-import { TodoListRepositoryInterface } from "../../interfaces/repositories/todo-list.js";
+import { TodoListRepositoryInterface } from "../../domain/todos/repositories/todo-list.js";
 import { UseCaseInterface } from "../../interfaces/use-case.js";
 
 interface CreateTodoListUseCaseInputInterface {

@@ -140,6 +140,8 @@ On peut faire ceci grâce à l'Event Storming. (Comme le brain Storming)
 
 Les évènements permettent également de séparer le couplage entre les différentes parties du code. Les différents modules subscribent sur les évènements dont ils ont besoin.
 
+Les données des évènements doivent être en Read-Only.
+
 L'ORM/DB a le devoir de décider quand les évènements peuvent être dispatchés. Car c'est lui seul qui sait si les données ont bien été traitées/persistées vers le moteur de stockage. Dans ce cas-ci, ce serait soit au repository, soit aux hooks de l'ORM de s'en charger.
 
 #### Application Services
@@ -240,3 +242,4 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://github.com/hgraca/explicit-architecture-php>
 <https://github.com/stemmlerjs/white-label>
 <https://github.com/VaughnVernon/IDDD_Samples>
+<https://github.com/dotnet-architecture/eShopOnContainers>

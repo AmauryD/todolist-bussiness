@@ -1,5 +1,5 @@
+import { EntityInterface } from "../../../entities/entity.js";
 import { TodoTitleRequiredError } from "../errors/todo-title-required.js";
-import { EntityInterface } from "../interfaces/entity.js";
 
 export interface TodoPropertiesInterface {
     title: string;

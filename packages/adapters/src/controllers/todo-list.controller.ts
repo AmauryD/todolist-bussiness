@@ -1,5 +1,5 @@
 import { CreateTodoListUseCase, ListTodoListsUseCase } from "todo-domain";
-import { CannotAccessTodoListError } from "todo-domain/errors/cannot-access-todo-list.js";
+import { CannotAccessTodoListError } from "todo-domain/src/domain/todos/errors/cannot-access-todo-list.js";
 import { Result } from "true-myth";
 import { ok } from "true-myth/result";
 import { SerializerInterface } from "../interfaces/serializer.interface.js";

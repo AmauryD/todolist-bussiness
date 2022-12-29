@@ -1,5 +1,5 @@
-import { TodoListAggregateRoot } from "../index.js";
-import { DomainEventInterface } from "../interfaces/domain-event.js";
+import { TodoListAggregateRoot } from "../../../index.js";
+import { DomainEventInterface } from "../../../events/domain-event.js";
 
 export class TodoListCreatedEvent implements DomainEventInterface<TodoListAggregateRoot> {
 	public date: Date;

@@ -1,15 +1,15 @@
 import { Maybe } from "true-myth";
 import { map } from "true-myth/maybe";
+import { DomainEventInterface } from "./domain-event.js";
 import { AggregateRoot } from "../entities/aggregate-root.js";
-import { DomainEventInterface } from "../interfaces/domain-event.js";
 
 type HandlerFunction = (handler: DomainEventInterface<unknown>) => void | Promise<void>;
 
 export class DomainEvents {
 	private static handlersMap = new Map<string, Set<HandlerFunction>>();
-	private static markedAggregates = new Map<string, AggregateRoot>();
+	private static markedAggregates = new Map<string, AggregateRoot<any>>();
 
-	public static markForDispatch(aggregate: AggregateRoot) {
+	public static markForDispatch(aggregate: AggregateRoot<any>) {
 		this.markedAggregates.set(aggregate.id, aggregate);
 	}
 
@@ -38,13 +38,13 @@ export class DomainEvents {
 		return Maybe.of(this.handlersMap.get(eventClassName));
 	}
 
-	private static dispatchAggregateEvents(aggregate :AggregateRoot) {
+	private static dispatchAggregateEvents(aggregate :AggregateRoot<any>) {
 		for (const event of aggregate.domainEvents) {
 			this.dispatch(event);
 		}
 	}
 
-	private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot) {
+	private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<any>) {
 		this.markedAggregates.delete(aggregate.id);
 	}
 

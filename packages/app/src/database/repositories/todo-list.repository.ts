@@ -22,7 +22,9 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 			title: todo.value.name,
 			id: todo.value.id
 		});
+
 		await this.ormRepository.persistAndFlush(todoORM);
+
 		return todo;
 	}
 	

@@ -1,9 +1,8 @@
 import Result, { err, ok } from "true-myth/result";
-import { TodoListNameRequiredError } from "../errors/todo-list-name-required.js";
 import { TodoListCreatedEvent } from "../events/todo-created.js";
-import { EntityInterface } from "../interfaces/entity.js";
-import { AggregateRoot } from "./aggregate-root.js";
+import { AggregateRoot } from "../../../entities/aggregate-root.js";
 import { Todo, TodoPropertiesInterface, TodoSnapshot } from "./todo.js";
+import { TodoListNameRequiredError } from "../errors/todo-list-name-required.js";
 
 export interface TodoListProperties {
     id: string,
@@ -17,7 +16,7 @@ export interface TodoListSnapshot {
 	isDone: boolean
 }
 
-export class TodoListAggregateRoot extends AggregateRoot implements EntityInterface<TodoListSnapshot> {
+export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
 	private _todos: Set<Todo> = new Set();
 
 	private constructor(
@@ -68,7 +67,7 @@ export class TodoListAggregateRoot extends AggregateRoot implements EntityInterf
 		}
 	}
 
-	public snapshot(): TodoListSnapshot {
+	public snapshot() {
 		return {
 			id: this.id,
 			name: this.name,

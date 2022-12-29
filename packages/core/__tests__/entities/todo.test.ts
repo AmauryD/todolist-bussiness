@@ -1,7 +1,8 @@
-import { Todo } from "../../src/entities/todo.js";
-import { TodoTitleRequiredError } from "../../src/errors/todo-title-required.js";
+
+import { TodoTitleRequiredError } from "../../src/domain/todos/errors/todo-title-required.js";
 import { it } from "node:test";
 import assert from "node:assert";
+import { Todo } from "../../src/domain/todos/entities/todo.js";
 
 it("Throws an error when todo title is not provided", () => {
 	assert.throws(() => Todo.create({ title: undefined } as never),TodoTitleRequiredError);

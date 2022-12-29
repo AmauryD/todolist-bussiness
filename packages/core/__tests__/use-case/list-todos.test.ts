@@ -4,7 +4,7 @@ import { it } from "node:test";
 import assert from "node:assert";
 import { SuccessAuthorizer } from "../fixtures/success-authorizer.js";
 import { Err } from "true-myth/result";
-import { CannotAccessTodoListError } from "../../src/errors/cannot-access-todo-list.js";
+import { CannotAccessTodoListError } from "../../src/domain/todos/errors/cannot-access-todo-list.js";
 import { TodoListAuthorizerInterface } from "../../src/interfaces/authorizers/todo-list.js";
 import { FailureAuthorizer } from "../fixtures/failure-authorizer.js";
 

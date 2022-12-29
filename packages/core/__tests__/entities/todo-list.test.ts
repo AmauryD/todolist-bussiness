@@ -1,6 +1,7 @@
-import { TodoListAggregateRoot } from "../../src/entities/todo-list.js";
+
 import { beforeEach, it } from "node:test";
 import assert from "node:assert";
+import { TodoListAggregateRoot } from "../../src/domain/todos/entities/todo-list.js";
 
 let todoList : TodoListAggregateRoot;
 const todoStructure = {

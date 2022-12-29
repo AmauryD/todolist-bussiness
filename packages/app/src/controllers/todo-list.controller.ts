@@ -19,7 +19,7 @@ export class TodoListController {
 
 	@GET("/")
 	public list() {
-		return this.todoListAdapter.list();
+		return this.todoListAdapter.list("a");
 	}
 
 	@POST("/")
