@@ -1,4 +1,4 @@
-import { EntityInterface } from "../../../entities/entity.js";
+import { EntityInterface } from "../../shared/entities/entity.js";
 import { TodoTitleRequiredError } from "../errors/todo-title-required.js";
 
 export interface TodoPropertiesInterface {

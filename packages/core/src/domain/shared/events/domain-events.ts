@@ -3,7 +3,7 @@ import { map } from "true-myth/maybe";
 import { DomainEventInterface } from "./domain-event.js";
 import { AggregateRoot } from "../entities/aggregate-root.js";
 
-type HandlerFunction = (handler: DomainEventInterface<unknown>) => void | Promise<void>;
+type HandlerFunction = (handler: DomainEventInterface) => void | Promise<void>;
 
 export class DomainEvents {
 	private static handlersMap = new Map<string, Set<HandlerFunction>>();
@@ -48,7 +48,7 @@ export class DomainEvents {
 		this.markedAggregates.delete(aggregate.id);
 	}
 
-	private static dispatch (event: DomainEventInterface<unknown>): void {
+	private static dispatch (event: DomainEventInterface): void {
 		const eventClassName = event.constructor.name;
 		map((handlers) => {
 			for (const handler of handlers)

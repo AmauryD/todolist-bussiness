@@ -1,6 +1,6 @@
 import Result, { err, ok } from "true-myth/result";
 import { TodoListCreatedEvent } from "../events/todo-created.js";
-import { AggregateRoot } from "../../../entities/aggregate-root.js";
+import { AggregateRoot } from "../../shared/entities/aggregate-root.js";
 import { Todo, TodoPropertiesInterface, TodoSnapshot } from "./todo.js";
 import { TodoListNameRequiredError } from "../errors/todo-list-name-required.js";
 
