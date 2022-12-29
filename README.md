@@ -83,45 +83,6 @@ Utilisation de commandes pour écrire des données et de queries pour lire les d
 
 Dans ce cas un use case ne pourra pas read/write en même temps.
 
-## Use cases
-
-### Create TodoList
-
-User can create a todoList for itself
-
-### Add Todo to TodoList
-
-User can create a todo only in his todos
-
-### Complete Todo From TodoList
-
-Use can complete it's own todos
-
-### Delete Todo From TodoList
-
-User can delete it's own todos
-
-### List TodoLists
-
-User can list it's own todo-lists
-
-### Get TodoList and their Todos
-
-Use can view his todolists and their todos
-
-## Data Structures
-
-### Todo
-
-- name
-- isDone
-
-### Todo-list
-
-- name
-- isDone (from all todos)
-- owner
-
 ## Event Sourcing
 
 Ne pas confondre avec les évènements du DDD.
@@ -173,7 +134,13 @@ Pour chaque Events, il faut identifier
 - Les évènements
 - Qui sousscrit à ces évènements
 
-On peut faire ceci grâce à l'Event Storming.
+On peut faire ceci grâce à l'Event Storming. (Comme le brain Storming)
+
+![Event storming](https://d33wubrfki0l68.cloudfront.net/24102a79027cca8b10cc9d9ad41aff03e76fa008/959d9/img/blog/domain-events/board.png)
+
+Les évènements permettent également de séparer le couplage entre les différentes parties du code. Les différents modules subscribent sur les évènements dont ils ont besoin.
+
+L'ORM/DB a le devoir de décider quand les évènements peuvent être dispatchés. Car c'est lui seul qui sait si les données ont bien été traitées/persistées vers le moteur de stockage. Dans ce cas-ci, ce serait soit au repository, soit aux hooks de l'ORM de s'en charger.
 
 #### Application Services
 
@@ -263,6 +230,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://pusher.com/tutorials/clean-architecture-introduction/>
 
 ### Youtube
+
 <https://youtu.be/N7agCpAYp1Q>
 
 ### Github
@@ -270,5 +238,5 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://github.com/wmde/fundraising-application>
 <https://github.com/wmde/fundraising-donations>
 <https://github.com/hgraca/explicit-architecture-php>
-<https://github.com/stemmlerjs/white-label/tree/master/src/core/domain>
+<https://github.com/stemmlerjs/white-label>
 <https://github.com/VaughnVernon/IDDD_Samples>
