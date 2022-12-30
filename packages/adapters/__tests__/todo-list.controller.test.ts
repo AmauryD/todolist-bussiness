@@ -27,7 +27,12 @@ beforeEach(() => {
 	repository = new TodoListInMemoryRepository();
 	listTodoListsUseCase = new ListTodoListsUseCase(
 		repository,
-		new SuccessAuthorizer()
+		new SuccessAuthorizer(),
+		{
+			async present(data) {
+				return data;
+			},
+		}
 	);
 	createTodoListsUseCase = new CreateTodoListUseCase(
 		new DummyIdGenerator(),

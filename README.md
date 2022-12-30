@@ -74,6 +74,8 @@ Explication plus détaillée du l'image ci-dessus:
 - Le `Controller` appelle le `Use Case (Interactor)` en passant les données via une Interface `Input Port` (généralement un DTO).
 - Le `Use case` appelle ensuite le `Presenter` avec des données `Output Port` qui vont permettre de "présenter" la donnée.
 
+à noter que le `Presenter` n'est pas obligatoire.
+
 ### CQRS
 
 *Pas mis en application car un peu trop overkill, mais Good To Know*.
@@ -240,6 +242,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://www.freecodecamp.org/news/modern-clean-architecture/>
 <https://medium.com/codex/avoiding-code-hotspots-a-use-case-driven-approach-2bcc12e4b878>
 <https://pusher.com/tutorials/clean-architecture-introduction/>
+<https://adevelopersdiscourse.blogspot.com/2020/06/clean-architecture-demystified.html>
 
 ### Youtube
 

@@ -5,20 +5,26 @@ import { TodoListAuthorizerInterface } from "../../interfaces/authorizers/todo-l
 import { TodoListRepositoryInterface } from "../../domain/todos/repositories/todo-list.js";
 import { UseCaseInterface } from "../../interfaces/use-case.js";
 import { TodoListSnapshot, TodoListAggregateRoot } from "../../index.js";
+import { PresenterInterface } from "../../domain/shared/presenters/presenter.js";
 
 export class ListTodoListsUseCase implements UseCaseInterface {
 	public constructor(
         private todoListRepository: TodoListRepositoryInterface,
-		private todoListAuthorizer: TodoListAuthorizerInterface
+		private todoListAuthorizer: TodoListAuthorizerInterface,
+		private presenter: PresenterInterface<TodoListSnapshot[]>
 	) {}
 
-	public async execute(userId: string): Promise<Result<TodoListSnapshot[], CannotAccessTodoListError>> {
+	public async execute(userId: string): Promise<Result<unknown, CannotAccessTodoListError>> {
 		const list: TodoListAggregateRoot[] = (await this.todoListRepository.list()).unwrapOr([]);
+
 		for (const todo of list) {
 			if (!await this.todoListAuthorizer.canUserAccessTodoList(userId, todo.id)) {
 				return err(new CannotAccessTodoListError());
 			}
 		}
-		return ok(list.map((e) => e.snapshot()));
+
+		const presented = await this.presenter.present(list.map((e) => e.snapshot()));
+
+		return ok(presented);
 	}
 }

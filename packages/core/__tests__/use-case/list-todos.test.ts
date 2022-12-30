@@ -11,7 +11,12 @@ import { FailureAuthorizer } from "../fixtures/failure-authorizer.js";
 function createUseCaseWithAuthorizer(authorizer: TodoListAuthorizerInterface) {
 	return new ListTodoListsUseCase(
 		new FakeTodoListRepository(),
-		authorizer
+		authorizer,
+		{
+			async present(data) {
+				return data;
+			},
+		}
 	);
 }
 
