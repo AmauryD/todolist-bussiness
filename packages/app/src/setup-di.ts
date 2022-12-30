@@ -8,8 +8,12 @@ import { UUIDGenerator } from "./utils/id-generator.js";
 export async function setupDI() {
 	const todoListRepository = new SQLTodoListRepository();
 	const useCase = new ListTodoListsUseCase(todoListRepository, {} as never);
-	const createUseCase = new CreateTodoListUseCase(new UUIDGenerator(),todoListRepository);
-	const controller = new AdapterTodoListController(useCase, createUseCase, new TodoListsRESTSerializer("todoLists"));
+	const createUseCase = new CreateTodoListUseCase(
+		new UUIDGenerator(),
+		todoListRepository,
+		new TodoListsRESTSerializer("todoLists")
+	);
+	const controller = new AdapterTodoListController(useCase, createUseCase);
 
 	container.register(AdapterTodoListController, {
 		useValue: controller

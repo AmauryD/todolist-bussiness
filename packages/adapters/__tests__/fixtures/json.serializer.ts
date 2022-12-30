@@ -1,7 +1,7 @@
-import { SerializerInterface } from "../../src/interfaces/serializer.interface.js";
+import { PresenterInterface } from "todo-domain/domain/shared/presenters/presenter.js";
 
-export class JsonSerializer implements SerializerInterface {
-	public serialize(something: unknown): unknown {
+export class JsonSerializer implements PresenterInterface<unknown> {
+	public async present(something: unknown) {
 		return JSON.stringify(something);
 	}
 }

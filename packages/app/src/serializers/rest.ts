@@ -1,11 +1,12 @@
-import { SerializerInterface } from "adapters/interfaces/serializer.interface.js";
+import { PresenterInterface } from "todo-domain/domain/shared/presenters/presenter.js";
 
-export class TodoListsRESTSerializer implements SerializerInterface {
+
+export class TodoListsRESTSerializer implements PresenterInterface<unknown> {
 	public constructor(
 		private entityName: string
 	) {}
 
-	public serialize(something: unknown): unknown {
+	public async present(something: unknown) {
 		return {
 			[this.entityName]: something
 		};

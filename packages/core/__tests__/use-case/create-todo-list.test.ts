@@ -3,6 +3,7 @@ import { CreateTodoListUseCase } from "../../src/use-cases/todo-list/create.js";
 import { FakeTodoListRepository } from "./common.js";
 import { test } from "node:test";
 import assert from "node:assert";
+import { unwrapOr } from "true-myth/result";
 
 class IdGenerator implements IdGeneratorInterface {
 	public generate(): string {
@@ -13,12 +14,15 @@ class IdGenerator implements IdGeneratorInterface {
 test("It creates a todo-list", async () => {
 	const createTodoListUseCase = new CreateTodoListUseCase(
 		new IdGenerator(),
-		new FakeTodoListRepository()
+		new FakeTodoListRepository(),
+		{
+			async present(data) { return data; }
+		}
 	);
 	const todoSnapshot = await createTodoListUseCase.execute({
 		name: "name"
 	});
-	assert.deepStrictEqual(todoSnapshot.isOk ? todoSnapshot.value.snapshot() : todoSnapshot.error,{
+	assert.deepStrictEqual(unwrapOr({},todoSnapshot),{
 		name: "name",
 		id: "1",
 		todos: [],

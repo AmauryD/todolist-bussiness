@@ -1,7 +1,6 @@
 import { CreateTodoListUseCase, ListTodoListsUseCase, TodoListAggregateRoot, TodoListRepositoryInterface, TodoListSnapshot } from "todo-domain";
 import { TodoListController } from "../src/controllers/todo-list.js";
 import { DummyIdGenerator } from "./fixtures/id-generator.js";
-import { JsonSerializer } from "./fixtures/json.serializer.js";
 import { TodoListInMemoryRepository } from "./fixtures/todolist-memory-repository.js";
 import { beforeEach, it } from "node:test";
 import  assert  from "node:assert";
@@ -32,15 +31,19 @@ beforeEach(() => {
 	);
 	createTodoListsUseCase = new CreateTodoListUseCase(
 		new DummyIdGenerator(),
-		repository
+		repository,
+		{
+			async present(data) {
+				return data;
+			},
+		}
 	);
 });
 
 it("Lists todo-lists", async () => {
 	const todoListController = new TodoListController(
 		listTodoListsUseCase,
-		undefined as never,
-		new JsonSerializer()
+		undefined as never
 	);
 
 	const firstAggregate = addAnAggregateToRepositoryList(repository as TodoListInMemoryRepository);
@@ -55,26 +58,25 @@ it("Lists todo-lists", async () => {
 	const list = await todoListController.list("someUser");
 	
 	assert.strictEqual(list.isOk, true);
-	assert.strictEqual(list.unwrapOr({}),
-		JSON.stringify([snapshot])
+	assert.deepStrictEqual(list.unwrapOr({}),
+		[snapshot]
 	);
 });
 
 it("Creates todo-list", async () => {
 	const todoListController = new TodoListController(
 		listTodoListsUseCase,
-		createTodoListsUseCase,
-		new JsonSerializer()
+		createTodoListsUseCase
 	);
 
 	const created = await todoListController.create({
 		name: "Remove kebab"
 	});
     
-	assert.strictEqual(unwrapOr("",created),JSON.stringify({
+	assert.deepStrictEqual(unwrapOr("",created),{
 		"id": "1",
 		"name": "Remove kebab",
 		"todos": [],
 		"isDone": true
-	}));
+	});
 });
