@@ -2,7 +2,7 @@ import assert from "node:assert";
 import { it } from "node:test";
 import { Maybe } from "true-myth";
 import { nothing } from "true-myth/maybe";
-import { Err, Ok } from "true-myth/result";
+import Result, { Err, Ok } from "true-myth/result";
 import { User, UserSnapshot } from "../../src/domain/users/entities/user.js";
 import { InvalidCredentialsError } from "../../src/domain/users/errors/invalid-credentials.js";
 import { UserDoesNotExistsError } from "../../src/domain/users/errors/does-not-exists.js";
@@ -13,6 +13,9 @@ import { LoginUseCase } from "../../src/use-cases/auth/login.js";
 class InvalidUserRepository implements UserRepositoryInterface {
 	public async getUserByEmail(): Promise<Maybe<User>> {
 		return nothing();
+	}
+	public async create(): Promise<Result<User, Error>> {
+		throw new Error("Method not implemented.");
 	}
 }
 
@@ -25,7 +28,9 @@ class ValidUserRepository implements UserRepositoryInterface {
 			password: "aaaaa"
 		}));
 	}
-
+	public async create(): Promise<Result<User, Error>> {
+		throw new Error("Method not implemented.");
+	}
 }
 
 class InvalidAuthService implements AuthServiceInterface {
