@@ -64,6 +64,16 @@ on ne retourne pas d'objet métier depuis les use-cases !
 
 Un port peut être une interface de service ou une interface de repository requise par un controller. L'implémentation concrète du Service, du Repository ou de la Query est ensuite injectée et utilisée dans le Controller.
 
+![Clean architecture](./images/details.png)
+
+Ayant fait l'erreur et vu l'erreur autre part :
+=> Le `Controller` ne doit pas connaître le `Presenter` !
+
+Explication plus détaillée du l'image ci-dessus:
+
+- Le `Controller` appelle le `Use Case (Interactor)` en passant les données via une Interface `Input Port` (généralement un DTO).
+- Le `Use case` appelle ensuite le `Presenter` avec des données `Output Port` qui vont permettre de "présenter" la donnée.
+
 ### CQRS
 
 *Pas mis en application car un peu trop overkill, mais Good To Know*.

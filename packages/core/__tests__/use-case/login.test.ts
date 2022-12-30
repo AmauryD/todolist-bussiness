@@ -48,6 +48,11 @@ class ValidAuthService implements AuthServiceInterface {
 async function createAndExecuteUseCase(repository: UserRepositoryInterface, authService: AuthServiceInterface) {
 	const useCase = new LoginUseCase(
 		repository,
+		{
+			async present(data) {
+				return data;
+			},
+		},
 		authService
 	);
 	const result = await useCase.execute({

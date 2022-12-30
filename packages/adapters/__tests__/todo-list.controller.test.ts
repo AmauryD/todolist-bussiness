@@ -1,5 +1,5 @@
 import { CreateTodoListUseCase, ListTodoListsUseCase, TodoListAggregateRoot, TodoListRepositoryInterface, TodoListSnapshot } from "todo-domain";
-import { TodoListController } from "../src/controllers/todo-list.controller.js";
+import { TodoListController } from "../src/controllers/todo-list.js";
 import { DummyIdGenerator } from "./fixtures/id-generator.js";
 import { JsonSerializer } from "./fixtures/json.serializer.js";
 import { TodoListInMemoryRepository } from "./fixtures/todolist-memory-repository.js";
