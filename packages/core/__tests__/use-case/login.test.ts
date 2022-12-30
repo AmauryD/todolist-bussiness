@@ -5,7 +5,7 @@ import { nothing } from "true-myth/maybe";
 import { Err, Ok } from "true-myth/result";
 import { User, UserSnapshot } from "../../src/domain/users/entities/user.js";
 import { InvalidCredentialsError } from "../../src/domain/users/errors/invalid-credentials.js";
-import { UserDoesNotExistsError } from "../../src/domain/users/errors/user-does-not-exists.js";
+import { UserDoesNotExistsError } from "../../src/domain/users/errors/does-not-exists.js";
 import { UserRepositoryInterface } from "../../src/domain/users/repositories/user.js";
 import { AuthServiceInterface } from "../../src/services/auth.service.js";
 import { LoginUseCase } from "../../src/use-cases/auth/login.js";

@@ -2,7 +2,7 @@
 import Result, { err, ok } from "true-myth/result";
 import { UserSnapshot } from "../../domain/users/entities/user.js";
 import { InvalidCredentialsError } from "../../domain/users/errors/invalid-credentials.js";
-import { UserDoesNotExistsError } from "../../domain/users/errors/user-does-not-exists.js";
+import { UserDoesNotExistsError } from "../../domain/users/errors/does-not-exists.js";
 import { UserRepositoryInterface } from "../../domain/users/repositories/user.js";
 import { UseCaseInterface } from "../../interfaces/use-case.js";
 import { AuthServiceInterface } from "../../services/auth.service.js";
