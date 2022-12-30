@@ -12,30 +12,38 @@ class AuthService implements AuthServiceInterface {
 	}
 }
 
+function setupLoginUseCase(): LoginUseCase {
+	return new LoginUseCase(
+		new UserRepository(),
+		{
+			async present(data) {
+				return data;
+			},
+		},
+		new AuthService()
+	);
+}
+
+function setupRegisterUseCase(): RegisterUseCase {
+	return new RegisterUseCase(
+		new UserRepository(),
+		{
+			async hash(password) {
+				return password.toUpperCase();
+			},
+		},
+		{
+			generate() {
+				return "1";
+			},
+		}
+	);
+}
+
 it("Log user in", async () => {
 	const authController = new AuthController(
-		new LoginUseCase(
-			new UserRepository(),
-			{
-				async present(data) {
-					return data;
-				},
-			},
-			new AuthService(),
-		),
-		new RegisterUseCase(
-			new UserRepository(),
-			{
-				async hash(password) {
-					return password.toUpperCase();
-				},
-			},
-			{
-				generate() {
-					return "1";
-				},
-			}
-		)
+		setupLoginUseCase(),
+		setupRegisterUseCase()
 	);
 
 	const loginResult = await authController.login({
