@@ -12,8 +12,8 @@ export class TodoListController {
 		private createTodoListUseCase: CreateTodoListUseCase
 	) {}
 
-	public async list(userId: string): Promise<Result<unknown, CannotAccessTodoListError>> {
-		const todos = await this.listTodoListsUseCase.execute(userId);
+	public async list(): Promise<Result<unknown, CannotAccessTodoListError>> {
+		const todos = await this.listTodoListsUseCase.execute();
 		return todos;
 	}
 

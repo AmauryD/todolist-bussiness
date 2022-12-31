@@ -256,3 +256,4 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://github.com/stemmlerjs/white-label>
 <https://github.com/VaughnVernon/IDDD_Samples>
 <https://github.com/dotnet-architecture/eShopOnContainers>
+<https://github.com/cleancoders/CleanCodeCaseStudy>

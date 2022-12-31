@@ -5,7 +5,6 @@ import { TodoListInMemoryRepository } from "./fixtures/todolist-memory-repositor
 import { beforeEach, it } from "node:test";
 import  assert  from "node:assert";
 import { unwrapOr } from "true-myth/result";
-import { SuccessAuthorizer } from "./fixtures/success-authorizer.js";
 
 
 function addAnAggregateToRepositoryList(repository: TodoListInMemoryRepository) {
@@ -27,7 +26,6 @@ beforeEach(() => {
 	repository = new TodoListInMemoryRepository();
 	listTodoListsUseCase = new ListTodoListsUseCase(
 		repository,
-		new SuccessAuthorizer(),
 		{
 			async present(data) {
 				return data;
@@ -60,7 +58,7 @@ it("Lists todo-lists", async () => {
 		Err() { return {} as TodoListSnapshot; },
 	});
 
-	const list = await todoListController.list("someUser");
+	const list = await todoListController.list();
 	
 	assert.strictEqual(list.isOk, true);
 	assert.deepStrictEqual(list.unwrapOr({}),
