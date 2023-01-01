@@ -10,7 +10,12 @@ export interface UserProperties {
     id: Identifier;
 }
 
-export type UserSnapshot = UserProperties;
+export interface UserSnapshot {
+	username: string;
+	email: string;
+    password?: string;
+    id: string;
+}
 
 export class User extends AggregateRoot<UserSnapshot> {
 	private constructor(
@@ -43,8 +48,8 @@ export class User extends AggregateRoot<UserSnapshot> {
 		return user;
 	}
 
-	public snapshot(): UserProperties {
-		return {...this.props}; 
+	public snapshot(): UserSnapshot {
+		return {...this.props, password: this.props.password.unwrapOr(undefined), id: this.props.id.value }; 
 	}
 
 }

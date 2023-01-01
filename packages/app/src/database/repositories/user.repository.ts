@@ -23,7 +23,7 @@ export class SQLUserRepository implements UserRepositoryInterface {
 		}
 
 		return just(User.create({
-			password: just(user.password),
+			password: Maybe.of(user.password),
 			username: user.username,
 			email: user.email,
 			id: Identifier.create(user.id)

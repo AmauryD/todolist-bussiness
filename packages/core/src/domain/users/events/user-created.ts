@@ -12,6 +12,6 @@ export class UserCreatedEvent implements DomainEventInterface {
 	}
 
 	public getId(): string {
-		return this.entity.id.value;
+		return this.entity.id;
 	}
 }

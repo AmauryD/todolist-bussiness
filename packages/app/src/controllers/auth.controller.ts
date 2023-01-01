@@ -1,20 +1,35 @@
-import { Controller } from "@triptyk/nfw-http";
+import { Controller, POST, UseMiddleware } from "@triptyk/nfw-http";
 import { WebAuthController as AuthControllerAdapter } from "adapters";
-import { LoginUseCaseRequest, RegisterUseCaseRequest } from "todo-domain";
+import { Result } from "true-myth";
+import { Body } from "../decorators/json-body.js";
+import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
+import { loginSchema, LoginValidationSchemaType } from "../validations/login.js";
+import { registerSchema, RegisterValidationSchemaType } from "../validations/register.js";
 
 @Controller({
 	routeName: "/api/v1/auth"
 })
+@UseMiddleware(DefaultErrorHandlerMiddleware)
 export class AuthController {
 	public constructor(
         public authControllerAdapter: AuthControllerAdapter
 	) {}
 
-	public register(registerRequest: RegisterUseCaseRequest) {
-		return this.authControllerAdapter.register(registerRequest);
+	@POST("/register")
+	public async register(@Body(registerSchema) registerRequest: Result<RegisterValidationSchemaType, Error>) {
+		if (registerRequest.isErr) {
+			throw registerRequest.error;
+		}
+		
+		const registered = await this.authControllerAdapter.register(registerRequest.value);
+		if (registered.isErr) {
+			throw registered.error;
+		}
+		return registered.value;
 	}
 
-	public login(loginRequest: LoginUseCaseRequest) {
+	@POST("/login")
+	public login(@Body(loginSchema) loginRequest: LoginValidationSchemaType) {
 		return this.authControllerAdapter.login(loginRequest);
 	}
 }

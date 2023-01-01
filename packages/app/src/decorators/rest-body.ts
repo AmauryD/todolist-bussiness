@@ -5,7 +5,7 @@ import Result, { err, ok } from "true-myth/result";
 import { InferType, Schema, ValidationError } from "yup";
 import { BodyMustNotBeEmptyError } from "../errors/body-must-not-be-empty.js";
 
-function extractBody(context: ControllerParamsContext<unknown>) {
+export function extractContextRequestBody(context: ControllerParamsContext<unknown>) {
 	const realBody = Maybe.of(context.ctx.request.body as Record<string, unknown>);
 	if (isNothing(realBody)) {
 		return nothing();
@@ -13,7 +13,7 @@ function extractBody(context: ControllerParamsContext<unknown>) {
 	return Maybe.of(Object.values(realBody).at(0));
 }
 
-async function validateSchema<T extends Schema, E extends InferType<T>>(schema: T, body: unknown): Promise<Result<E, ValidationError>> {
+export async function validateSchema<T extends Schema, E extends InferType<T>>(schema: T, body: unknown): Promise<Result<E, ValidationError>> {
 	try {
 		const validated = await schema.validate(body);
 		return ok(validated);
@@ -23,7 +23,7 @@ async function validateSchema<T extends Schema, E extends InferType<T>>(schema: 
 }
 
 export const restBody = (schema: Schema) => async (context: ControllerParamsContext<unknown>): Promise<Result<unknown, ValidationError | BodyMustNotBeEmptyError>> => {
-	const maybeBody = extractBody(context);
+	const maybeBody = extractContextRequestBody(context);
 	if (isNothing(maybeBody)) {
 		return err(new BodyMustNotBeEmptyError());
 	}
