@@ -127,6 +127,14 @@ La majeure partie de la logique domaine doit se trouver dans les entités. Pour 
 
 Représente un type et encapsule la logique de validation d'un type.
 
+> The bad practice of using primitive types to represent an object in a domain is so common that has even a name: primitive obsession.
+
+Ils ont 3 caractéristiques principales:
+
+- `immutability`
+- `value equality`
+- `self validation`
+
 #### Domain Services
 
 Ces services peuvent être également des use-case dans la Clean Archi.
