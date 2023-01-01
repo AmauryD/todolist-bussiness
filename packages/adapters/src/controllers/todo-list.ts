@@ -6,7 +6,7 @@ export interface TodoListWeb {
 	name: string;
 }
 
-export class TodoListController {
+export class WebTodoListController {
 	public constructor(
 		private listTodoListsUseCase: ListTodoListsUseCase,
 		private createTodoListUseCase: CreateTodoListUseCase

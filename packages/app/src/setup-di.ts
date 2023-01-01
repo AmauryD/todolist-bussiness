@@ -1,5 +1,5 @@
 import { container } from "@triptyk/nfw-core";
-import { TodoListController as AdapterTodoListController } from "adapters";
+import { WebTodoListController as AdapterTodoListController } from "adapters";
 import { CreateTodoListUseCase, ListTodoListsUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
 import { TodoListsRESTSerializer } from "./serializers/rest.js";

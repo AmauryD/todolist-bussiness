@@ -1,5 +1,5 @@
 import { CreateTodoListUseCase, ListTodoListsUseCase, TodoListAggregateRoot, TodoListRepositoryInterface, TodoListSnapshot } from "todo-domain";
-import { TodoListController } from "../src/controllers/todo-list.js";
+import { WebTodoListController } from "../src/controllers/todo-list.js";
 import { DummyIdGenerator } from "./fixtures/id-generator.js";
 import { TodoListInMemoryRepository } from "./fixtures/todolist-memory-repository.js";
 import { beforeEach, it } from "node:test";
@@ -45,7 +45,7 @@ beforeEach(() => {
 });
 
 it("Lists todo-lists", async () => {
-	const todoListController = new TodoListController(
+	const todoListController = new WebTodoListController(
 		listTodoListsUseCase,
 		undefined as never
 	);
@@ -68,7 +68,7 @@ it("Lists todo-lists", async () => {
 });
 
 it("Creates todo-list", async () => {
-	const todoListController = new TodoListController(
+	const todoListController = new WebTodoListController(
 		listTodoListsUseCase,
 		createTodoListsUseCase
 	);

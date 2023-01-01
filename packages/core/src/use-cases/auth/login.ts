@@ -7,6 +7,7 @@ import { UseCaseInterface } from "../../interfaces/use-case.js";
 import { AuthServiceInterface } from "../../services/auth.service.js";
 import { PresenterInterface } from "../../domain/shared/presenters/presenter.js";
 import { UserSnapshot } from "../../index.js";
+import { PasswordNotSetError } from "../../domain/users/errors/password-not-set.js";
 
 export interface LoginUseCaseRequest {
     email: string,
@@ -27,7 +28,11 @@ export class LoginUseCase implements UseCaseInterface {
 			return err(new UserDoesNotExistsError());
 		}
 
-		if (!await this.authService.passwordMatches(request.password, user.value.password)) {
+		if (user.value.password.isNothing) {
+			return err(new PasswordNotSetError());
+		}
+
+		if (!await this.authService.passwordMatches(request.password, user.value.password.unwrapOr(""))) {
 			return err(new InvalidCredentialsError()); 
 		}
 

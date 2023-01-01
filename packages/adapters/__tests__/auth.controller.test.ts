@@ -1,11 +1,12 @@
 import { it } from "node:test";
 import { Identifier, LoginUseCase, RegisterUseCase, UserSnapshot } from "todo-domain";
 import { AuthServiceInterface } from "todo-domain";
-import { AuthController } from "../src/controllers/auth.js";
+import { WebAuthController } from "../src/controllers/auth.js";
 import { UserRepository } from "./fixtures/user-memory-repository.js";
 import assert from "node:assert";
 import { Ok } from "true-myth/result";
 import { identifier } from "./fixtures/identifier.js";
+import { just } from "true-myth/maybe";
 
 class AuthService implements AuthServiceInterface {
 	public async passwordMatches(): Promise<boolean> {
@@ -29,11 +30,6 @@ function setupRegisterUseCase(): RegisterUseCase {
 	return new RegisterUseCase(
 		new UserRepository(),
 		{
-			async hash(password) {
-				return password.toUpperCase();
-			},
-		},
-		{
 			generate() {
 				return Identifier.create("1");
 			},
@@ -42,7 +38,7 @@ function setupRegisterUseCase(): RegisterUseCase {
 }
 
 it("Log user in", async () => {
-	const authController = new AuthController(
+	const authController = new WebAuthController(
 		setupLoginUseCase(),
 		setupRegisterUseCase()
 	);
@@ -50,14 +46,14 @@ it("Log user in", async () => {
 	const loginResult = await authController.login({
 		email: "a",
 		password: "b"
-	});
+	}) as Ok<UserSnapshot, never>;
 	
 
 	assert.strictEqual(loginResult.isOk, true);
-	assert.deepEqual((loginResult as Ok<UserSnapshot, never>).value, {
+	assert.deepEqual(loginResult.value, {
 		username: "amaury", 
 		email: "a", 
-		password: "", 
+		password: just(""), 
 		id: identifier("1")
 	});
 });

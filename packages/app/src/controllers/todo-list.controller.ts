@@ -1,6 +1,6 @@
 import { inject } from "@triptyk/nfw-core";
 import { Controller, GET, POST, UseMiddleware } from "@triptyk/nfw-http";
-import { TodoListController as AdapterTodoListController, TodoListWeb } from "adapters";
+import { WebTodoListController as AdapterTodoListController, TodoListWeb } from "adapters";
 import { Result } from "true-myth";
 import { ValidationError } from "yup";
 import { RestBody } from "../decorators/rest-body.js";

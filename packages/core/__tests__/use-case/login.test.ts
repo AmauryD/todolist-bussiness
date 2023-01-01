@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { it } from "node:test";
 import { Maybe } from "true-myth";
-import { nothing } from "true-myth/maybe";
+import { just, nothing } from "true-myth/maybe";
 import Result, { Err, Ok } from "true-myth/result";
 import { User, UserSnapshot } from "../../src/domain/users/entities/user.js";
 import { InvalidCredentialsError } from "../../src/domain/users/errors/invalid-credentials.js";
@@ -15,7 +15,7 @@ class InvalidUserRepository implements UserRepositoryInterface {
 	public async getUserByEmail(): Promise<Maybe<User>> {
 		return nothing();
 	}
-	public async create(): Promise<Result<User, Error>> {
+	public async createWithoutPassword(): Promise<Result<User, Error>> {
 		throw new Error("Method not implemented.");
 	}
 }
@@ -26,10 +26,10 @@ class ValidUserRepository implements UserRepositoryInterface {
 			username: "Amaury",
 			id: identifier("123"),
 			email: mail,
-			password: "aaaaa"
+			password: just("123")
 		}));
 	}
-	public async create(): Promise<Result<User, Error>> {
+	public async createWithoutPassword(): Promise<Result<User, Error>> {
 		throw new Error("Method not implemented.");
 	}
 }
@@ -81,7 +81,7 @@ it("Returns User snapshot when email is found and password matches",  async () =
 	assert.deepEqual(result.value, {
 		email: "amaury",
 		id: identifier("123"),
-		password: "aaaaa",
+		password: just("123"),
 		username: "Amaury"
 	});
 });

@@ -1,10 +1,12 @@
+import { Maybe } from "true-myth";
 import { AggregateRoot } from "../../shared/entities/aggregate-root.js";
 import { Identifier } from "../../shared/value-objects/identifier.js";
+import { UserCreatedEvent } from "../events/user-created.js";
 
 export interface UserProperties {
     username: string;
 	email: string;
-    password: string;
+    password: Maybe<string>;
     id: Identifier;
 }
 
@@ -30,6 +32,9 @@ export class User extends AggregateRoot<UserSnapshot> {
 
 	public static create(props: UserProperties) {
 		const user = new User(props);
+
+		user.addEvent(new UserCreatedEvent(user.snapshot()));
+
 		return user;
 	}
 

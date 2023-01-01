@@ -2,6 +2,14 @@
 
 ## Use cases
 
+### Register User
+
+Creates his password by mail with a token.
+
+### Login User
+
+Logs-in with email-password.
+
 ### Create TodoList
 
 User can create a todoList for itself

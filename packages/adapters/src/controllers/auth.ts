@@ -1,14 +1,16 @@
-import { LoginUseCase, LoginUseCaseRequest, RegisterUseCase } from "todo-domain/index.js";
+import { LoginUseCase, LoginUseCaseRequest, RegisterUseCase, RegisterUseCaseRequest } from "todo-domain/index.js";
 
-export class AuthController {
+export class WebAuthController {
 	public constructor(
         public loginUseCase: LoginUseCase,
         public registerUseCase: RegisterUseCase
 	) {}
 
 	public async login(loginRequest: LoginUseCaseRequest) {
-		const loginUseCase = await this.loginUseCase.execute(loginRequest);
+		return this.loginUseCase.execute(loginRequest);
+	}
 
-		return loginUseCase;
+	public async register(registerRequest: RegisterUseCaseRequest) {
+		return this.registerUseCase.execute(registerRequest);
 	}
 }
