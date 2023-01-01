@@ -1,14 +1,14 @@
-import { ok } from "true-myth/result";
+import Result, { ok, Ok } from "true-myth/result";
 import { TodoListRepositoryInterface } from "../../src/domain/todos/repositories/todo-list.js";
 import { TodoListAggregateRoot, TodoListProperties } from "../../src/index.js";
 
 export class FakeTodoListRepository implements TodoListRepositoryInterface {
-	public async list() {
+	public async list(): Promise<Result<TodoListAggregateRoot[], never>> {
 		const fakeExistingTodo = TodoListAggregateRoot.create({
 			name: "title",
 			id: "1"
-		});
-		return fakeExistingTodo.mapOr(ok<TodoListAggregateRoot[],never>([]),(v) => ok<TodoListAggregateRoot[], never>([v]));
+		}) as Ok<TodoListAggregateRoot,never>;
+		return ok([fakeExistingTodo.value]);
 	}
 
 	public async create(props: TodoListProperties) {

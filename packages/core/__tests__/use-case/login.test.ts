@@ -63,21 +63,21 @@ async function createAndExecuteUseCase(repository: UserRepositoryInterface, auth
 }
 
 it("Returns UserDoesNotExistsError when email does not exists",  async () => {
-	const result = await createAndExecuteUseCase(new InvalidUserRepository(), new ValidAuthService());
+	const result = (await createAndExecuteUseCase(new InvalidUserRepository(), new ValidAuthService())) as Err<never,UserDoesNotExistsError>;
 	assert.strictEqual(result?.isErr, true);
-	assert.strictEqual((result as Err<never,UserDoesNotExistsError>).error.constructor, UserDoesNotExistsError);
+	assert.strictEqual(result.error.constructor, UserDoesNotExistsError);
 });
 
 it("Returns InvalidCredentialsError when password does not match",  async () => {
-	const result = await createAndExecuteUseCase(new ValidUserRepository(), new InvalidAuthService());
+	const result = (await createAndExecuteUseCase(new ValidUserRepository(), new InvalidAuthService())) as Err<never,InvalidCredentialsError>;
 	assert.strictEqual(result?.isErr, true);
-	assert.strictEqual((result as Err<never,InvalidCredentialsError>).error.constructor, InvalidCredentialsError);
+	assert.strictEqual(result.error.constructor, InvalidCredentialsError);
 });
 
 it("Returns User snapshot when email is found and password matches",  async () => {
-	const result = await createAndExecuteUseCase(new ValidUserRepository(), new ValidAuthService());
+	const result = (await createAndExecuteUseCase(new ValidUserRepository(), new ValidAuthService())) as Ok<UserSnapshot,never>;
 	assert.strictEqual(result?.isOk, true);
-	assert.deepEqual((result as Ok<UserSnapshot,never>).value, {
+	assert.deepEqual(result.value, {
 		email: "amaury",
 		id: "123",
 		password: "aaaaa",

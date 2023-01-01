@@ -1,19 +1,14 @@
-import { IdGeneratorInterface } from "../../src/interfaces/id-generator.js";
 import { CreateTodoListUseCase } from "../../src/use-cases/todo-list/create.js";
 import { FakeTodoListRepository } from "./common.js";
 import { test } from "node:test";
 import assert from "node:assert";
 import { unwrapOr } from "true-myth/result";
+import { FakeIdGenerator } from "../fixtures/id-generator.js";
 
-class IdGenerator implements IdGeneratorInterface {
-	public generate(): string {
-		return "1";
-	}
-}
 
 test("It creates a todo-list", async () => {
 	const createTodoListUseCase = new CreateTodoListUseCase(
-		new IdGenerator(),
+		new FakeIdGenerator(),
 		new FakeTodoListRepository(),
 		{
 			async present(data) { return data; }
