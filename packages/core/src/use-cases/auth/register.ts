@@ -25,12 +25,8 @@ export class RegisterUseCase implements UseCaseInterface {
 
 		const generatedId = this.idGenerator.generate();
 
-		if (generatedId.isErr) {
-			return err(generatedId.error);
-		}
-
 		const newUser = await this.userRepository.createWithoutPassword({
-			id: generatedId.value,
+			id: generatedId,
 			username: params.username,
 			email: params.email
 		});

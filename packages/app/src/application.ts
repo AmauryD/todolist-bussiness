@@ -11,20 +11,18 @@ import { TodoListSeeder } from "./database/seeders/todo-list.js";
 import { todoListSchema } from "./database/models/todo-list.js";
 import { todoSchema } from "./database/models/todo.js";
 import {koaBody} from "koa-body";
+import { AuthController } from "./controllers/auth.controller.js";
+import { userSchema } from "./database/models/user.js";
 
 @singleton()
 export class Application {
 	public async init() {
 		const koa = new Koa();
-		await init(
-			{
-				type: "sqlite",
-				dbName: ":memory:",
-				entities: [todoSchema, todoListSchema]
-			}
-		);
+
+		await this.setupDatabaseConnection();
 		await setupDI();
 		await this.refreshDatabase();
+
 		koa.use(requestContext);
 		koa.use(koaBody());
 		koa.use(cors({
@@ -33,11 +31,22 @@ export class Application {
         
 		await createApplication({
 			server: koa,
-			controllers: [TodoListController]
+			controllers: [TodoListController,AuthController]
 		});
+		
 		koa.listen(8000, () => {
 			console.log("listening on port 8000");
 		});
+	}
+
+	private async setupDatabaseConnection() {
+		await init(
+			{
+				type: "sqlite",
+				dbName: ":memory:",
+				entities: [todoSchema, todoListSchema, userSchema]
+			}
+		);
 	}
 
 	private async refreshDatabase() {

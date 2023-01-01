@@ -4,6 +4,11 @@ import { Identifier, TodoListAggregateRoot, TodoListProperties, TodoListReposito
 import Result, { err, ok } from "true-myth/result";
 import { TodoList } from "../models/todo-list.js";
 
+/**
+ * Petit raccourci que j'ai pris, normalement il aurait fallu le faire en deux temps via la couche adapters.
+ * ça ne brise pas la clean architecture. 
+ * Petite explication ici http://www.plainionist.net/Implementing-Clean-Architecture-Frameworks/
+ */
 export class SQLTodoListRepository implements TodoListRepositoryInterface {
 	private ormRepository: EntityRepository<TodoList>;
 
@@ -33,17 +38,11 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 		const todoList : TodoListAggregateRoot[] = [];
 
 		for (const todo of todos) {
-			const convertedId = Identifier.create(todo.id);
-
-			if (convertedId.isErr) {
-				return convertedId as Result<never, Error>;
-			}
-
 			const created = TodoListAggregateRoot.create({
 				name: todo.title,
-				id: convertedId.value
+				id: Identifier.create(todo.id)
 			});
-			
+
 			if (created.isErr) {
 				return created as Result<never, Error>;
 			}

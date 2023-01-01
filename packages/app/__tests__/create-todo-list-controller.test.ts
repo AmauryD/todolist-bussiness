@@ -11,6 +11,7 @@ import { todoSchema } from "../src/database/models/todo.js";
 import { err, ok } from "true-myth/result";
 import { BodyMustNotBeEmptyError } from "../src/errors/body-must-not-be-empty.js";
 import { ValidationError } from "yup";
+import { userSchema } from "../src/database/models/user.js";
 
 let controller: TodoListController;
 
@@ -18,7 +19,7 @@ beforeEach(async () => {
 	await init({
 		type: "sqlite",
 		dbName: ":memory:",
-		entities: [todoSchema, todoListSchema],
+		entities: [todoSchema, todoListSchema, userSchema],
 		allowGlobalContext: true
 	});
 	await setupDI();

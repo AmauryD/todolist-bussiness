@@ -1,7 +1,6 @@
-import { User, UserRepositoryInterface } from "todo-domain";
+import { Identifier, User, UserRepositoryInterface } from "todo-domain";
 import { Maybe, Result } from "true-myth";
 import { just } from "true-myth/maybe";
-import { identifier } from "./identifier.js";
 
 export class UserRepository implements UserRepositoryInterface {
 	public async createWithoutPassword(): Promise<Result<User, Error>> {
@@ -12,7 +11,7 @@ export class UserRepository implements UserRepositoryInterface {
 			username: "amaury",
 			email: "a",
 			password: just(""),
-			id: identifier("1")
+			id: Identifier.create("1")
 		}));
 	}
 }

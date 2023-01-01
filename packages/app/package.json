@@ -16,6 +16,7 @@
     "@triptyk/nfw-http": "~4.0.0-alpha.29",
     "@triptyk/nfw-mikro-orm": "~4.0.0-alpha.29",
     "adapters": "workspace:*",
+    "bcrypt": "^5.1.0",
     "koa": "^2.14.1",
     "todo-domain": "workspace:*",
     "true-myth": "^6.2.0",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@koa/cors": "^4.0.0",
     "@mikro-orm/seeder": "~5.5.3",
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.15",
     "@types/json-api-serializer": "^2.6.3",
     "@types/koa": "2.13.5",

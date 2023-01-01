@@ -9,7 +9,7 @@ import { UserDoesNotExistsError } from "../../src/domain/users/errors/does-not-e
 import { UserRepositoryInterface } from "../../src/domain/users/repositories/user.js";
 import { AuthServiceInterface } from "../../src/services/auth.service.js";
 import { LoginUseCase } from "../../src/use-cases/auth/login.js";
-import { identifier } from "../fixtures/identifier.js";
+import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
 
 class InvalidUserRepository implements UserRepositoryInterface {
 	public async getUserByEmail(): Promise<Maybe<User>> {
@@ -24,7 +24,7 @@ class ValidUserRepository implements UserRepositoryInterface {
 	public async getUserByEmail(mail: string): Promise<Maybe<User>> {
 		return Maybe.of(User.create({
 			username: "Amaury",
-			id: identifier("123"),
+			id: Identifier.create("123"),
 			email: mail,
 			password: just("123")
 		}));
@@ -80,7 +80,7 @@ it("Returns User snapshot when email is found and password matches",  async () =
 	assert.strictEqual(result?.isOk, true);
 	assert.deepEqual(result.value, {
 		email: "amaury",
-		id: identifier("123"),
+		id: Identifier.create("123"),
 		password: just("123"),
 		username: "Amaury"
 	});

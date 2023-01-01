@@ -26,8 +26,13 @@ export class User extends AggregateRoot<UserSnapshot> {
 	public get password() {
 		return this.props.password;
 	}
+	
 	public get email() {
 		return this.props.email;
+	}
+
+	public get username() {
+		return this.props.username;
 	}
 
 	public static create(props: UserProperties) {

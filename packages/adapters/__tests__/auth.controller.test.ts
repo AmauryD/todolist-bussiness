@@ -5,7 +5,6 @@ import { WebAuthController } from "../src/controllers/auth.js";
 import { UserRepository } from "./fixtures/user-memory-repository.js";
 import assert from "node:assert";
 import { Ok } from "true-myth/result";
-import { identifier } from "./fixtures/identifier.js";
 import { just } from "true-myth/maybe";
 
 class AuthService implements AuthServiceInterface {
@@ -54,6 +53,6 @@ it("Log user in", async () => {
 		username: "amaury", 
 		email: "a", 
 		password: just(""), 
-		id: identifier("1")
+		id: Identifier.create("1")
 	});
 });

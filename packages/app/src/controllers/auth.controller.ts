@@ -3,7 +3,7 @@ import { WebAuthController as AuthControllerAdapter } from "adapters";
 import { LoginUseCaseRequest, RegisterUseCaseRequest } from "todo-domain";
 
 @Controller({
-	routeName: "/auth"
+	routeName: "/api/v1/auth"
 })
 export class AuthController {
 	public constructor(

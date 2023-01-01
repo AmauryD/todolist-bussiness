@@ -22,13 +22,9 @@ export class CreateTodoListUseCase implements UseCaseInterface {
 	public async execute(todoListInput: CreateTodoListUseCaseInputInterface): Promise<Result<unknown, Error>> {
 		const generatedId = this.idGenerator.generate();
 
-		if (generatedId.isErr) {
-			return generatedId;
-		}
-
 		const todoList =  await this.todoListRepository.create({
 			name: todoListInput.name,
-			id: generatedId.value
+			id: generatedId
 		});
 
 		if (todoList.isErr) {

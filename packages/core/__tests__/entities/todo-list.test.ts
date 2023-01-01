@@ -3,19 +3,17 @@ import { beforeEach, it } from "node:test";
 import assert from "node:assert";
 import { TodoListAggregateRoot } from "../../src/domain/todos/entities/todo-list.js";
 import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
-import { Ok } from "true-myth/result";
-import { identifier } from "../fixtures/identifier.js";
 
 let todoList : TodoListAggregateRoot;
 const todoStructure = {
 	isDone: true,
 	title: "title",
-	id: identifier("2")
+	id: Identifier.create("2")
 };
 
 beforeEach(() => {
 	const todoListCreationResult = TodoListAggregateRoot.create({
-		id: (Identifier.create("1") as Ok<Identifier,never>).value,
+		id: Identifier.create("1"),
 		name: "Coucou"
 	});
 	todoList = todoListCreationResult.unwrapOrElse(() => undefined as never);

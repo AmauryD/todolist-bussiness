@@ -51,6 +51,7 @@ importers:
       '@triptyk/nfw-core': ~4.0.0-alpha.29
       '@triptyk/nfw-http': ~4.0.0-alpha.29
       '@triptyk/nfw-mikro-orm': ~4.0.0-alpha.29
+      '@types/bcrypt': ^5.0.0
       '@types/express': ^4.17.15
       '@types/json-api-serializer': ^2.6.3
       '@types/koa': 2.13.5
@@ -58,6 +59,7 @@ importers:
       '@types/koa__router': 12.0.0
       '@types/node': ^18.11.17
       adapters: workspace:*
+      bcrypt: ^5.1.0
       json-api-serializer: ^2.6.6
       koa: ^2.14.1
       koa-body: ^6.0.1
@@ -77,6 +79,7 @@ importers:
       '@triptyk/nfw-http': 4.0.0-alpha.30_lx6dfihanrfn7muygyimzzjbv4
       '@triptyk/nfw-mikro-orm': 4.0.0-alpha.30_zh2bvoubdifbncdmp45s2tjzku
       adapters: link:../adapters
+      bcrypt: 5.1.0
       koa: 2.14.1
       todo-domain: link:../core
       true-myth: 6.2.0
@@ -86,6 +89,7 @@ importers:
     devDependencies:
       '@koa/cors': 4.0.0
       '@mikro-orm/seeder': 5.5.3_@mikro-orm+core@5.5.3
+      '@types/bcrypt': 5.0.0
       '@types/express': 4.17.15
       '@types/json-api-serializer': 2.6.3
       '@types/koa': 2.13.5
@@ -3092,6 +3096,12 @@ packages:
     resolution: {integrity: sha512-2TN6oiwtNjOezilFVl77zwdNPwQWaDBBCCWWxyo1ctiO3vAtd7H/aB/CBJdw9+kqq3+latD0SXoedIuHySSZWw==}
     dev: true
 
+  /@types/bcrypt/5.0.0:
+    resolution: {integrity: sha512-agtcFKaruL8TmcvqbndlqHPSJgsolhf/qPWchFlgnW1gECTN/nKbFcoFnvKAQRFfKbh+BO6A3SWdJu9t+xF3Lw==}
+    dependencies:
+      '@types/node': 18.11.17
+    dev: true
+
   /@types/body-parser/1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
@@ -5081,6 +5091,18 @@ packages:
     dependencies:
       safe-buffer: 5.1.2
     dev: true
+
+  /bcrypt/5.1.0:
+    resolution: {integrity: sha512-RHBS7HI5N5tEnGTmtR/pppX0mmDSBpQ4aCBsj7CEQfYXDcO74A8sIBYcJMuCsis2E81zDxeENYhv66oZwLiA+Q==}
+    engines: {node: '>= 10.0.0'}
+    requiresBuild: true
+    dependencies:
+      '@mapbox/node-pre-gyp': 1.0.10
+      node-addon-api: 5.0.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
 
   /big.js/5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
@@ -12351,6 +12373,10 @@ packages:
 
   /node-addon-api/4.3.0:
     resolution: {integrity: sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==}
+
+  /node-addon-api/5.0.0:
+    resolution: {integrity: sha512-CvkDw2OEnme7ybCykJpVcKH+uAOLV2qLqiyla128dN9TkEWfrYmxG6C2boDe5KcNQqZF3orkqzGgOMvZ/JNekA==}
+    dev: false
 
   /node-dir/0.1.17:
     resolution: {integrity: sha512-tmPX422rYgofd4epzrNoOXiE8XFZYOcCq1vD7MAXCDO+O+zndlA2ztdKKMa+EeuBG5tHETpr4ml4RGgpqDCCAg==}
