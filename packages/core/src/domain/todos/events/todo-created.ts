@@ -11,6 +11,6 @@ export class TodoListCreatedEvent implements DomainEventInterface {
 	}
 
 	public getId(): string {
-		return this.entity.id;
+		return this.entity.id.value;
 	}
 }

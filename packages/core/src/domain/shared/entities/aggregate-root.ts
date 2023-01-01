@@ -1,5 +1,6 @@
 import { EntityInterface } from "../../../index.js";
 import { DomainEventInterface } from "../events/domain-event.js";
+import { Identifier } from "../value-objects/identifier.js";
 
 export abstract class AggregateRoot<T extends object>  implements EntityInterface<T> {
 	private readonly _events: DomainEventInterface[] = [];
@@ -8,7 +9,7 @@ export abstract class AggregateRoot<T extends object>  implements EntityInterfac
 		return this._events;    
 	}
     
-    public abstract get id(): string;
+    public abstract get id(): Identifier;
 	
     public addEvent(event: DomainEventInterface) {
     	this._events.push(event);

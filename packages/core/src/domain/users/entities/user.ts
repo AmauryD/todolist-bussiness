@@ -1,10 +1,11 @@
 import { AggregateRoot } from "../../shared/entities/aggregate-root.js";
+import { Identifier } from "../../shared/value-objects/identifier.js";
 
 export interface UserProperties {
     username: string;
 	email: string;
     password: string;
-    id: string;
+    id: Identifier;
 }
 
 export type UserSnapshot = UserProperties;

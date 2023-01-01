@@ -4,13 +4,14 @@ import { DummyIdGenerator } from "./fixtures/id-generator.js";
 import { TodoListInMemoryRepository } from "./fixtures/todolist-memory-repository.js";
 import { beforeEach, it } from "node:test";
 import  assert  from "node:assert";
-import { unwrapOr } from "true-myth/result";
+import { Ok, unwrapOr } from "true-myth/result";
+import { Identifier } from "todo-domain/domain/shared/value-objects/identifier.js";
 
 
 function addAnAggregateToRepositoryList(repository: TodoListInMemoryRepository) {
 	const firstAggregate = TodoListAggregateRoot.create({
 		name: "aaa",
-		id: "aaa"
+		id: (Identifier.create("aaa") as Ok<Identifier, never>).value
 	});
 	if (firstAggregate.isOk) {
 		repository.todos.push(firstAggregate.value);

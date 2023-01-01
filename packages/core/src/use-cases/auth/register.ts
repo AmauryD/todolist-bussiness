@@ -20,7 +20,7 @@ export class RegisterUseCase implements UseCaseInterface {
 		public idGenerator: IdGeneratorInterface
 	) {}
 
-	public async execute(params: RegisterUseCaseParams): Promise<Result<UserSnapshot, UserAlreadyExistsError>> {
+	public async execute(params: RegisterUseCaseParams): Promise<Result<UserSnapshot, UserAlreadyExistsError | Error>> {
 		const existingEmailUser = await this.userRepository.getUserByEmail(params.email);
 
 		if (existingEmailUser.isJust) {
@@ -28,9 +28,14 @@ export class RegisterUseCase implements UseCaseInterface {
 		}
 
 		const hashedPassword = await this.hashService.hash(params.password, params.saltKey);
+		const generatedId = this.idGenerator.generate();
+
+		if (generatedId.isErr) {
+			return err(generatedId.error);
+		}
 
 		const newUser = await this.userRepository.create({
-			id: this.idGenerator.generate(),
+			id: generatedId.value,
 			username: params.username,
 			email: params.password,
 			password: hashedPassword

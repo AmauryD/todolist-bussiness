@@ -1,6 +1,6 @@
 import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { container } from "@triptyk/nfw-core";
-import { TodoListAggregateRoot, TodoListProperties, TodoListRepositoryInterface } from "todo-domain";
+import { Identifier, TodoListAggregateRoot, TodoListProperties, TodoListRepositoryInterface } from "todo-domain";
 import Result, { err, ok } from "true-myth/result";
 import { TodoList } from "../models/todo-list.js";
 
@@ -20,7 +20,7 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 
 		const todoORM = this.ormRepository.create({
 			title: todo.value.name,
-			id: todo.value.id
+			id: todo.value.id.value
 		});
 
 		await this.ormRepository.persistAndFlush(todoORM);
@@ -33,10 +33,17 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 		const todoList : TodoListAggregateRoot[] = [];
 
 		for (const todo of todos) {
+			const convertedId = Identifier.create(todo.id);
+
+			if (convertedId.isErr) {
+				return convertedId as Result<never, Error>;
+			}
+
 			const created = TodoListAggregateRoot.create({
 				name: todo.title,
-				id: todo.id
+				id: convertedId.value
 			});
+			
 			if (created.isErr) {
 				return created as Result<never, Error>;
 			}

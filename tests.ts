@@ -56,8 +56,12 @@ function titleTest(e: BaseTest, color: "green" | "red") {
 
 stream.on("test:fail", (e: TestFail) => {
 	titleTest(e,"red");
+	
+	console.log(e);
 	if (typeof (e.details as TestDetailsYAML).yaml === "string") {
-		const parsed = parse((e.details as TestDetailsYAML).yaml);
+		const parsed = parse((e.details as TestDetailsYAML).yaml, {
+			strict: false
+		});
 		console.log(`${parsed.error}`);
 		return;
 	}

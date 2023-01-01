@@ -3,6 +3,7 @@ import { TodoTitleRequiredError } from "../../src/domain/todos/errors/todo-title
 import { it } from "node:test";
 import assert from "node:assert";
 import { Todo } from "../../src/domain/todos/entities/todo.js";
+import { identifier } from "../fixtures/identifier.js";
 
 it("Throws an error when todo title is not provided", () => {
 	assert.throws(() => Todo.create({ title: undefined } as never),TodoTitleRequiredError);
@@ -11,7 +12,7 @@ it("Throws an error when todo title is not provided", () => {
 it("Creates a snapshot of a todo-list", () => {
 	const todo = Todo.create({
 		title: "bonjour",
-		id: "2",
+		id: identifier("2"),
 		isDone: false
 	});
 	assert.deepStrictEqual(todo.snapshot(),{

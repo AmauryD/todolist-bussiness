@@ -1,5 +1,6 @@
 import { User, UserRepositoryInterface } from "todo-domain/index.js";
 import { Maybe, Result } from "true-myth";
+import { identifier } from "./identifier.js";
 
 export class UserRepository implements UserRepositoryInterface {
 	public async create(): Promise<Result<User, Error>> {
@@ -10,7 +11,7 @@ export class UserRepository implements UserRepositoryInterface {
 			username: "amaury",
 			email: "a",
 			password: "",
-			id: ""
+			id: identifier("1")
 		}));
 	}
 }

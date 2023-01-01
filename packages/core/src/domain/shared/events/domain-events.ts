@@ -10,7 +10,7 @@ export class DomainEvents {
 	private static markedAggregates = new Map<string, AggregateRoot<any>>();
 
 	public static markForDispatch(aggregate: AggregateRoot<any>) {
-		this.markedAggregates.set(aggregate.id, aggregate);
+		this.markedAggregates.set(aggregate.id.value, aggregate);
 	}
 
 	public static register(
@@ -45,7 +45,7 @@ export class DomainEvents {
 	}
 
 	private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<any>) {
-		this.markedAggregates.delete(aggregate.id);
+		this.markedAggregates.delete(aggregate.id.value);
 	}
 
 	private static dispatch (event: DomainEventInterface): void {

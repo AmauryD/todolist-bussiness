@@ -1,11 +1,12 @@
 import Result, { err, ok } from "true-myth/result";
 import { TodoListCreatedEvent } from "../events/todo-created.js";
 import { AggregateRoot } from "../../shared/entities/aggregate-root.js";
-import { Todo, TodoPropertiesInterface, TodoSnapshot } from "./todo.js";
+import { Todo, TodoProperties, TodoSnapshot } from "./todo.js";
 import { TodoListNameRequiredError } from "../errors/todo-list-name-required.js";
+import { Identifier } from "../../shared/value-objects/identifier.js";
 
 export interface TodoListProperties {
-    id: string,
+    id: Identifier,
     name: string
 }
 
@@ -53,12 +54,12 @@ export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
 		return ok(todoList);
 	}
 
-	public addTodo(todo: TodoPropertiesInterface) {
+	public addTodo(todo: TodoProperties) {
 		const newTodo = Todo.create(todo);
 		this._todos.add(newTodo);
 	}
 
-	public removeTodo(todoId: TodoPropertiesInterface["id"]) {
+	public removeTodo(todoId: TodoProperties["id"]) {
 		for (const todo of this.todos.values()) {
 			if (todo.id === todoId) {
 				this._todos.delete(todo);
@@ -69,7 +70,7 @@ export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
 
 	public snapshot() {
 		return {
-			id: this.id,
+			id: this.id.value,
 			name: this.name,
 			todos: [...this.todos.values()].map((todo) => todo.snapshot()),
 			isDone: this.isDone

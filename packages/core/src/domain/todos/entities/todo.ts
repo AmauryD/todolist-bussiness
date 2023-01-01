@@ -1,10 +1,11 @@
 import { EntityInterface } from "../../shared/entities/entity.js";
+import { Identifier } from "../../shared/value-objects/identifier.js";
 import { TodoTitleRequiredError } from "../errors/todo-title-required.js";
 
-export interface TodoPropertiesInterface {
+export interface TodoProperties {
     title: string;
     isDone: boolean;
-    id: string;
+    id: Identifier;
 }
 
 export interface TodoSnapshot {
@@ -14,7 +15,7 @@ export interface TodoSnapshot {
 }
 
 export class Todo implements EntityInterface<TodoSnapshot> {
-	private constructor(private props: TodoPropertiesInterface) {}
+	private constructor(private props: TodoProperties) {}
 
 	public get title() {
 		return this.props.title;
@@ -28,7 +29,7 @@ export class Todo implements EntityInterface<TodoSnapshot> {
 		return this.props.id;
 	}
 
-	public static create(props: TodoPropertiesInterface) {
+	public static create(props: TodoProperties) {
 		if (!props.title) {
 			throw new TodoTitleRequiredError();
 		}
@@ -37,7 +38,7 @@ export class Todo implements EntityInterface<TodoSnapshot> {
 
 	public snapshot() {
 		return {
-			id: this.id,
+			id: this.id.value,
 			isDone: this.isDone,
 			title: this.title
 		};

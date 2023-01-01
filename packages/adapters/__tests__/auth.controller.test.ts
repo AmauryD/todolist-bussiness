@@ -1,10 +1,11 @@
 import { it } from "node:test";
-import { LoginUseCase, RegisterUseCase, UserSnapshot } from "todo-domain/index.js";
+import { Identifier, LoginUseCase, RegisterUseCase, UserSnapshot } from "todo-domain";
 import { AuthServiceInterface } from "todo-domain";
 import { AuthController } from "../src/controllers/auth.js";
 import { UserRepository } from "./fixtures/user-memory-repository.js";
 import assert from "node:assert";
 import { Ok } from "true-myth/result";
+import { identifier } from "./fixtures/identifier.js";
 
 class AuthService implements AuthServiceInterface {
 	public async passwordMatches(): Promise<boolean> {
@@ -34,7 +35,7 @@ function setupRegisterUseCase(): RegisterUseCase {
 		},
 		{
 			generate() {
-				return "1";
+				return Identifier.create("1");
 			},
 		}
 	);
@@ -57,6 +58,6 @@ it("Log user in", async () => {
 		username: "amaury", 
 		email: "a", 
 		password: "", 
-		id: ""
+		id: identifier("1")
 	});
 });

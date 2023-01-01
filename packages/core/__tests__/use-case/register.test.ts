@@ -9,6 +9,7 @@ import { UserRepositoryInterface } from "../../src/domain/users/repositories/use
 import { HashServiceInterface } from "../../src/interfaces/hasher.js";
 import { RegisterUseCase } from "../../src/use-cases/auth/register.js";
 import { FakeIdGenerator } from "../fixtures/id-generator.js";
+import { identifier } from "../fixtures/identifier.js";
 
 class FailUserRepository implements UserRepositoryInterface {
 	public async create(): Promise<Result<User, Error>> {
@@ -19,7 +20,7 @@ class FailUserRepository implements UserRepositoryInterface {
 			username: "amaury",
 			email: "a",
 			password: "",
-			id: ""
+			id: identifier("1")
 		}));
 	}
 }
@@ -30,7 +31,7 @@ class SuccessUserRepository extends FailUserRepository {
 			username: "amaury",
 			email: "a",
 			password: "",
-			id: ""
+			id: identifier("1")
 		}));
 	}
 	public async getUserByEmail(): Promise<Maybe<User>> {
