@@ -29,7 +29,7 @@ beforeEach(() => {
 		repository,
 		{
 			async present(data) {
-				return data;
+				return data.map((d) => d.snapshot());
 			},
 		}
 	);
@@ -38,7 +38,7 @@ beforeEach(() => {
 		repository,
 		{
 			async present(data) {
-				return data;
+				return data.snapshot();
 			},
 		}
 	);

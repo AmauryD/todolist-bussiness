@@ -9,7 +9,7 @@ function createUseCase() {
 		new FakeTodoListRepository(),
 		{
 			async present(data) {
-				return data;
+				return data.map((e) => e.snapshot());
 			},
 		}
 	);

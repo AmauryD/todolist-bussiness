@@ -17,7 +17,7 @@ function setupLoginUseCase(): LoginUseCase {
 		new UserRepository(),
 		{
 			async present(data) {
-				return data;
+				return data.snapshot();
 			},
 		},
 		new AuthService()

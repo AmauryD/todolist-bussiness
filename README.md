@@ -66,6 +66,11 @@ Un port peut être une interface de service ou une interface de repository requi
 
 ![Clean architecture](./images/details.png)
 
+##### Presenters
+
+Le Presenter est un `Humble Object`. Il sert à transformer le retour du Use Case de manière correcte pour la `Vue`.
+Il est également testable plus facilement qu'une Vue entière.
+
 Ayant fait l'erreur et vu l'erreur autre part :
 => Le `Controller` ne doit pas connaître le `Presenter` !
 

@@ -5,9 +5,9 @@ import { UserDoesNotExistsError } from "../errors/does-not-exists.js";
 import { UserRepositoryInterface } from "../repositories/user.js";
 import { AuthServiceInterface } from "../services/auth.service.js";
 import { PresenterInterface } from "../../shared/presenters/presenter.js";
-import { UserSnapshot } from "../../../index.js";
 import { PasswordNotSetError } from "../errors/password-not-set.js";
 import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
+import { User } from "../entities/user.js";
 
 export interface LoginUseCaseRequest {
     email: string,
@@ -17,7 +17,7 @@ export interface LoginUseCaseRequest {
 export class LoginUseCase implements UseCaseInterface {
 	public constructor(
 		public userRepository : UserRepositoryInterface,
-		public presenter: PresenterInterface<UserSnapshot>,
+		public presenter: PresenterInterface<User>,
 		public authService: AuthServiceInterface
 	) {}
 
@@ -36,7 +36,7 @@ export class LoginUseCase implements UseCaseInterface {
 			return err(new InvalidCredentialsError()); 
 		}
 
-		const presented = await this.presenter.present(user.value.snapshot());
+		const presented = await this.presenter.present(user.value);
 
 		return ok(presented);
 	}

@@ -51,7 +51,7 @@ async function createAndExecuteUseCase(repository: UserRepositoryInterface, auth
 		repository,
 		{
 			async present(data) {
-				return data;
+				return data.snapshot();
 			},
 		},
 		authService

@@ -1,7 +1,7 @@
 
 import { TodoListRepositoryInterface } from "../repositories/todo-list.js";
 import { PresenterInterface } from "../../shared/presenters/presenter.js";
-import { TodoListSnapshot } from "../../../index.js";
+import { TodoListAggregateRoot } from "../../../index.js";
 import { Result } from "true-myth";
 import { ok } from "true-myth/result";
 import { IdGeneratorInterface } from "../../shared/interfaces/id-generator.js";
@@ -15,7 +15,7 @@ export class CreateTodoListUseCase implements UseCaseInterface {
 	public constructor(
 		private idGenerator: IdGeneratorInterface,
 		private todoListRepository: TodoListRepositoryInterface,
-		private todoListPresenter: PresenterInterface<TodoListSnapshot>
+		private todoListPresenter: PresenterInterface<TodoListAggregateRoot>
 	) {}
 
 	public async execute(todoListInput: CreateTodoListUseCaseInputInterface): Promise<Result<unknown, Error>> {
@@ -30,7 +30,7 @@ export class CreateTodoListUseCase implements UseCaseInterface {
 			return todoList;
 		}
 
-		const presented = await this.todoListPresenter.present(todoList.value.snapshot());
+		const presented = await this.todoListPresenter.present(todoList.value);
 		
 		return ok(presented);
 	}

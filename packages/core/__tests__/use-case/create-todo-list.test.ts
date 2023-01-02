@@ -11,7 +11,7 @@ test("It creates a todo-list", async () => {
 		new FakeIdGenerator(),
 		new FakeTodoListRepository(),
 		{
-			async present(data) { return data; }
+			async present(data) { return data.snapshot(); }
 		}
 	);
 	const todoSnapshot = await createTodoListUseCase.execute({
