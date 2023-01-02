@@ -3,7 +3,7 @@ import { map } from "true-myth/maybe";
 import { DomainEventInterface } from "./domain-event.js";
 import { AggregateRoot } from "../entities/aggregate-root.js";
 
-type HandlerFunction = (handler: DomainEventInterface) => void | Promise<void>;
+export type HandlerFunction = (handler: DomainEventInterface) => void | Promise<void>;
 
 export class DomainEvents {
 	private static handlersMap = new Map<string, Set<HandlerFunction>>();
@@ -17,7 +17,7 @@ export class DomainEvents {
 		callback: HandlerFunction, 
 		eventClassName: string
 	) {
-		const handler = this.getHandler(eventClassName);
+		const handler = this.getHandlers(eventClassName);
 		if (handler.isNothing) {
 			this.handlersMap.set(eventClassName, new Set());
 		}
@@ -34,7 +34,7 @@ export class DomainEvents {
 		}, aggregate);
 	}
 
-	private static getHandler(eventClassName: string) {
+	private static getHandlers(eventClassName: string) {
 		return Maybe.of(this.handlersMap.get(eventClassName));
 	}
 
@@ -50,9 +50,12 @@ export class DomainEvents {
 
 	private static dispatch (event: DomainEventInterface): void {
 		const eventClassName = event.constructor.name;
+		const handlers = this.getHandlers(eventClassName);
+		
 		map((handlers) => {
-			for (const handler of handlers)
+			for (const handler of handlers) {
 				handler(event);
-		}, this.getHandler(eventClassName));
+			}
+		}, handlers);
 	}
 }

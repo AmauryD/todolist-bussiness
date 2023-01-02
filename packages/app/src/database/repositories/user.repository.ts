@@ -1,5 +1,5 @@
 import { EntityRepository, MikroORM } from "@mikro-orm/core";
-import { Identifier, User, UserPropertiesWithoutPassword, UserRepositoryInterface } from "todo-domain";
+import { DomainEvents, Identifier, User, UserPropertiesWithoutPassword, UserRepositoryInterface } from "todo-domain";
 import { Result } from "true-myth";
 import Maybe, { just, nothing } from "true-myth/maybe";
 import { ok } from "true-myth/result";
@@ -32,13 +32,14 @@ export class SQLUserRepository implements UserRepositoryInterface {
 
 	public async createWithoutPassword(params: UserPropertiesWithoutPassword): Promise<Result<User, Error>> {
 		const user = User.create({ ...params, password: nothing() });
-
 		const userORM = this.ormRepository.create({
 			username: user.username,
 			id: user.id.value,
 			email: user.email,
 			password: undefined
 		});
+		
+		DomainEvents.markForDispatch(user);
 
 		await this.ormRepository.persistAndFlush(userORM);
 

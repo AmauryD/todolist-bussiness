@@ -3,7 +3,6 @@ import { WebAuthController, WebTodoListController } from "adapters";
 import { CreateTodoListUseCase, ListTodoListsUseCase, LoginUseCase, RegisterUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
 import { SQLUserRepository } from "./database/repositories/user.repository.js";
-import { UserCreatedListener } from "./listeners/user-created.js";
 import { TodoListsRESTSerializer } from "./serializers/rest.js";
 import { AuthService } from "./services/auth.js";
 import { UUIDGenerator } from "./services/id-generator.js";
@@ -11,8 +10,6 @@ import { UUIDGenerator } from "./services/id-generator.js";
 export async function setupDI() {
 	setupTodoListAdapter();
 	const userRepository = new SQLUserRepository();
-
-	new UserCreatedListener().setupListener();
 
 	const loginUseCase = new LoginUseCase(
 		userRepository,

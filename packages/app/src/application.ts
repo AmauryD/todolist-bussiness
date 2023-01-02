@@ -13,6 +13,7 @@ import { todoSchema } from "./database/models/todo.js";
 import {koaBody} from "koa-body";
 import { AuthController } from "./controllers/auth.controller.js";
 import { userSchema } from "./database/models/user.js";
+import { AfterCreationSubscriber } from "./database/subscribers/after.js";
 
 @singleton()
 export class Application {
@@ -44,6 +45,7 @@ export class Application {
 			{
 				type: "sqlite",
 				dbName: ":memory:",
+				subscribers: [new AfterCreationSubscriber()],
 				entities: [todoSchema, todoListSchema, userSchema]
 			}
 		);

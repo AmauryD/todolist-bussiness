@@ -254,6 +254,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://pusher.com/tutorials/clean-architecture-introduction/>
 <https://adevelopersdiscourse.blogspot.com/2020/06/clean-architecture-demystified.html>
 <https://www.infoq.com/articles/ddd-contextmapping/>
+<https://medium.com/unil-ci-software-engineering/clean-domain-driven-design-2236f5430a05>
 
 ### Youtube
 
@@ -268,6 +269,8 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://github.com/VaughnVernon/IDDD_Samples>
 <https://github.com/dotnet-architecture/eShopOnContainers>
 <https://github.com/cleancoders/CleanCodeCaseStudy>
+<https://github.com/culttt/cribbb>
+<https://github.com/4lessandrodev/finance-project-ddd>
 
 ### Outils
 

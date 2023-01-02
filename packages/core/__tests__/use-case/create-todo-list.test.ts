@@ -1,4 +1,4 @@
-import { CreateTodoListUseCase } from "../../src/use-cases/todo-list/create.js";
+import { CreateTodoListUseCase } from "../../src/domain/todos/use-cases/create.js";
 import { FakeTodoListRepository } from "./common.js";
 import { test } from "node:test";
 import assert from "node:assert";

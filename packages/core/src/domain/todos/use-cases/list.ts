@@ -1,10 +1,10 @@
 
 import Result, { ok } from "true-myth/result";
-import { CannotAccessTodoListError } from "../../domain/todos/errors/cannot-access-todo-list.js";
-import { TodoListRepositoryInterface } from "../../domain/todos/repositories/todo-list.js";
-import { UseCaseInterface } from "../../interfaces/use-case.js";
-import { TodoListSnapshot, TodoListAggregateRoot } from "../../index.js";
-import { PresenterInterface } from "../../domain/shared/presenters/presenter.js";
+import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
+import { PresenterInterface } from "../../shared/presenters/presenter.js";
+import { TodoListSnapshot, TodoListAggregateRoot } from "../entities/todo-list.js";
+import { CannotAccessTodoListError } from "../errors/cannot-access-todo-list.js";
+import { TodoListRepositoryInterface } from "../repositories/todo-list.js";
 
 export class ListTodoListsUseCase implements UseCaseInterface {
 	public constructor(

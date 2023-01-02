@@ -1,12 +1,11 @@
-import { IdGeneratorInterface } from "../../interfaces/id-generator.js";
-import { TodoListRepositoryInterface } from "../../domain/todos/repositories/todo-list.js";
-import { UseCaseInterface } from "../../interfaces/use-case.js";
-import { PresenterInterface } from "../../domain/shared/presenters/presenter.js";
-import { TodoListSnapshot } from "../../index.js";
+
+import { TodoListRepositoryInterface } from "../repositories/todo-list.js";
+import { PresenterInterface } from "../../shared/presenters/presenter.js";
+import { TodoListSnapshot } from "../../../index.js";
 import { Result } from "true-myth";
 import { ok } from "true-myth/result";
-
-
+import { IdGeneratorInterface } from "../../shared/interfaces/id-generator.js";
+import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
 
 interface CreateTodoListUseCaseInputInterface {
 	name: string

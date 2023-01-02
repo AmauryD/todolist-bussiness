@@ -1,9 +1,10 @@
 import Result, { err, map } from "true-myth/result";
-import { UserSnapshot } from "../../domain/users/entities/user.js";
-import { UserAlreadyExistsError } from "../../domain/users/errors/already-exists.js";
-import { UserRepositoryInterface } from "../../domain/users/repositories/user.js";
-import { IdGeneratorInterface } from "../../index.js";
-import { UseCaseInterface } from "../../interfaces/use-case.js";
+import { IdGeneratorInterface } from "../../shared/interfaces/id-generator.js";
+import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
+import { UserSnapshot } from "../entities/user.js";
+import { UserAlreadyExistsError } from "../errors/already-exists.js";
+import { UserRepositoryInterface } from "../repositories/user.js";
+
 
 export interface RegisterUseCaseRequest {
     username: string;

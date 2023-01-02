@@ -106,10 +106,12 @@ importers:
     specifiers:
       '@types/node': ^18.11.17
       true-myth: ^6.2.0
+      type-fest: ^3.5.0
     dependencies:
       true-myth: 6.2.0
     devDependencies:
       '@types/node': 18.11.17
+      type-fest: 3.5.0
 
   packages/frontend:
     specifiers:
