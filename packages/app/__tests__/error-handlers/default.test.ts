@@ -17,6 +17,7 @@ it("Handles errors correctly", async () => {
 	assert.strictEqual(ctx.status,500);
 	assert.deepStrictEqual(ctx.body,{
 		details: "Blah",
-		code: "Error"
+		code: "Error",
+		name: "Error"
 	});
 });

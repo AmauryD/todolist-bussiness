@@ -1,0 +1,7 @@
+ContextMap TodoListProjectMap {
+    contains TodoContext
+	contains UserContext
+}
+
+BoundedContext TodoContext
+BoundedContext UserContext

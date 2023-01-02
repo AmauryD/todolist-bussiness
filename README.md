@@ -111,6 +111,8 @@ Ne pas confondre avec les évènements du DDD.
 
 Langage commun entre les gens du métier et le developpeur.
 
+![language](https://res.infoq.com/articles/ddd-contextmapping/en/resources/ddd-contextmapping-figure1.gif)
+
 #### Bounded Context
 
 ![Bounded Context example](https://martinfowler.com/bliki/images/boundedContext/sketch.png)
@@ -251,6 +253,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://medium.com/codex/avoiding-code-hotspots-a-use-case-driven-approach-2bcc12e4b878>
 <https://pusher.com/tutorials/clean-architecture-introduction/>
 <https://adevelopersdiscourse.blogspot.com/2020/06/clean-architecture-demystified.html>
+<https://www.infoq.com/articles/ddd-contextmapping/>
 
 ### Youtube
 

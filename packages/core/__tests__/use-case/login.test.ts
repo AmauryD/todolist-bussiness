@@ -80,8 +80,8 @@ it("Returns User snapshot when email is found and password matches",  async () =
 	assert.strictEqual(result?.isOk, true);
 	assert.deepEqual(result.value, {
 		email: "amaury",
-		id: Identifier.create("123"),
-		password: just("123"),
+		id: "123",
+		password:"123",
 		username: "Amaury"
 	});
 });
