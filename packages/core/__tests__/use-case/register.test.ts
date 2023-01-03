@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { it } from "node:test";
 import { Maybe } from "true-myth";
-import { just, nothing } from "true-myth/maybe";
+import { just, Nothing, nothing } from "true-myth/maybe";
 import Result, { Err } from "true-myth/result";
 import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
 import { User } from "../../src/domain/users/entities/user.js";
@@ -11,6 +11,12 @@ import { RegisterUseCase } from "../../src/domain/users/use-cases/register.js";
 import { FakeIdGenerator } from "../fixtures/id-generator.js";
 
 class FailUserRepository implements UserRepositoryInterface {
+	public validateUserAccount(): Promise<Result<Nothing<unknown>, Error>> {
+		throw new Error("Method not implemented.");
+	}
+	public getUserById(): Promise<Maybe<User>> {
+		throw new Error("Method not implemented.");
+	}
 	public async createWithoutPassword(): Promise<Result<User, Error>> {
 		throw new Error("Method not implemented.");
 	}
@@ -18,6 +24,7 @@ class FailUserRepository implements UserRepositoryInterface {
 		return Maybe.of(User.create({
 			username: "amaury",
 			email: "a",
+			isValidated: false,
 			validationToken: nothing(),
 			password: just(""),
 			id: Identifier.create("1")

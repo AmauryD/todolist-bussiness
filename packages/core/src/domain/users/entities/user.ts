@@ -1,12 +1,14 @@
 import { Maybe } from "true-myth";
 import { AggregateRoot } from "../../shared/entities/aggregate-root.js";
 import { Identifier } from "../../shared/value-objects/identifier.js";
+import { UserAccountValidatedEvent } from "../events/account-validated.js";
 import { UserCreatedEvent } from "../events/user-created.js";
 import { ValidationToken } from "../value-objects/validation-token.js";
 
 export interface UserProperties {
     username: string;
 	email: string;
+	isValidated: boolean;
     password: Maybe<string>;
 	validationToken: Maybe<ValidationToken>;
     id: Identifier;
@@ -43,6 +45,10 @@ export class User extends AggregateRoot<UserSnapshot> {
 		return this.props.validationToken;
 	}
 
+	public get hasValidationToken() {
+		return this.validationToken.isJust;
+	}
+
 	public get username() {
 		return this.props.username;
 	}
@@ -53,6 +59,11 @@ export class User extends AggregateRoot<UserSnapshot> {
 		user.addEvent(new UserCreatedEvent(user.snapshot()));
 
 		return user;
+	}
+
+	public validate() {
+		this.props.isValidated = true;
+		this.addEvent(new UserAccountValidatedEvent(this.snapshot()));
 	}
 
 	public snapshot(): UserSnapshot {

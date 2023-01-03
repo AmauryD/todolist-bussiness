@@ -23,6 +23,8 @@ export * from "./domain/users/use-cases/login.js";
 export * from "./domain/users/use-cases/register.js";
 
 export * from "./domain/users/value-objects/validation-token.js";
+export * from "./domain/users/use-cases/validate-account.js";
+export * from "./domain/users/value-objects/validation-token.js";
 
 export * from "./domain/notifications/use-cases/send-confirmation-mail.js";
 export * from "./domain/notifications/services/mail-service.js";

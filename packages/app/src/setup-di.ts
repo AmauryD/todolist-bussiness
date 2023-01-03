@@ -1,6 +1,6 @@
 import { container } from "@triptyk/nfw-core";
 import { ConfirmationMailFormatter, ConfirmationMailListener, WebAuthController, WebTodoListController } from "adapters";
-import { CreateTodoListUseCase, ListTodoListsUseCase, LoginUseCase, RegisterUseCase, SendConfirmationMailUseCase } from "todo-domain";
+import { CreateTodoListUseCase, ListTodoListsUseCase, LoginUseCase, RegisterUseCase, SendConfirmationMailUseCase, ValidateAccountUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
 import { SQLUserRepository } from "./database/repositories/user.repository.js";
 import { TodoListsRESTPresenter } from "adapters/src/presenters/rest.js";
@@ -39,8 +39,12 @@ function registerAuthAdapter() {
 		new UUIDGenerator()
 	);
 
+	const validateAccountUseCase = new ValidateAccountUseCase(
+		userRepository
+	);
 
-	const authControllerAdapter = new WebAuthController(loginUseCase, registerUseCase);
+
+	const authControllerAdapter = new WebAuthController(loginUseCase, registerUseCase, validateAccountUseCase);
 
 	container.register(WebAuthController, {
 		useValue: authControllerAdapter

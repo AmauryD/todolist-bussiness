@@ -32,6 +32,7 @@ export class RegisterUseCase implements UseCaseInterface {
 			id: generatedId,
 			username: params.username,
 			validationToken: just(ValidationToken.generate()),
+			isValidated: false,
 			email: params.email
 		});
 

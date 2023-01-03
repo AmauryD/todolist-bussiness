@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { it } from "node:test";
 import { Maybe } from "true-myth";
-import { just, nothing } from "true-myth/maybe";
+import { just, Nothing, nothing } from "true-myth/maybe";
 import Result, { Err, Ok } from "true-myth/result";
 import { User, UserSnapshot } from "../../src/domain/users/entities/user.js";
 import { InvalidCredentialsError } from "../../src/domain/users/errors/invalid-credentials.js";
@@ -12,6 +12,12 @@ import { LoginUseCase } from "../../src/domain/users/use-cases/login.js";
 import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
 
 class InvalidUserRepository implements UserRepositoryInterface {
+	public validateUserAccount(): Promise<Result<Nothing<unknown>, Error>> {
+		throw new Error("Method not implemented.");
+	}
+	public getUserById(): Promise<Maybe<User>> {
+		throw new Error("Method not implemented.");
+	}
 	public async getUserByEmail(): Promise<Maybe<User>> {
 		return nothing();
 	}
@@ -21,11 +27,18 @@ class InvalidUserRepository implements UserRepositoryInterface {
 }
 
 class ValidUserRepository implements UserRepositoryInterface {
+	public validateUserAccount(): Promise<Result<Nothing<unknown>, Error>> {
+		throw new Error("Method not implemented.");
+	}
+	public getUserById(): Promise<Maybe<User>> {
+		throw new Error("Method not implemented.");
+	}
 	public async getUserByEmail(mail: string): Promise<Maybe<User>> {
 		return Maybe.of(User.create({
 			username: "Amaury",
 			validationToken: nothing(),
 			id: Identifier.create("123"),
+			isValidated: false,
 			email: mail,
 			password: just("123")
 		}));

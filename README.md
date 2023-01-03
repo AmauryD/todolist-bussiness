@@ -100,6 +100,8 @@ Utilisation de commandes pour écrire des données et de queries pour lire les d
 
 Dans ce cas un use case ne pourra pas read/write en même temps.
 
+Un use-case est donc soit une `command` ou une `query`.
+
 ## Event Sourcing
 
 Ne pas confondre avec les évènements du DDD.

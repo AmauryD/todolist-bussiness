@@ -1,5 +1,5 @@
 import { it } from "node:test";
-import { Identifier, LoginUseCase, RegisterUseCase, UserSnapshot } from "todo-domain";
+import { Identifier, LoginUseCase, RegisterUseCase, UserSnapshot, ValidateAccountUseCase } from "todo-domain";
 import { AuthServiceInterface } from "todo-domain";
 import { WebAuthController } from "../src/controllers/auth.js";
 import { UserRepository } from "./fixtures/user-memory-repository.js";
@@ -24,6 +24,12 @@ function setupLoginUseCase(): LoginUseCase {
 	);
 }
 
+function setupValidateAccountUseCase() {
+	return new ValidateAccountUseCase(
+		new UserRepository()
+	);
+}
+
 function setupRegisterUseCase(): RegisterUseCase {
 	return new RegisterUseCase(
 		new UserRepository(),
@@ -38,7 +44,8 @@ function setupRegisterUseCase(): RegisterUseCase {
 it("Log user in", async () => {
 	const authController = new WebAuthController(
 		setupLoginUseCase(),
-		setupRegisterUseCase()
+		setupRegisterUseCase(),
+		setupValidateAccountUseCase()
 	);
 
 	const loginResult = await authController.login({

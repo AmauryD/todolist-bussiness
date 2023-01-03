@@ -1,5 +1,6 @@
 export interface ConfirmationMailData {
     username: string;
+    userId: string;
     token: string;
 }
 

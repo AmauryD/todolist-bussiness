@@ -1,4 +1,4 @@
-import { Controller, POST, UseMiddleware } from "@triptyk/nfw-http";
+import { Controller, Param, POST, UseMiddleware } from "@triptyk/nfw-http";
 import { WebAuthController as AuthControllerAdapter } from "adapters";
 import { Result } from "true-myth";
 import { Body } from "../decorators/json-body.js";
@@ -31,5 +31,10 @@ export class AuthController {
 	@POST("/login")
 	public login(@Body(loginSchema) loginRequest: LoginValidationSchemaType) {
 		return this.authControllerAdapter.login(loginRequest);
+	}
+
+	@POST("/validate-account/:userId/:token")
+	public validateAccount(@Param("userId") userId: string, @Param("token") token: string) {
+		return this.authControllerAdapter.validateAccount(userId, token);
 	}
 }

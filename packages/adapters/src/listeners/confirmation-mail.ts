@@ -14,6 +14,7 @@ export class ConfirmationMailListener extends AbstractSendConfirmationMailListen
 		await this.sendConfirmationMailUseCase.execute({
 			username: e.entity.username,
 			email: e.entity.email,
+			userId: e.entity.id,
 			token: e.entity.validationToken ?? ""
 		});
 	}

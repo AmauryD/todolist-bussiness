@@ -6,7 +6,8 @@ import { MailServiceInterface } from "../services/mail-service.js";
 export interface SendConfirmationMailParams {
     username: string,
     email: string,
-    token: string
+    token: string,
+	userId: string
 }
 
 export class SendConfirmationMailUseCase implements UseCaseInterface {
@@ -18,7 +19,8 @@ export class SendConfirmationMailUseCase implements UseCaseInterface {
 	public async execute(params: SendConfirmationMailParams) {
 		const mailContent = this.confirmationMailFormatter.format({
 			username: params.username,
-			token: params.token
+			token: params.token,
+			userId: params.userId
 		});
 
 		await this.mailService.send({

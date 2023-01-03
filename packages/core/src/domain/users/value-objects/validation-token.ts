@@ -9,6 +9,10 @@ export class ValidationToken implements ValueObject {
         public readonly value: string
 	) {}
 
+	/**
+	 * Why not use IDGenerator ? Because IDgenerator is for changing the behavior of generating resource Identifier.
+	 * Validation Token generation behavior will never change
+	 */
 	public static generate() {
 		return new ValidationToken(randomUUID());
 	}

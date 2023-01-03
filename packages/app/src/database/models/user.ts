@@ -5,6 +5,7 @@ export interface UserModel {
     email: string;
     password?: string;
 	validationToken?: string;
+	isValidated: boolean;
     id: string;
 }
 
@@ -14,6 +15,7 @@ export const userSchema = new EntitySchema<UserModel>({
 		id: { type: "string", primary: true },
 		username: { type: "string" },
 		email: { type: "string" },
+		isValidated: { type: "boolean", default: false },
 		validationToken: { type: "string", nullable: true },
 		password: { type: "string", nullable: true },
 	},

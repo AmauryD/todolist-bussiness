@@ -22,7 +22,7 @@ export class Application {
 
 		await this.setupDatabaseConnection();
 		await setupDI();
-		await this.refreshDatabase();
+		// await this.refreshDatabase();
 
 		koa.use(requestContext);
 		koa.use(koaBody());
@@ -44,7 +44,7 @@ export class Application {
 		await init(
 			{
 				type: "sqlite",
-				dbName: ":memory:",
+				dbName: "todo-list",
 				subscribers: [new AfterCreationSubscriber()],
 				entities: [todoSchema, todoListSchema, userSchema]
 			}

@@ -2,7 +2,7 @@ import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { DomainEvents, Identifier, User, UserPropertiesWithoutPassword, UserRepositoryInterface } from "todo-domain";
 import { ValidationToken } from "todo-domain";
 import { Result } from "true-myth";
-import Maybe, { just, nothing } from "true-myth/maybe";
+import Maybe, { just, Nothing, nothing } from "true-myth/maybe";
 import { ok } from "true-myth/result";
 import { toMaybe } from "true-myth/toolbelt";
 import { container } from "tsyringe";
@@ -15,24 +15,22 @@ export class SQLUserRepository implements UserRepositoryInterface {
 		this.ormRepository = container.resolve(MikroORM).em.getRepository<UserModel>("User");
 	}
 
-	public async getUserByEmail(mail: string): Promise<Maybe<User>> {
-		const user = await this.ormRepository.findOne({
-			email: mail
+	public getUserById(userId: Identifier): Promise<Maybe<User>> {
+		return this.getUserByProperty("id", userId.value);
+	}
+
+	public async validateUserAccount(userId: Identifier): Promise<Result<Nothing<unknown>, Error>> {
+		await this.ormRepository.nativeUpdate({
+			id: userId.value,
+		}, {
+			isValidated: true,
+			validationToken: null
 		});
-        
-		if (user === null) {
-			return nothing();
-		}
+		return ok(nothing());
+	}
 
-		const validationToken = ValidationToken.from(user.validationToken ?? "");
-
-		return just(User.create({
-			password: Maybe.of(user.password),
-			validationToken: toMaybe(validationToken),
-			username: user.username,
-			email: user.email,
-			id: Identifier.create(user.id)
-		}));
+	public async getUserByEmail(mail: string): Promise<Maybe<User>> {
+		return this.getUserByProperty("email",mail);
 	}
 
 	public async createWithoutPassword(params: UserPropertiesWithoutPassword): Promise<Result<User, Error>> {
@@ -40,6 +38,7 @@ export class SQLUserRepository implements UserRepositoryInterface {
 		const userORM = this.ormRepository.create({
 			username: user.username,
 			id: user.id.value,
+			isValidated: false,
 			email: user.email,
 			password: undefined,
 			validationToken: user.validationToken.mapOr(undefined, (vt) => vt.value)
@@ -50,5 +49,26 @@ export class SQLUserRepository implements UserRepositoryInterface {
 		await this.ormRepository.persistAndFlush(userORM);
 
 		return ok(user);
+	}
+
+	private async getUserByProperty<K extends keyof UserModel>(property: K, value: UserModel[K]): Promise<Maybe<User>>  {
+		const user = await this.ormRepository.findOne({
+			[property]: value
+		});
+        
+		if (user === null) {
+			return nothing();
+		}
+
+		const validationToken = ValidationToken.from(user.validationToken ?? "");
+
+		return just(User.create({
+			isValidated: user.isValidated,
+			password: Maybe.of(user.password),
+			validationToken: toMaybe(validationToken),
+			username: user.username,
+			email: user.email,
+			id: Identifier.create(user.id)
+		}));
 	}
 }
