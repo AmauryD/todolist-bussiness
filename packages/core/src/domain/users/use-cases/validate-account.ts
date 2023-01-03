@@ -1,5 +1,6 @@
+
 import { Just } from "true-myth/maybe";
-import { err } from "true-myth/result";
+import { err, ok } from "true-myth/result";
 import { Identifier, UserDoesNotExistsError, ValidationToken } from "../../../index.js";
 import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
 import { InvalidValidationTokenError } from "../errors/invalid-validation-token.js";
@@ -48,5 +49,6 @@ export class ValidateAccountUseCase implements UseCaseInterface {
 		);
 
 		user.value.validate();
+		return ok(user);
 	}
 }
