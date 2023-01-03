@@ -3,12 +3,12 @@ import assert from "node:assert";
 import { it } from "node:test";
 import { Result } from "true-myth";
 import { ok } from "true-myth/result";
-import { ConfirmationMailData, ConfirmationMailFormatterInterface, MailMessage, MailServiceInterface, SendConfirmationMailUseCase } from "../../src/index.js";
+import { ConfirmationMailFormatterInterface, MailServiceInterface, SendConfirmationMailUseCase } from "../../src/index.js";
 
 class MailService implements MailServiceInterface {
 	public isCalled = false;
 
-	public async send(message: MailMessage): Promise<Result<unknown, Error>> {
+	public async send(): Promise<Result<unknown, Error>> {
 		this.isCalled = true;
 		return ok();
 	}
@@ -17,7 +17,7 @@ class MailService implements MailServiceInterface {
 class ConfirmationMailFormatter implements ConfirmationMailFormatterInterface {
 	public isCalled = false;
 
-	public format(data: ConfirmationMailData): string {
+	public format(): string {
 		this.isCalled = true;
 		return "";
 	}

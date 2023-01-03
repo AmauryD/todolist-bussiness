@@ -71,6 +71,10 @@ Un port peut être une interface de service ou une interface de repository requi
 Le Presenter est un `Humble Object`. Il sert à transformer le retour du Use Case de manière correcte pour la `Vue`.
 Il est également testable plus facilement qu'une Vue entière.
 
+Un `Mappers` est un objet qui transforme une donnée sous une forme en une autre forme.
+
+Un `Mapper` est un `Presenter` mais un `Presenter` n'est pas forcément un `Mapper`. Un `Presenter` peut faire un peu plus qu'un `Mapper`. [Voir ce Tweet de Uncle Bob](https://twitter.com/unclebobmartin/status/1008746090584256512).
+
 Ayant fait l'erreur et vu l'erreur autre part :
 => Le `Controller` ne doit pas connaître le `Presenter` !
 
@@ -78,8 +82,6 @@ Explication plus détaillée du l'image ci-dessus:
 
 - Le `Controller` appelle le `Use Case (Interactor)` en passant les données via une Interface `Input Port` (généralement un DTO).
 - Le `Use case` appelle ensuite le `Presenter` avec des données `Output Port` qui vont permettre de "présenter" la donnée.
-
-à noter que le `Presenter` n'est pas obligatoire.
 
 ### CQRS
 
@@ -278,6 +280,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://github.com/cleancoders/CleanCodeCaseStudy>
 <https://github.com/culttt/cribbb>
 <https://github.com/4lessandrodev/finance-project-ddd>
+<https://github.com/madetech/clean-architecture>
 
 ### Outils
 
