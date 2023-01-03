@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { it } from "node:test";
 import { Maybe } from "true-myth";
-import { just } from "true-myth/maybe";
+import { just, nothing } from "true-myth/maybe";
 import Result, { Err } from "true-myth/result";
 import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
 import { User } from "../../src/domain/users/entities/user.js";
@@ -18,6 +18,7 @@ class FailUserRepository implements UserRepositoryInterface {
 		return Maybe.of(User.create({
 			username: "amaury",
 			email: "a",
+			validationToken: nothing(),
 			password: just(""),
 			id: Identifier.create("1")
 		}));

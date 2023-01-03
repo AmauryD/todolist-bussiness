@@ -1,8 +1,10 @@
 import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { DomainEvents, Identifier, User, UserPropertiesWithoutPassword, UserRepositoryInterface } from "todo-domain";
+import { ValidationToken } from "todo-domain/domain/users/value-objects/validation-token.js";
 import { Result } from "true-myth";
 import Maybe, { just, nothing } from "true-myth/maybe";
 import { ok } from "true-myth/result";
+import { toMaybe } from "true-myth/toolbelt";
 import { container } from "tsyringe";
 import { UserModel } from "../models/user.js";
 
@@ -22,8 +24,11 @@ export class SQLUserRepository implements UserRepositoryInterface {
 			return nothing();
 		}
 
+		const validationToken = ValidationToken.from(user.validationToken ?? "");
+
 		return just(User.create({
 			password: Maybe.of(user.password),
+			validationToken: toMaybe(validationToken),
 			username: user.username,
 			email: user.email,
 			id: Identifier.create(user.id)

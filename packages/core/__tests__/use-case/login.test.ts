@@ -24,6 +24,7 @@ class ValidUserRepository implements UserRepositoryInterface {
 	public async getUserByEmail(mail: string): Promise<Maybe<User>> {
 		return Maybe.of(User.create({
 			username: "Amaury",
+			validationToken: nothing(),
 			id: Identifier.create("123"),
 			email: mail,
 			password: just("123")
@@ -82,6 +83,7 @@ it("Returns User snapshot when email is found and password matches",  async () =
 		email: "amaury",
 		id: "123",
 		password:"123",
-		username: "Amaury"
+		username: "Amaury",
+		validationToken: undefined
 	});
 });

@@ -10,6 +10,7 @@
     "build": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "todo-domain": "workspace:*",
     "true-myth": "^6.2.0"
   },
@@ -17,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "^18.11.17"
   }
 }

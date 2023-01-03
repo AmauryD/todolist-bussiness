@@ -24,6 +24,11 @@ export * from "./domain/users/services/auth.service.js";
 export * from "./domain/users/use-cases/login.js";
 export * from "./domain/users/use-cases/register.js";
 
+export * from "./domain/notifications/use-cases/send-confirmation-mail.js";
+export * from "./domain/notifications/services/mail-service.js";
+
+export * from "./domain/notifications/formatters/confirmation-mail.js";
+
 export * from "./domain/shared/interfaces/id-generator.js";
 
 export * from "./domain/todos/use-cases/create.js";

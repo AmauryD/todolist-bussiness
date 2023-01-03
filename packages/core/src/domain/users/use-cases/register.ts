@@ -1,9 +1,11 @@
+import { just } from "true-myth/maybe";
 import Result, { err, map } from "true-myth/result";
 import { IdGeneratorInterface } from "../../shared/interfaces/id-generator.js";
 import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
 import { UserSnapshot } from "../entities/user.js";
 import { UserAlreadyExistsError } from "../errors/already-exists.js";
 import { UserRepositoryInterface } from "../repositories/user.js";
+import { ValidationToken } from "../value-objects/validation-token.js";
 
 
 export interface RegisterUseCaseRequest {
@@ -29,6 +31,7 @@ export class RegisterUseCase implements UseCaseInterface {
 		const newUser = await this.userRepository.createWithoutPassword({
 			id: generatedId,
 			username: params.username,
+			validationToken: just(ValidationToken.generate()),
 			email: params.email
 		});
 

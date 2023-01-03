@@ -5,7 +5,7 @@ import { Class } from "type-fest";
 export abstract class EventListener<E extends DomainEventInterface> {
     protected abstract event: Class<E>;
     
-    public setupListener() {
+    public setup() {
     	DomainEvents.register((e) => this.handle(e as E), this.event.name);
     }
 

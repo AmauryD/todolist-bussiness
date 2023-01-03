@@ -1,7 +1,7 @@
 import { PresenterInterface } from "todo-domain/domain/shared/presenters/presenter.js";
 
 
-export class TodoListsRESTSerializer implements PresenterInterface<unknown> {
+export class TodoListsRESTPresenter implements PresenterInterface<unknown> {
 	public constructor(
 		private entityName: string
 	) {}

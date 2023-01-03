@@ -32,13 +32,19 @@ importers:
 
   packages/adapters:
     specifiers:
+      '@types/bcrypt': ^5.0.0
       '@types/node': ^18.11.17
+      bcrypt: ^5.1.0
       todo-domain: workspace:*
       true-myth: ^6.2.0
+      uuid: ^9.0.0
     dependencies:
+      bcrypt: 5.1.0
       todo-domain: link:../core
       true-myth: 6.2.0
+      uuid: 9.0.0
     devDependencies:
+      '@types/bcrypt': 5.0.0
       '@types/node': 18.11.17
 
   packages/app:
@@ -15892,6 +15898,11 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: true
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
+    dev: false
 
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}

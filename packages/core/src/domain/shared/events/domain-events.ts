@@ -1,5 +1,4 @@
 import { Maybe } from "true-myth";
-import { map } from "true-myth/maybe";
 import { DomainEventInterface } from "./domain-event.js";
 import { AggregateRoot } from "../entities/aggregate-root.js";
 
@@ -27,11 +26,15 @@ export class DomainEvents {
 	public static dispatchEventForAggregate (id: string): void {
 		const aggregate = Maybe.of(this.markedAggregates.get(id));
     
-		map((aggregate) => {
-			this.dispatchAggregateEvents(aggregate);
-			aggregate.clearEvents();
-			this.removeAggregateFromMarkedDispatchList(aggregate);
-		}, aggregate);
+		aggregate.match({
+			Just : (aggregate) => {
+				this.dispatchAggregateEvents(aggregate);
+				aggregate.clearEvents();
+				this.removeAggregateFromMarkedDispatchList(aggregate);
+			},
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			Nothing() {},
+		});
 	}
 
 	private static getHandlers(eventClassName: string) {
@@ -52,10 +55,14 @@ export class DomainEvents {
 		const eventClassName = event.constructor.name;
 		const handlers = this.getHandlers(eventClassName);
 		
-		map((handlers) => {
-			for (const handler of handlers) {
-				handler(event);
-			}
-		}, handlers);
+		handlers.match({
+			Just(handlers) {
+				for (const handler of handlers) {
+					handler(event);
+				}
+			},
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			Nothing() {},
+		});
 	}
 }

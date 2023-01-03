@@ -1,6 +1,6 @@
 import { Identifier, User, UserRepositoryInterface } from "todo-domain";
 import { Maybe, Result } from "true-myth";
-import { just } from "true-myth/maybe";
+import { just, nothing } from "true-myth/maybe";
 
 export class UserRepository implements UserRepositoryInterface {
 	public async createWithoutPassword(): Promise<Result<User, Error>> {
@@ -10,6 +10,7 @@ export class UserRepository implements UserRepositoryInterface {
 		return Maybe.of(User.create({
 			username: "amaury",
 			email: "a",
+			validationToken: nothing(),
 			password: just(""),
 			id: Identifier.create("1")
 		}));
