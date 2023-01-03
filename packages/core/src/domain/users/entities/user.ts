@@ -39,6 +39,10 @@ export class User extends AggregateRoot<UserSnapshot> {
 		return this.props.email;
 	}
 
+	public get validationToken() {
+		return this.props.validationToken;
+	}
+
 	public get username() {
 		return this.props.username;
 	}

@@ -1,6 +1,6 @@
 import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { DomainEvents, Identifier, User, UserPropertiesWithoutPassword, UserRepositoryInterface } from "todo-domain";
-import { ValidationToken } from "todo-domain/domain/users/value-objects/validation-token.js";
+import { ValidationToken } from "todo-domain";
 import { Result } from "true-myth";
 import Maybe, { just, nothing } from "true-myth/maybe";
 import { ok } from "true-myth/result";
@@ -41,7 +41,8 @@ export class SQLUserRepository implements UserRepositoryInterface {
 			username: user.username,
 			id: user.id.value,
 			email: user.email,
-			password: undefined
+			password: undefined,
+			validationToken: user.validationToken.mapOr(undefined, (vt) => vt.value)
 		});
 		
 		DomainEvents.markForDispatch(user);
