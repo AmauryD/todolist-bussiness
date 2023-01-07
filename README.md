@@ -83,6 +83,12 @@ Explication plus détaillée du l'image ci-dessus:
 - Le `Controller` appelle le `Use Case (Interactor)` en passant les données via une Interface `Input Port` (généralement un DTO).
 - Le `Use case` appelle ensuite le `Presenter` avec des données `Output Port` qui vont permettre de "présenter" la donnée.
 
+### Application Bussiness != Domain Business
+
+Même si ça à l'air assez clair, on a vite tendance à lier les deux en un seul même endroit et après se demander pourquoi ces deux choses sont séparées alors qu'elles sont si liées.
+
+Le fait est que le Domain Business concerne le domaine métier en général alors que le Domain Business concerne les Use Cases pour une application précise. Mais vu que l'en général, l'on a un domaine par projet, les deux semblent fort liés.
+
 ### CQRS
 
 *Pas mis en application car un peu trop overkill, mais Good To Know*.
