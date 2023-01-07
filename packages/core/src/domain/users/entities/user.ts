@@ -45,6 +45,10 @@ export class User extends AggregateRoot<UserSnapshot> {
 		return this.props.validationToken;
 	}
 
+	public get isValidated() {
+		return this.props.isValidated;
+	}
+
 	public get hasValidationToken() {
 		return this.validationToken.isJust;
 	}
@@ -61,7 +65,7 @@ export class User extends AggregateRoot<UserSnapshot> {
 		return user;
 	}
 
-	public validate() {
+	public validateAccount() {
 		this.props.isValidated = true;
 		this.addEvent(new UserAccountValidatedEvent(this.snapshot()));
 	}

@@ -48,7 +48,7 @@ export class ValidateAccountUseCase implements UseCaseInterface {
 			user.value.id
 		);
 
-		user.value.validate();
+		user.value.validateAccount();
 		return ok(user);
 	}
 }
