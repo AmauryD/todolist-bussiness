@@ -28,10 +28,10 @@ beforeEach(async () => {
 });
 
 test("Creates a todo-list", async () => {
-	const todoLists: any = await controller.create(ok({
+	const todoLists = await controller.create(ok({
 		name: "Coucou"
-	}));
-	assert.strictEqual(todoLists.todoLists.name, "Coucou");
+	})) as any;
+	assert.strictEqual(todoLists.todoList.name, "Coucou");
 });
 
 it("Rejects when bad result", async () => {

@@ -1,9 +1,9 @@
 import { container } from "@triptyk/nfw-core";
-import { ConfirmationMailFormatter, WebAuthController, WebTodoListController } from "adapters";
+import { ConfirmationMailFormatter, TodoListsWebPresenter, TodoListWebPresenter, WebAuthController, WebTodoListController } from "adapters";
 import { ConfirmationMailListener, CreateTodoListUseCase, ListTodoListsUseCase, LoginUseCase, RegisterUseCase, SendConfirmationMailUseCase, ValidateAccountUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
 import { SQLUserRepository } from "./database/repositories/user.repository.js";
-import { TodoListsRESTPresenter } from "adapters/src/presenters/rest.js";
+
 import { AuthService } from "adapters";
 import { UUIDGenerator } from "adapters";
 import { IAmBrokeAFMailService } from "./services/no-money-mail.js";
@@ -30,7 +30,7 @@ function registerAuthAdapter() {
 
 	const loginUseCase = new LoginUseCase(
 		userRepository,
-		new TodoListsRESTPresenter("todoLists"),
+		{} as never,
 		new AuthService()
 	);
 
@@ -55,12 +55,12 @@ function registerTodoListAdapter() {
 	const todoListRepository = new SQLTodoListRepository();
 	const useCase = new ListTodoListsUseCase(
 		todoListRepository,
-		new TodoListsRESTPresenter("todoLists")
+		new TodoListsWebPresenter()
 	);
 	const createUseCase = new CreateTodoListUseCase(
 		new UUIDGenerator(),
 		todoListRepository,
-		new TodoListsRESTPresenter("todoLists")
+		new TodoListWebPresenter()
 	);
 	const controller = new WebTodoListController(useCase, createUseCase);
 

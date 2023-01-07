@@ -4,10 +4,9 @@ import { InvalidCredentialsError } from "../../../domain/users/errors/invalid-cr
 import { UserDoesNotExistsError } from "../../../domain/users/errors/does-not-exists.js";
 import { UserRepositoryInterface } from "../repositories/user.js";
 import { AuthServiceInterface } from "../services/auth.service.js";
-import { PresenterInterface } from "../../shared/presenters/presenter.js";
 import { PasswordNotSetError } from "../../../domain/users/errors/password-not-set.js";
 import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
-import { User } from "../../../domain/users/entities/user.js";
+import { UserPresenterInterface } from "../presenters/user.js";
 
 export interface LoginUseCaseRequest {
     email: string,
@@ -17,7 +16,7 @@ export interface LoginUseCaseRequest {
 export class LoginUseCase implements UseCaseInterface {
 	public constructor(
 		public userRepository : UserRepositoryInterface,
-		public presenter: PresenterInterface<User>,
+		public presenter: UserPresenterInterface,
 		public authService: AuthServiceInterface
 	) {}
 

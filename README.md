@@ -75,8 +75,12 @@ Un `Mappers` est un objet qui transforme une donnée sous une forme en une autre
 
 Un `Mapper` est un `Presenter` mais un `Presenter` n'est pas forcément un `Mapper`. Un `Presenter` peut faire un peu plus qu'un `Mapper`. [Voir ce Tweet de Uncle Bob](https://twitter.com/unclebobmartin/status/1008746090584256512).
 
+Un Mapper est souvent utilisé afin de faire la logique de conversion entre un modèle domaine et un modèle ORM.
+
 Ayant fait l'erreur et vu l'erreur autre part :
 => Le `Controller` ne doit pas connaître le `Presenter` !
+
+Edit: Apparemment, c'est quand même valide que le controlleur appelle le Presenter (Uncle Bob lui même l'a fait). Le désaventage est que l'on couple le Controller et le Presenter.
 
 Explication plus détaillée du l'image ci-dessus:
 

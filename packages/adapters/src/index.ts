@@ -1,7 +1,8 @@
 export * from  "./controllers/todo-list.js";
 export * from  "./controllers/auth.js";
 
-export * from  "./presenters/rest.js";
+export * from  "./presenters/todo-list.js";
+export * from  "./presenters/todo-lists.js";
 
 export * from  "./formatters/confirmation-mail-formatter.js";
 

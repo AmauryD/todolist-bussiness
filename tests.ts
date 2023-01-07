@@ -1,7 +1,6 @@
 import glob from "glob";
 import { run } from "node:test";
 import chalk from "chalk";
-import { parse } from "yaml";
 
 interface TestDetailsParent {
   duration: number,
@@ -24,6 +23,8 @@ interface TestFail {
   name:string
 }
 
+let failCount = 0;
+
 const stream = run({
 	files: glob.sync("packages/*/__tests__/**/*.test.ts"),
 });
@@ -36,7 +37,7 @@ stream.on("test:diagnostic", (e) => {
 });
 
 stream.on("test:pass", (e) => {
-	titleTest(e as never, "green");
+	// titleTest(e as never, "green");
 });
 
 function isParentTest(e: TestDetailsParent | TestDetailsYAML): boolean {
@@ -56,13 +57,19 @@ function titleTest(e: BaseTest, color: "green" | "red") {
 
 stream.on("test:fail", (e: TestFail) => {
 	titleTest(e,"red");
+	failCount++;
 	
-	console.log(e);
 	if (typeof (e.details as TestDetailsYAML).yaml === "string") {
-		const parsed = parse((e.details as TestDetailsYAML).yaml, {
-			strict: false
-		});
-		console.log(`${parsed.error}`);
+		// const parsed = parse((e.details as TestDetailsYAML).yaml, {
+		// 	strict: false
+		// });
+		console.log(e.details);
 		return;
+	}
+});
+
+process.once("beforeExit",() => {
+	if (failCount > 0) {
+		process.exit(1);
 	}
 });

@@ -12,6 +12,7 @@ importers:
       eslint: ^8.30.0
       eslint-plugin-unused-imports: ^2.0.0
       glob: ^8.0.3
+      husky: ~8.0.2
       ts-node: ^10.9.1
       tsx: ^3.12.1
       typescript: ^4.9.4
@@ -25,6 +26,7 @@ importers:
       eslint: 8.30.0
       eslint-plugin-unused-imports: 2.0.0_juver2u3xbiwnjfu6d55vmnoem
       glob: 8.0.3
+      husky: 8.0.2
       ts-node: 10.9.1_moeqx3xmzxqxagf2sz6mqkbb7m
       tsx: 3.12.1
       typescript: 4.9.4

@@ -3,9 +3,6 @@ import { UserCreatedEvent } from "../../../domain/index.js";
 import { EventListener } from "../../../domain/shared/listeners/listener.js";
 import { SendConfirmationMailUseCase } from "../use-cases/send-confirmation-mail.js";
 
-/**
- * You should see the listener as a sort of controller ?
- */
 export class ConfirmationMailListener extends EventListener<UserCreatedEvent>  {
 	protected event = UserCreatedEvent;
 

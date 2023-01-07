@@ -1,8 +1,8 @@
 import { it } from "node:test";
 import { Identifier, LoginUseCase, RegisterUseCase, UserSnapshot, ValidateAccountUseCase } from "todo-domain";
 import { AuthServiceInterface } from "todo-domain";
-import { WebAuthController } from "../src/controllers/auth.js";
-import { UserRepository } from "./fixtures/user-memory-repository.js";
+import { WebAuthController } from "../../../src/controllers/auth.js";
+import { UserRepository } from "../../fixtures/user-memory-repository.js";
 import assert from "node:assert";
 import { Ok } from "true-myth/result";
 
