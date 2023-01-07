@@ -4,7 +4,7 @@ Ici sont les notes de mon voyage vers le monde du DDD avec la Clean architecture
 
 ## Notes
 
-Pour une to-do list, l'accumulation de toutes les notions ci-dessous et probablement très overkill.
+Pour une to-do list, l'accumulation de toutes les notions ci-dessous est probablement très overkill.
 
 Une simple application MVC bien testée aurait été beaucoup plus rapide et efficace.
 
@@ -92,7 +92,7 @@ Explication plus détaillée du l'image ci-dessus:
 Même si ça à l'air assez clair, on a vite tendance à lier les deux en un seul même endroit et après se demander pourquoi ces deux choses sont séparées alors qu'elles sont si liées.
 
 Le fait est que le Domain Business concerne le domaine métier en général alors que le Domain Business concerne les Use Cases pour une application précise. Mais vu que l'en général, l'on a un domaine par projet, les deux semblent fort liés.
-
+s
 ### CQRS
 
 *Pas mis en application car un peu trop overkill, mais Good To Know*.
@@ -113,6 +113,10 @@ Utilisation de commandes pour écrire des données et de queries pour lire les d
 Dans ce cas un use case ne pourra pas read/write en même temps.
 
 Un use-case est donc soit une `command` ou une `query`.
+
+## TDD
+
+Les projets doivent être réalisés en TDD.
 
 ## Event Sourcing
 
