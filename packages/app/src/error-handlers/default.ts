@@ -1,16 +1,7 @@
 import { RouterContext } from "@koa/router";
 import { MiddlewareInterface } from "@triptyk/nfw-http";
+import { WebError } from "adapters";
 import { DefaultState, DefaultContext, Next } from "koa";
-import { TodoListNameRequiredError } from "todo-domain";
-import { Class } from "type-fest";
-import { ValidationError } from "yup";
-import { BodyMustNotBeEmptyError } from "../errors/body-must-not-be-empty.js";
-
-const errorsStatuses = new Map<Class<Error>, number>([
-	[TodoListNameRequiredError, 400],
-	[BodyMustNotBeEmptyError, 400],
-	[ValidationError, 400]
-]);
 
 export class DefaultErrorHandlerMiddleware implements MiddlewareInterface {
 	public async use(context: RouterContext<DefaultState, DefaultContext, unknown>, next: Next): Promise<void> {
@@ -19,14 +10,22 @@ export class DefaultErrorHandlerMiddleware implements MiddlewareInterface {
 		}catch(e) {
 			console.log(e);
 			
-			if (e instanceof Error) {
+			if (e instanceof WebError) {
 				context.body = {
-					code: e.constructor.name,
-					name: e.name,
-					details: e.message,
+					code: e.original.constructor.name,
+					name: e.original.name,
+					details: e.original.message,
 				};
-				context.status = errorsStatuses.get(e.constructor as Class<Error>) ?? 500;
+				context.status = e.code;
+				return;
 			}
+
+			context.body = {
+				code: "InternalServerError",
+				name: "InternalServerError",
+				details: "InternalServerError"
+			};
+			context.status = 500;
 		}
 	}
 }

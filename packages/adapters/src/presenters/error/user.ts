@@ -1,5 +1,5 @@
 import { UserAlreadyExistsError, UserDoesNotExistsError, UserErrorPresenterInterface } from "todo-domain";
-import { WebError } from "../../interfaces/web-error.js";
+import { WebError } from "../../errors/web-error.js";
 import { Class } from "type-fest"; 
 
 export const errorsMap = new Map<Class<Error>, number>([
@@ -9,16 +9,10 @@ export const errorsMap = new Map<Class<Error>, number>([
 
 export class UserErrorPresenter implements UserErrorPresenterInterface {
 	public present(error: Error): WebError {
-		const knownError = errorsMap.get(error.constructor as Class<Error>);
-		if (knownError) {
-			return {
-				code: knownError,
-				original: error
-			};
+		const knownErrorCode = errorsMap.get(error.constructor as Class<Error>);
+		if (knownErrorCode) {
+			return new WebError(knownErrorCode, error);
 		}
-		return {
-			code: 500,
-			original: error
-		};
+		return new WebError(500, error);
 	}
 }

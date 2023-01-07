@@ -1,4 +1,5 @@
 import { LoginUseCase, RegisterUseCase, ValidateAccountUseCase, LoginUseCaseRequest, RegisterUseCaseRequest } from "todo-domain";
+import { WebError } from "../index.js";
 import { UserErrorPresenter } from "../presenters/error/user.js";
 import { UserPresenter } from "../presenters/user.js";
 
@@ -14,7 +15,11 @@ export class WebAuthController {
 	}
 
 	public async register(registerRequest: RegisterUseCaseRequest) {
-		return this.registerUseCase.execute(registerRequest);
+		const register = await this.registerUseCase.execute(registerRequest);
+		if (register instanceof WebError) {
+			throw register;
+		}
+		return register;
 	}
 
 	public async validateAccount(userId: string, token: string) {

@@ -7,6 +7,8 @@ import { SQLUserRepository } from "./database/repositories/user.repository.js";
 import { AuthService } from "adapters";
 import { UUIDGenerator } from "adapters";
 import { IAmBrokeAFMailService } from "./services/no-money-mail.js";
+import { UserErrorPresenter } from "adapters";
+import { UserPresenter } from "adapters";
 
 export async function setupDI() {
 	registerTodoListAdapter();
@@ -30,14 +32,14 @@ function registerAuthAdapter() {
 
 	const loginUseCase = new LoginUseCase(
 		userRepository,
-		{} as never,
+		new UserPresenter(),
 		new AuthService()
 	);
 
 	const registerUseCase = new RegisterUseCase(
 		userRepository,
-		{} as never,
-		{} as never,
+		new UserPresenter(),
+		new UserErrorPresenter(),
 		new UUIDGenerator()
 	);
 

@@ -16,8 +16,8 @@ it("Handles errors correctly", async () => {
 	await middleware.use(ctx as never,fakeControllerAction);
 	assert.strictEqual(ctx.status,500);
 	assert.deepStrictEqual(ctx.body,{
-		details: "Blah",
-		code: "Error",
-		name: "Error"
+		details: "InternalServerError",
+		code: "InternalServerError",
+		name: "InternalServerError"
 	});
 });
