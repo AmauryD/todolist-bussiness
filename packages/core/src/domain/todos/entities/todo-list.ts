@@ -1,9 +1,10 @@
 import Result, { err, ok } from "true-myth/result";
-import { TodoListCreatedEvent } from "../events/todo-created.js";
+import { TodoListCreatedEvent } from "../events/todo-list-created.js";
 import { AggregateRoot } from "../../shared/entities/aggregate-root.js";
 import { Todo, TodoProperties, TodoSnapshot } from "./todo.js";
 import { TodoListNameRequiredError } from "../errors/todo-list-name-required.js";
 import { Identifier } from "../../shared/value-objects/identifier.js";
+import { TodoCreatedEvent } from "../events/todo-created.js";
 
 export interface TodoListProperties {
     id: Identifier,
@@ -56,7 +57,10 @@ export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
 
 	public addTodo(todo: TodoProperties) {
 		const newTodo = Todo.create(todo);
-		newTodo.map((t) => this._todos.add(t));
+		newTodo.map((t) => {
+			this.addEvent(new TodoCreatedEvent(t));
+			return this._todos.add(t);
+		});
 	}
 
 	public removeTodo(todoId: TodoProperties["id"]) {

@@ -6,6 +6,7 @@ import { Identifier } from "../../../src/domain/shared/value-objects/identifier.
 import { assertError } from "../../utils/assert-error.js";
 import { TodoListNameRequiredError } from "../../../src/index.js";
 import { Ok } from "true-myth/result";
+import { TodoCreatedEvent } from "../../../src/domain/todos/events/todo-created.js";
 
 let todoList : TodoListAggregateRoot;
 
@@ -53,6 +54,15 @@ it("has a value of not done when all sub-tasks are not done", () => {
 	todoList.addTodo({...todoStructure, isDone: false });
 	assert.strictEqual(todoList.isDone,false);
 });
+
+
+it("Adds TodoCreatedEvent when a todo is added to todoList", () => {
+	todoList.addTodo({...todoStructure, isDone: false });
+	assert.strictEqual(todoList.domainEvents.length, 2);
+	assert.strictEqual(todoList.domainEvents[1].constructor, TodoCreatedEvent);
+	assert.strictEqual(todoList.domainEvents[1].getId(), todoStructure.id.value);
+});
+
 
 it("Creates a snapshot of a todo-list", () => {
 	assert.deepStrictEqual(todoList.snapshot(), {

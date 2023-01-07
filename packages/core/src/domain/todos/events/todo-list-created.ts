@@ -1,11 +1,11 @@
-import { Todo } from "../../../index.js";
+import { TodoListAggregateRoot } from "../../../index.js";
 import { DomainEventInterface } from "../../shared/events/domain-event.js";
 
-export class TodoCreatedEvent implements DomainEventInterface {
+export class TodoListCreatedEvent implements DomainEventInterface {
 	public date: Date;
 	
 	public constructor(
-        public entity: Readonly<Todo>
+        public entity: Readonly<TodoListAggregateRoot>
 	) {
 		this.date = new Date();
 	}
