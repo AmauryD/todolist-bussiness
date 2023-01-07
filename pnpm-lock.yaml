@@ -39,6 +39,7 @@ importers:
       bcrypt: ^5.1.0
       todo-domain: workspace:*
       true-myth: ^6.2.0
+      type-fest: ^3.5.0
     dependencies:
       bcrypt: 5.1.0
       todo-domain: link:../core
@@ -46,6 +47,7 @@ importers:
     devDependencies:
       '@types/bcrypt': 5.0.0
       '@types/node': 18.11.17
+      type-fest: 3.5.0
 
   packages/app:
     specifiers:
