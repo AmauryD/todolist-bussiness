@@ -1,7 +1,8 @@
 import { ControllerParamsContext, createCustomDecorator } from "@triptyk/nfw-http";
 import { Maybe } from "true-myth";
 import { isNothing, nothing } from "true-myth/maybe";
-import Result, { err } from "true-myth/result";
+import Result from "true-myth/result";
+import { fromMaybe } from "true-myth/toolbelt";
 import { ValidationError } from "yup";
 import { BodyMustNotBeEmptyError } from "../errors/body-must-not-be-empty.js";
 
@@ -15,10 +16,7 @@ export function extractContextRequestBody(context: ControllerParamsContext<unkno
 
 export const restBody = () => async (context: ControllerParamsContext<unknown>): Promise<Result<unknown, ValidationError | BodyMustNotBeEmptyError>> => {
 	const maybeBody = extractContextRequestBody(context);
-	if (isNothing(maybeBody)) {
-		return err(new BodyMustNotBeEmptyError());
-	}
-	return maybeBody.value;
+	return fromMaybe(new BodyMustNotBeEmptyError(), maybeBody);
 };
 
 export function RestBody() {
