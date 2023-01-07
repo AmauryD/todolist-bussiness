@@ -1,4 +1,4 @@
-import { EntityInterface } from "../../../index.js";
+import { EntityInterface } from "../../index.js";
 import { DomainEventInterface } from "../events/domain-event.js";
 import { Identifier } from "../value-objects/identifier.js";
 

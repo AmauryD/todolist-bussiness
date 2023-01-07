@@ -1,4 +1,4 @@
-import { PresenterInterface } from "todo-domain/domain/shared/presenters/presenter.js";
+import { PresenterInterface } from "todo-domain/src/application/shared/presenters/presenter.js";
 
 
 export class TodoListsRESTPresenter implements PresenterInterface<unknown> {

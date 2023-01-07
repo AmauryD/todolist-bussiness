@@ -1,7 +1,7 @@
 import { Maybe, Result } from "true-myth";
 import { Nothing } from "true-myth/maybe";
-import { Identifier } from "../../../index.js";
-import { User, UserProperties } from "../entities/user.js";
+import { Identifier } from "../../../domain/index.js";
+import { User, UserProperties } from "../../../domain/users/entities/user.js";
 
 export type UserPropertiesWithoutPassword = Omit<UserProperties, "password">;
  

@@ -1,7 +1,7 @@
 
 import { TodoListRepositoryInterface } from "../repositories/todo-list.js";
 import { PresenterInterface } from "../../shared/presenters/presenter.js";
-import { TodoListAggregateRoot } from "../../../index.js";
+import { TodoListAggregateRoot } from "../../../domain/index.js";
 import { Result } from "true-myth";
 import { ok } from "true-myth/result";
 import { IdGeneratorInterface } from "../../shared/interfaces/id-generator.js";

@@ -1,4 +1,4 @@
-import { IdGeneratorInterface } from "../../src/domain/shared/interfaces/id-generator.js";
+import { IdGeneratorInterface } from "../../src/application/shared/interfaces/id-generator.js";
 import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
 
 

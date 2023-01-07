@@ -4,7 +4,7 @@ import { nothing } from "true-myth/maybe";
 import { Class } from "type-fest";
 import { User } from "../../../src/domain/users/entities/user.js";
 import { UserAccountValidatedEvent } from "../../../src/domain/users/events/account-validated.js";
-import { DomainEventInterface, Identifier, UserCreatedEvent } from "../../../src/index.js";
+import { DomainEventInterface, Identifier, UserCreatedEvent } from "../../../src/domain/index.js";
 
 function createUser() {
 	return User.create({

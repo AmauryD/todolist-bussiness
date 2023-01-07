@@ -114,6 +114,14 @@ Ne pas confondre avec les évènements du DDD.
 
 ## Using DDD
 
+### Correspondances des couches avec la Clean Architecture
+
+Il y a 3 couches en DDD:
+
+- Domaine => Couche Enterprise Business Rules
+- Application => Couche Application Business Rules
+- Infrastructure => Couche Adapters + Frameworks & Drivers.
+
 ### Concepts
 
 #### Ubiquitous Language
@@ -176,6 +184,8 @@ Les données des évènements doivent être en Read-Only.
 L'ORM/DB a le devoir de décider quand les évènements peuvent être dispatchés. Car c'est lui seul qui sait si les données ont bien été traitées/persistées vers le moteur de stockage. Dans ce cas-ci, ce serait soit au repository, soit aux hooks de l'ORM de s'en charger.
 
 #### Application Services
+
+
 
 ## Using functionnal programming
 

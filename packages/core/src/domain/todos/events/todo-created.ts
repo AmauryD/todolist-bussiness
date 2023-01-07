@@ -1,4 +1,4 @@
-import { Todo } from "../../../index.js";
+import { Todo } from "../../index.js";
 import { DomainEventInterface } from "../../shared/events/domain-event.js";
 
 export class TodoCreatedEvent implements DomainEventInterface {

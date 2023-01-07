@@ -1,13 +1,13 @@
 
 import Result, { err, ok } from "true-myth/result";
-import { InvalidCredentialsError } from "../errors/invalid-credentials.js";
-import { UserDoesNotExistsError } from "../errors/does-not-exists.js";
+import { InvalidCredentialsError } from "../../../domain/users/errors/invalid-credentials.js";
+import { UserDoesNotExistsError } from "../../../domain/users/errors/does-not-exists.js";
 import { UserRepositoryInterface } from "../repositories/user.js";
 import { AuthServiceInterface } from "../services/auth.service.js";
 import { PresenterInterface } from "../../shared/presenters/presenter.js";
-import { PasswordNotSetError } from "../errors/password-not-set.js";
+import { PasswordNotSetError } from "../../../domain/users/errors/password-not-set.js";
 import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
-import { User } from "../entities/user.js";
+import { User } from "../../../domain/users/entities/user.js";
 
 export interface LoginUseCaseRequest {
     email: string,

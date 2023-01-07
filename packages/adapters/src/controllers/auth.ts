@@ -1,4 +1,4 @@
-import { LoginUseCase, LoginUseCaseRequest, RegisterUseCase, RegisterUseCaseRequest, ValidateAccountUseCase } from "todo-domain/index.js";
+import { LoginUseCase, RegisterUseCase, ValidateAccountUseCase, LoginUseCaseRequest, RegisterUseCaseRequest } from "todo-domain";
 
 export class WebAuthController {
 	public constructor(
