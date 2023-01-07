@@ -1,8 +1,8 @@
 import { ControllerParamsContext, createCustomDecorator } from "@triptyk/nfw-http";
 import { Maybe } from "true-myth";
 import { isNothing, nothing } from "true-myth/maybe";
-import Result, { err, ok } from "true-myth/result";
-import { InferType, Schema, ValidationError } from "yup";
+import Result, { err } from "true-myth/result";
+import { ValidationError } from "yup";
 import { BodyMustNotBeEmptyError } from "../errors/body-must-not-be-empty.js";
 
 export function extractContextRequestBody(context: ControllerParamsContext<unknown>) {
@@ -13,24 +13,15 @@ export function extractContextRequestBody(context: ControllerParamsContext<unkno
 	return Maybe.of(Object.values(realBody).at(0));
 }
 
-export async function validateSchema<T extends Schema, E extends InferType<T>>(schema: T, body: unknown): Promise<Result<E, ValidationError>> {
-	try {
-		const validated = await schema.validate(body);
-		return ok(validated);
-	} catch(e) {
-		return err(e as ValidationError);
-	}
-}
-
-export const restBody = (schema: Schema) => async (context: ControllerParamsContext<unknown>): Promise<Result<unknown, ValidationError | BodyMustNotBeEmptyError>> => {
+export const restBody = () => async (context: ControllerParamsContext<unknown>): Promise<Result<unknown, ValidationError | BodyMustNotBeEmptyError>> => {
 	const maybeBody = extractContextRequestBody(context);
 	if (isNothing(maybeBody)) {
 		return err(new BodyMustNotBeEmptyError());
 	}
-	return validateSchema(schema,maybeBody.value);
+	return maybeBody.value;
 };
 
-export function RestBody(schema: Schema) {
-	return createCustomDecorator(restBody(schema), "rest-body");
+export function RestBody() {
+	return createCustomDecorator(restBody(), "rest-body");
 }
 

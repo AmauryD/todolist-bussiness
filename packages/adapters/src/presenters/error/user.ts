@@ -2,14 +2,14 @@ import { UserAlreadyExistsError, UserDoesNotExistsError, UserErrorPresenterInter
 import { WebError } from "../../errors/web-error.js";
 import { Class } from "type-fest"; 
 
-export const errorsMap = new Map<Class<Error>, number>([
+export const errorToErrorCodeMap = new Map<Class<Error>, number>([
 	[UserAlreadyExistsError, 409],
 	[UserDoesNotExistsError, 404]
 ]);
 
 export class UserErrorPresenter implements UserErrorPresenterInterface {
 	public present(error: Error): WebError {
-		const knownErrorCode = errorsMap.get(error.constructor as Class<Error>);
+		const knownErrorCode = errorToErrorCodeMap.get(error.constructor as Class<Error>);
 		if (knownErrorCode) {
 			return new WebError(knownErrorCode, error);
 		}

@@ -1,11 +1,7 @@
 import { Controller, Param, POST, UseMiddleware } from "@triptyk/nfw-http";
 import { WebAuthController as AuthControllerAdapter } from "adapters";
-import { Result } from "true-myth";
 import { Body } from "../decorators/json-body.js";
 import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
-import { loginSchema, LoginValidationSchemaType } from "../validations/login.js";
-import { registerSchema, RegisterValidationSchemaType } from "../validations/register.js";
-
 @Controller({
 	routeName: "/api/v1/auth"
 })
@@ -16,7 +12,7 @@ export class AuthController {
 	) {}
 
 	@POST("/register")
-	public async register(@Body(registerSchema) registerRequest: Result<RegisterValidationSchemaType, Error>) {
+	public async register(@Body() registerRequest: any) {
 		if (registerRequest.isErr) {
 			throw registerRequest.error;
 		}
@@ -25,7 +21,7 @@ export class AuthController {
 	}
 
 	@POST("/login")
-	public login(@Body(loginSchema) loginRequest: LoginValidationSchemaType) {
+	public login(@Body() loginRequest: any) {
 		return this.authControllerAdapter.login(loginRequest);
 	}
 

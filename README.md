@@ -101,6 +101,7 @@ Même si ça à l'air assez clair, on a vite tendance à lier les deux en un seu
 
 Le fait est que le Domain Business concerne le domaine métier en général alors que le Domain Business concerne les Use Cases pour une application précise. Mais vu que l'en général, l'on a un domaine par projet, les deux semblent fort liés.
 s
+
 ### CQRS
 
 *Pas mis en application car un peu trop overkill, mais Good To Know*.
@@ -225,6 +226,16 @@ Dans ce projet, j'ai commencé à utiliser un peu de programmation fonctionnelle
 
 Celà dépend grandement du cas, si votre validation touche à une règle métier alors elle doit être dans les couches du domaine.
 Si vous validez par exemple un format JSON ou autre chose qui ne touche pas au métier ou n'est pas une règle absolue pour votre métier alors elle doit se trouver dans les couches application.
+
+Discussion intéressante où Uncle Bob répond lui-même.
+<https://groups.google.com/g/clean-code-discussion/c/latn4x6Zo7w/m/bFwtDI1XSA8J>
+
+>Entities can have validation functions, but they should be application specific.  That means they are general validations that enforce invariants, and not specific validations for specific cases.  
+Imagine a payroll system in which employees under the age of 18 must be hourly, but 18 and over can be salaried or commissioned as well.  The interactor that adds new employees accepts a request data structure that has specified hourly, salaried, or commissioned, as well as age.  Who is responsible for validating that the age and payment classification are appropriate?
+Before we answer that, let's get one thing out of the way.  What happens at the GUI is irrelevant.  You might have some javascript that prevents ages under 18 from selecting anything but Hourly; but that is beside the point.  The validation still has to be done on the interactor side of the boundary because that side is not allowed to depend upon the GUI in any way.  
+Should the age restriction be enforced by the employee entity, or by an sub-interactor called by the add-employee-interactor and the change-employee-interator?  This depends entirely on the volatility of the policy.  If this is an iron-clad policy that must be maintained by every application that uses the Employee entity, then by all means put it in that entity.  If, however, that policy is subject to change in such a way that different applications would use different policies. (e.g. different states or different countries) then it might be better to keep the validation in the interactors.  
+Interactors are, by their nature, more volatile than entites.  The two kinds of objects change at different rates and for different reasons.  The validation should go in the object that has the most similar change rate.  So if the age/class restriction is volatile, and might change based on time, region, mangement style, or etc... then I'd put it in the interactors.  If, however, the age/class restriction is fundamental to the Employee entity, and won't change unless there is a foundational change to that entity, then it would be better to put the validation in the entity.
+This is really just the SRP / CCP again. Gather together things that change for the same reasons.  Separate things that change for different reasons.
 
 ### Où placer la logique d'Authorization ?
 
