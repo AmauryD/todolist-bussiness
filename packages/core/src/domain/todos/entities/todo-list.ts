@@ -56,7 +56,7 @@ export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
 
 	public addTodo(todo: TodoProperties) {
 		const newTodo = Todo.create(todo);
-		this._todos.add(newTodo);
+		newTodo.map((t) => this._todos.add(t));
 	}
 
 	public removeTodo(todoId: TodoProperties["id"]) {

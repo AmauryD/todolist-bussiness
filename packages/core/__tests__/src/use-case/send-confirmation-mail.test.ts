@@ -3,7 +3,7 @@ import assert from "node:assert";
 import { it } from "node:test";
 import { Result } from "true-myth";
 import { ok } from "true-myth/result";
-import { ConfirmationMailFormatterInterface, MailServiceInterface, SendConfirmationMailUseCase } from "../../src/index.js";
+import { ConfirmationMailFormatterInterface, MailServiceInterface, SendConfirmationMailUseCase } from "../../../src/index.js";
 
 class MailService implements MailServiceInterface {
 	public isCalled = false;

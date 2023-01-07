@@ -1,3 +1,4 @@
+import Result, { err, ok } from "true-myth/result";
 import { EntityInterface } from "../../shared/entities/entity.js";
 import { Identifier } from "../../shared/value-objects/identifier.js";
 import { TodoTitleRequiredError } from "../errors/todo-title-required.js";
@@ -29,11 +30,11 @@ export class Todo implements EntityInterface<TodoSnapshot> {
 		return this.props.id;
 	}
 
-	public static create(props: TodoProperties) {
+	public static create(props: TodoProperties): Result<Todo,TodoTitleRequiredError> {
 		if (!props.title) {
-			throw new TodoTitleRequiredError();
+			return err(new TodoTitleRequiredError());
 		}
-		return new Todo(props);
+		return ok(new Todo(props));
 	}
 
 	public snapshot() {

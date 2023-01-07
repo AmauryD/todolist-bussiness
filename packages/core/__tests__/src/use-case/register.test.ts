@@ -3,12 +3,12 @@ import { it } from "node:test";
 import { Maybe } from "true-myth";
 import { just, Nothing, nothing } from "true-myth/maybe";
 import Result, { Err } from "true-myth/result";
-import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
-import { User } from "../../src/domain/users/entities/user.js";
-import { UserAlreadyExistsError } from "../../src/domain/users/errors/already-exists.js";
-import { UserRepositoryInterface } from "../../src/domain/users/repositories/user.js";
-import { RegisterUseCase } from "../../src/domain/users/use-cases/register.js";
-import { FakeIdGenerator } from "../fixtures/id-generator.js";
+import { Identifier } from "../../../src/domain/shared/value-objects/identifier.js";
+import { User } from "../../../src/domain/users/entities/user.js";
+import { UserAlreadyExistsError } from "../../../src/domain/users/errors/already-exists.js";
+import { UserRepositoryInterface } from "../../../src/domain/users/repositories/user.js";
+import { RegisterUseCase } from "../../../src/domain/users/use-cases/register.js";
+import { FakeIdGenerator } from "../../fixtures/id-generator.js";
 
 class FailUserRepository implements UserRepositoryInterface {
 	public validateUserAccount(): Promise<Result<Nothing<unknown>, Error>> {

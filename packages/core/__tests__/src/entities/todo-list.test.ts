@@ -1,10 +1,14 @@
 
 import { beforeEach, it } from "node:test";
 import assert from "node:assert";
-import { TodoListAggregateRoot } from "../../src/domain/todos/entities/todo-list.js";
-import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
+import { TodoListAggregateRoot } from "../../../src/domain/todos/entities/todo-list.js";
+import { Identifier } from "../../../src/domain/shared/value-objects/identifier.js";
+import { assertError } from "../../utils/assert-error.js";
+import { TodoListNameRequiredError } from "../../../src/index.js";
+import { Ok } from "true-myth/result";
 
 let todoList : TodoListAggregateRoot;
+
 const todoStructure = {
 	isDone: true,
 	title: "title",
@@ -15,12 +19,12 @@ beforeEach(() => {
 	const todoListCreationResult = TodoListAggregateRoot.create({
 		id: Identifier.create("1"),
 		name: "Coucou"
-	});
-	todoList = todoListCreationResult.unwrapOrElse(() => undefined as never);
+	}) as Ok<TodoListAggregateRoot, never>;
+	todoList = todoListCreationResult.value;
 });
 
 it("Throws an error when todo-list name is not provided", () => {
-	assert.strictEqual(TodoListAggregateRoot.create({ name: undefined } as never).isErr, true);
+	assertError(TodoListAggregateRoot.create({ name: undefined } as never),TodoListNameRequiredError);
 });
 
 it("Creates a todo-list with title and id", () => {

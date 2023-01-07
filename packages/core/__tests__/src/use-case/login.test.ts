@@ -3,13 +3,13 @@ import { it } from "node:test";
 import { Maybe } from "true-myth";
 import { just, Nothing, nothing } from "true-myth/maybe";
 import Result, { Err, Ok } from "true-myth/result";
-import { User, UserSnapshot } from "../../src/domain/users/entities/user.js";
-import { InvalidCredentialsError } from "../../src/domain/users/errors/invalid-credentials.js";
-import { UserDoesNotExistsError } from "../../src/domain/users/errors/does-not-exists.js";
-import { UserRepositoryInterface } from "../../src/domain/users/repositories/user.js";
-import { AuthServiceInterface } from "../../src/domain/users/services/auth.service.js";
-import { LoginUseCase } from "../../src/domain/users/use-cases/login.js";
-import { Identifier } from "../../src/domain/shared/value-objects/identifier.js";
+import { User, UserSnapshot } from "../../../src/domain/users/entities/user.js";
+import { InvalidCredentialsError } from "../../../src/domain/users/errors/invalid-credentials.js";
+import { UserDoesNotExistsError } from "../../../src/domain/users/errors/does-not-exists.js";
+import { UserRepositoryInterface } from "../../../src/domain/users/repositories/user.js";
+import { AuthServiceInterface } from "../../../src/domain/users/services/auth.service.js";
+import { LoginUseCase } from "../../../src/domain/users/use-cases/login.js";
+import { Identifier } from "../../../src/domain/shared/value-objects/identifier.js";
 
 class InvalidUserRepository implements UserRepositoryInterface {
 	public validateUserAccount(): Promise<Result<Nothing<unknown>, Error>> {

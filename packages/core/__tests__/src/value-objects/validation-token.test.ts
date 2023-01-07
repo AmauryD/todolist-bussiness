@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import test, { it } from "node:test";
 import { Ok } from "true-myth/result";
-import { ValidationToken } from "../../src/index.js";
+import { ValidationToken } from "../../../src/index.js";
 
 it("generates a non-empty string", () => {
 	assert.strictEqual(ValidationToken.generate().value.length > 0, true);

@@ -1,9 +1,9 @@
-import { CreateTodoListUseCase } from "../../src/domain/todos/use-cases/create.js";
+import { CreateTodoListUseCase } from "../../../src/domain/todos/use-cases/create.js";
 import { FakeTodoListRepository } from "./common.js";
 import { test } from "node:test";
 import assert from "node:assert";
 import { unwrapOr } from "true-myth/result";
-import { FakeIdGenerator } from "../fixtures/id-generator.js";
+import { FakeIdGenerator } from "../../fixtures/id-generator.js";
 
 
 test("It creates a todo-list", async () => {
