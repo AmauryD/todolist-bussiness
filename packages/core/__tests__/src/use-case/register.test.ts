@@ -2,7 +2,7 @@ import assert from "node:assert";
 import { it } from "node:test";
 import { Maybe } from "true-myth";
 import { just, Nothing, nothing } from "true-myth/maybe";
-import Result, { Err } from "true-myth/result";
+import Result from "true-myth/result";
 import { Identifier } from "../../../src/domain/shared/value-objects/identifier.js";
 import { User } from "../../../src/domain/users/entities/user.js";
 import { UserAlreadyExistsError } from "../../../src/domain/users/errors/already-exists.js";
@@ -32,9 +32,15 @@ class FailUserRepository implements UserRepositoryInterface {
 	}
 }
 
+const mirrorPresenter = {
+	present : (data: unknown) => data,
+};
+
 it("Registers a new User returns UserAlreadyExists error when email is already taken", async () => {
 	const useCase = new RegisterUseCase(
 		new FailUserRepository(),
+		mirrorPresenter,
+		mirrorPresenter,
 		new FakeIdGenerator()
 	);
     
@@ -43,6 +49,5 @@ it("Registers a new User returns UserAlreadyExists error when email is already t
 		email: "amaury@tripttyk.eu"
 	});
 
-	assert.strictEqual(newUser?.isErr, true);
-	assert.strictEqual((newUser as Err<never,UserAlreadyExistsError>).error.constructor, UserAlreadyExistsError);
+	assert.strictEqual(newUser instanceof UserAlreadyExistsError, true);
 });

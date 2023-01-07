@@ -1,9 +1,11 @@
 import { LoginUseCase, RegisterUseCase, ValidateAccountUseCase, LoginUseCaseRequest, RegisterUseCaseRequest } from "todo-domain";
+import { UserErrorPresenter } from "../presenters/error/user.js";
+import { UserPresenter } from "../presenters/user.js";
 
 export class WebAuthController {
 	public constructor(
         public loginUseCase: LoginUseCase,
-        public registerUseCase: RegisterUseCase,
+        public registerUseCase: RegisterUseCase<UserPresenter,UserErrorPresenter>,
 		public validateAccountUseCase: ValidateAccountUseCase
 	) {}
 

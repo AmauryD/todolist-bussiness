@@ -30,9 +30,16 @@ function setupValidateAccountUseCase() {
 	);
 }
 
-function setupRegisterUseCase(): RegisterUseCase {
+const mirrorPresenter = {
+	present : (data: unknown) => data,
+};
+
+
+function setupRegisterUseCase() {
 	return new RegisterUseCase(
 		new UserRepository(),
+		mirrorPresenter,
+		mirrorPresenter,
 		{
 			generate() {
 				return Identifier.create("1");
@@ -44,7 +51,7 @@ function setupRegisterUseCase(): RegisterUseCase {
 it("Log user in", async () => {
 	const authController = new WebAuthController(
 		setupLoginUseCase(),
-		setupRegisterUseCase(),
+		setupRegisterUseCase() as never,
 		setupValidateAccountUseCase()
 	);
 

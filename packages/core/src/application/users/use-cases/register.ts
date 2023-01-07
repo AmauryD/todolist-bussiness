@@ -1,11 +1,11 @@
 import { just } from "true-myth/maybe";
-import Result, { err, map } from "true-myth/result";
 import { IdGeneratorInterface } from "../../shared/interfaces/id-generator.js";
 import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
-import { UserSnapshot } from "../../../domain/users/entities/user.js";
 import { UserAlreadyExistsError } from "../../../domain/users/errors/already-exists.js";
 import { UserRepositoryInterface } from "../repositories/user.js";
 import { ValidationToken } from "../../../domain/users/value-objects/validation-token.js";
+import { UserPresenterInterface } from "../presenters/user.js";
+import { UserErrorPresenterInterface } from "../presenters/error/user.js";
 
 
 export interface RegisterUseCaseRequest {
@@ -13,17 +13,23 @@ export interface RegisterUseCaseRequest {
     email: string;
 }
 
-export class RegisterUseCase implements UseCaseInterface {
+export class RegisterUseCase<
+	O extends UserPresenterInterface,
+	OE extends UserErrorPresenterInterface,
+	RT = ReturnType<O["present"]> | ReturnType<OE["present"]>
+> implements UseCaseInterface {
 	public constructor(
         public userRepository: UserRepositoryInterface,
+		public userPresenter: O,
+		public userErrorPresenter: OE,
 		public idGenerator: IdGeneratorInterface
 	) {}
 
-	public async execute(params: RegisterUseCaseRequest): Promise<Result<UserSnapshot, UserAlreadyExistsError | Error>> {
+	public async execute(params: RegisterUseCaseRequest): Promise<RT> {
 		const existingEmailUser = await this.userRepository.getUserByEmail(params.email);
 
 		if (existingEmailUser.isJust) {
-			return err(new UserAlreadyExistsError());
+			return this.userErrorPresenter.present(new UserAlreadyExistsError()) as RT;
 		}
 
 		const generatedId = this.idGenerator.generate();
@@ -36,6 +42,9 @@ export class RegisterUseCase implements UseCaseInterface {
 			email: params.email
 		});
 
-		return map((m) => m.snapshot(), newUser);
+		return newUser.match({
+			Ok : (value) => this.userPresenter.present(value),
+			Err: (error) => this.userErrorPresenter.present(error),
+		}) as RT;
 	}
 }

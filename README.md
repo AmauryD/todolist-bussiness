@@ -78,14 +78,22 @@ Un `Mapper` est un `Presenter` mais un `Presenter` n'est pas forcément un `Mapp
 Un Mapper est souvent utilisé afin de faire la logique de conversion entre un modèle domaine et un modèle ORM.
 
 Ayant fait l'erreur et vu l'erreur autre part :
-=> Le `Controller` ne doit pas connaître le `Presenter` !
-
-Edit: Apparemment, c'est quand même valide que le controlleur appelle le Presenter (Uncle Bob lui même l'a fait). Le désaventage est que l'on couple le Controller et le Presenter.
+=> Le `Controller` ne doit pas connaître le `Presenter`.
 
 Explication plus détaillée du l'image ci-dessus:
 
 - Le `Controller` appelle le `Use Case (Interactor)` en passant les données via une Interface `Input Port` (généralement un DTO).
 - Le `Use case` appelle ensuite le `Presenter` avec des données `Output Port` qui vont permettre de "présenter" la donnée.
+
+Edit: Apparemment, c'est quand même valide que le controlleur appelle le Presenter (Uncle Bob lui même l'a fait). Le désaventage est que l'on couple le Controller et le Presenter.
+
+###### Pourquoi ai-je fais un presenter d'erreurs ?
+
+Dans le projet, j'ai fait un presenter pour la donnée du use case, mais j'ai également fait un presenter pour l'erreur.
+
+> The software in this layer is a set of adapters that convert data from the format most convenient for the use cases and entities, to the format most convenient for some external agency such as the Database or the Web.
+
+Afin de gérer les exceptions et erreurs renvoyées par les couches métier, je laisse le `presenter` se charger de transformer l'erreur en une erreur compatible avec le web. En ajoutant par exemple, un code HTTP correspondant à l'erreur.
 
 ### Application Bussiness != Domain Business
 
@@ -117,6 +125,10 @@ Un use-case est donc soit une `command` ou une `query`.
 ## TDD
 
 Les projets doivent être réalisés en TDD.
+
+## Husky
+
+Husky a été installé dans ce projet dans le but, que, chaque commit soit dans un état où les tests sont valides. N'importe quel développeur peut donc prendre le projet à un commit T et avoir une suite de tests valide et sans erreurs Typescript.
 
 ## Event Sourcing
 

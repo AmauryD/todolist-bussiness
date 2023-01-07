@@ -21,11 +21,7 @@ export class AuthController {
 			throw registerRequest.error;
 		}
 		
-		const registered = await this.authControllerAdapter.register(registerRequest.value);
-		if (registered.isErr) {
-			throw registered.error;
-		}
-		return registered.value;
+		return this.authControllerAdapter.register(registerRequest.value);
 	}
 
 	@POST("/login")

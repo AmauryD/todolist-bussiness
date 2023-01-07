@@ -36,6 +36,8 @@ function registerAuthAdapter() {
 
 	const registerUseCase = new RegisterUseCase(
 		userRepository,
+		{} as never,
+		{} as never,
 		new UUIDGenerator()
 	);
 
