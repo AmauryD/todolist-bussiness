@@ -1,7 +1,8 @@
 import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { container } from "@triptyk/nfw-core";
-import { Identifier, TodoListAggregateRoot, TodoListProperties, TodoListRepositoryInterface } from "todo-domain";
-import Result, { err, ok } from "true-myth/result";
+import { TodoListAggregateRoot, TodoListProperties, TodoListRepositoryInterface } from "todo-domain";
+import Result, { ok } from "true-myth/result";
+import { TodoListMapper } from "../mappers/todo-list.js";
 import { TodoList } from "../models/todo-list.js";
 
 /**
@@ -11,16 +12,18 @@ import { TodoList } from "../models/todo-list.js";
  */
 export class SQLTodoListRepository implements TodoListRepositoryInterface {
 	private ormRepository: EntityRepository<TodoList>;
+	private mapper = new TodoListMapper();
 
 	public constructor() {
 		this.ormRepository = container.resolve(MikroORM).em.getRepository<TodoList>("TodoList");
+		
 	}
 
 	public async create(structure: TodoListProperties) {
 		const todo = TodoListAggregateRoot.create(structure);
 
 		if (todo.isErr) {
-			return err<never, Error>(todo.error);
+			return todo;
 		}
 
 		const todoORM = this.ormRepository.create({
@@ -38,11 +41,7 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 		const todoList : TodoListAggregateRoot[] = [];
 
 		for (const todo of todos) {
-			const created = TodoListAggregateRoot.create({
-				name: todo.title,
-				id: Identifier.create(todo.id)
-			});
-
+			const created = this.mapper.toDomain(todo);
 			if (created.isErr) {
 				return created as Result<never, Error>;
 			}

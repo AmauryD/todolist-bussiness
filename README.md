@@ -87,6 +87,33 @@ Explication plus détaillée du l'image ci-dessus:
 
 Edit: Apparemment, c'est quand même valide que le controlleur appelle le Presenter (Uncle Bob lui même l'a fait). Le désaventage est que l'on couple le Controller et le Presenter.
 
+Edit2: Un presenter ne retourne pas forcément de données, c'est assez flou là dessus. Dans le cas de ce projet le Presenter est une sorte de Mapper. Mais j'ai pensé à lui accorder toute la logique de présentation, c'est à dire lui faire envoyer la donnée au client en plus. Tout ça à l'aide d'une interface "TransportMethod" qui est passée au `Presenter`.
+
+```ts
+  // in Framework layer
+  class KoaTransport implements WebTransportInterface  {
+    public constructor(private ctx: KoaContext) {}
+
+    public transport(data) {
+      ctx.body = data;
+    }
+  }
+
+  // in Adapter layer
+  class WebPresenter {
+    constructor(
+      private webTransport: WebTransportInterface
+    ) {}
+
+    present(user: UserDomainEntity) {
+      const user = {
+        name: user.name.value,
+        id: user.id.value
+      };
+      this.webTransport.transport(user);
+  }
+```
+
 ###### Pourquoi ai-je fais un presenter d'erreurs ?
 
 Dans le projet, j'ai fait un presenter pour la donnée du use case, mais j'ai également fait un presenter pour l'erreur.
@@ -210,10 +237,6 @@ Les données des évènements doivent être en Read-Only.
 
 L'ORM/DB a le devoir de décider quand les évènements peuvent être dispatchés. Car c'est lui seul qui sait si les données ont bien été traitées/persistées vers le moteur de stockage. Dans ce cas-ci, ce serait soit au repository, soit aux hooks de l'ORM de s'en charger.
 
-#### Application Services
-
-
-
 ## Using functionnal programming
 
 Dans ce projet, j'ai commencé à utiliser un peu de programmation fonctionnelle via la librairie `true-myth`. Permettant de gérer les erreurs/undefined/null de manière efficace et Typescript-Aware.
@@ -221,6 +244,17 @@ Dans ce projet, j'ai commencé à utiliser un peu de programmation fonctionnelle
 *ça n'a rien à voir avec le DDD ni la CA*.
 
 ## FAQ
+
+### Quid de la pagination ?
+
+Sujet également délicat. Est-ce que limiter le nombre de résultats fait partie du domaine, de l'application, des adapters ?
+
+La question que je suis posée,est, pourquoi voulons-nous faire ceci ?
+La réponse a été assez simple: question de performances.
+
+Celà n'a donc rien à voir avec le business selon moi, et doit rester un détail de l'implémentation dans la couche Adapters/Frameworks.
+
+Dans d'autres cas, ça pourrait faire partie de la couche Application ou Domaine. Mais c'est au cas par cas.
 
 ### Où placer la validation ?
 
@@ -311,6 +345,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://adevelopersdiscourse.blogspot.com/2020/06/clean-architecture-demystified.html>
 <https://www.infoq.com/articles/ddd-contextmapping/>
 <https://medium.com/unil-ci-software-engineering/clean-domain-driven-design-2236f5430a05>
+https://fullstackmark.com/post/11/better-software-design-with-clean-architecture
 
 ### Youtube
 
@@ -328,6 +363,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://github.com/culttt/cribbb>
 <https://github.com/4lessandrodev/finance-project-ddd>
 <https://github.com/madetech/clean-architecture>
+<https://github.com/panagiop/node.js-clean-architecture>
 
 ### Outils
 
