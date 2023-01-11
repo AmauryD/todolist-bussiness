@@ -1,15 +1,11 @@
 
 import { Just } from "true-myth/maybe";
 import { err, ok } from "true-myth/result";
-import { Identifier, UserDoesNotExistsError, ValidationToken } from "../../../domain/index.js";
-import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
-import { InvalidValidationTokenError } from "../../../domain/users/errors/invalid-validation-token.js";
-import { UserRepositoryInterface } from "../repositories/user.js";
-
-export interface ValidateAccountUseCaseParams {
-    token : string;
-    userId: string;
-}
+import { Identifier, UserDoesNotExistsError, ValidationToken } from "../../../../domain/index.js";
+import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
+import { InvalidValidationTokenError } from "../../../../domain/users/errors/invalid-validation-token.js";
+import { UserRepositoryInterface } from "../../repositories/user.js";
+import { ValidateAccountUseCaseParams } from "./request.js";
 
 export class ValidateAccountUseCase implements UseCaseInterface {
 	public constructor(

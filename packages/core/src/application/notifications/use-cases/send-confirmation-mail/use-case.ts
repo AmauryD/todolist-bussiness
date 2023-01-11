@@ -1,14 +1,7 @@
-import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
-import { ConfirmationMailFormatterInterface } from "../formatters/confirmation-mail.js";
-import { MailServiceInterface } from "../services/mail-service.js";
-
-
-export interface SendConfirmationMailParams {
-    username: string,
-    email: string,
-    token: string,
-	userId: string
-}
+import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
+import { ConfirmationMailFormatterInterface } from "../../formatters/confirmation-mail.js";
+import { MailServiceInterface } from "../../services/mail-service.js";
+import { SendConfirmationMailParams } from "./request.js";
 
 export class SendConfirmationMailUseCase implements UseCaseInterface {
 	public constructor(

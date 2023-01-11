@@ -1,12 +1,12 @@
 
 import { beforeEach, it } from "node:test";
 import assert from "node:assert";
-import { TodoListAggregateRoot } from "../../../src/domain/todos/entities/todo-list.js";
-import { Identifier } from "../../../src/domain/shared/value-objects/identifier.js";
-import { assertError } from "../../utils/assert-error.js";
-import { TodoListNameRequiredError } from "../../../src/domain/index.js";
+import { TodoListAggregateRoot } from "../../../../src/domain/todos/entities/todo-list.js";
+import { Identifier } from "../../../../src/domain/shared/value-objects/identifier.js";
+import { assertError } from "../../../utils/assert-error.js";
+import { TodoListNameRequiredError } from "../../../../src/domain/index.js";
 import { Ok } from "true-myth/result";
-import { TodoCreatedEvent } from "../../../src/domain/todos/events/todo-created.js";
+import { TodoCreatedEvent } from "../../../../src/domain/todos/events/todo-created.js";
 
 let todoList : TodoListAggregateRoot;
 

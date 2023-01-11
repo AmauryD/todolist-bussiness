@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { it } from "node:test";
-import { Identifier } from "../../../src/domain/shared/value-objects/identifier.js";
+import { Identifier } from "../../../../src/domain/shared/value-objects/identifier.js";
 
 it("Equals when id are the same", () => {
 	const id1 = Identifier.create("1"); 

@@ -4,8 +4,8 @@ import { it } from "node:test";
 import { Maybe, Result } from "true-myth";
 import { just, nothing, Nothing } from "true-myth/maybe";
 import { Err, ok } from "true-myth/result";
-import { InvalidValidationTokenError } from "../../../src/domain/users/errors/invalid-validation-token.js";
-import { UserRepositoryInterface, User, Identifier, ValidateAccountUseCase, UserDoesNotExistsError } from "../../../src/index.js";
+import { InvalidValidationTokenError } from "../../../../src/domain/users/errors/invalid-validation-token.js";
+import { UserRepositoryInterface, User, Identifier, ValidateAccountUseCase, UserDoesNotExistsError } from "../../../../src/index.js";
 
 class FakeUserRepository implements UserRepositoryInterface {
 	public async getUserByEmail(): Promise<Maybe<User>> {

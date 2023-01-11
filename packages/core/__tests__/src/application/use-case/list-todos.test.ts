@@ -2,7 +2,7 @@
 import { FakeTodoListRepository } from "./common.js";
 import { it } from "node:test";
 import assert from "node:assert";
-import { ListTodoListsUseCase } from "../../../src/application/todos/use-cases/list.js";
+import { ListTodoListsUseCase } from "../../../../src/application/todos/use-cases/list/use-case.js";
 
 function createUseCase() {
 	return new ListTodoListsUseCase(

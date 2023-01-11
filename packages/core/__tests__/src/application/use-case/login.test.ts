@@ -1,15 +1,16 @@
-import assert from "node:assert";
+
 import { it } from "node:test";
 import { Maybe } from "true-myth";
 import { just, Nothing, nothing } from "true-myth/maybe";
 import Result, { Err, Ok } from "true-myth/result";
-import { User, UserSnapshot } from "../../../src/domain/users/entities/user.js";
-import { InvalidCredentialsError } from "../../../src/domain/users/errors/invalid-credentials.js";
-import { UserDoesNotExistsError } from "../../../src/domain/users/errors/does-not-exists.js";
-import { UserRepositoryInterface } from "../../../src/application/users/repositories/user.js";
-import { AuthServiceInterface } from "../../../src/application/users/services/auth.service.js";
-import { LoginUseCase } from "../../../src/application/users/use-cases/login.js";
-import { Identifier } from "../../../src/domain/shared/value-objects/identifier.js";
+import { User, UserSnapshot } from "../../../../src/domain/users/entities/user.js";
+import { InvalidCredentialsError } from "../../../../src/domain/users/errors/invalid-credentials.js";
+import { UserDoesNotExistsError } from "../../../../src/domain/users/errors/does-not-exists.js";
+import { UserRepositoryInterface } from "../../../../src/application/users/repositories/user.js";
+import { AuthServiceInterface } from "../../../../src/application/users/services/auth.service.js";
+import { LoginUseCase } from "../../../../src/application/users/use-cases/login/use-case.js";
+import { Identifier } from "../../../../src/domain/shared/value-objects/identifier.js";
+import assert from "node:assert";
 
 class InvalidUserRepository implements UserRepositoryInterface {
 	public validateUserAccount(): Promise<Result<Nothing<unknown>, Error>> {
@@ -60,14 +61,19 @@ class ValidAuthService implements AuthServiceInterface {
 	}
 }
 
-async function createAndExecuteUseCase(repository: UserRepositoryInterface, authService: AuthServiceInterface) {
+const snapshotPresenter = {
+	async present(data: User) {
+		return data.snapshot();
+	},
+};
+
+async function createAndExecuteUseCase(
+	repository: UserRepositoryInterface, 
+	authService: AuthServiceInterface
+) {
 	const useCase = new LoginUseCase(
 		repository,
-		{
-			async present(data) {
-				return data.snapshot();
-			},
-		},
+		snapshotPresenter,
 		authService
 	);
 	const result = await useCase.execute({
@@ -78,20 +84,26 @@ async function createAndExecuteUseCase(repository: UserRepositoryInterface, auth
 }
 
 it("Returns UserDoesNotExistsError when email does not exists",  async () => {
-	const result = (await createAndExecuteUseCase(new InvalidUserRepository(), new ValidAuthService())) as Err<never,UserDoesNotExistsError>;
-	assert.strictEqual(result?.isErr, true);
+	const result = (await createAndExecuteUseCase(
+		new InvalidUserRepository(), 
+		new ValidAuthService()
+	)) as Err<never,UserDoesNotExistsError>;
 	assert.strictEqual(result.error.constructor, UserDoesNotExistsError);
 });
 
 it("Returns InvalidCredentialsError when password does not match",  async () => {
-	const result = (await createAndExecuteUseCase(new ValidUserRepository(), new InvalidAuthService())) as Err<never,InvalidCredentialsError>;
-	assert.strictEqual(result?.isErr, true);
+	const result = (await createAndExecuteUseCase(
+		new ValidUserRepository(), 
+		new InvalidAuthService()
+	)) as Err<never,InvalidCredentialsError>;
 	assert.strictEqual(result.error.constructor, InvalidCredentialsError);
 });
 
 it("Returns User snapshot when email is found and password matches",  async () => {
-	const result = (await createAndExecuteUseCase(new ValidUserRepository(), new ValidAuthService())) as Ok<UserSnapshot,never>;
-	assert.strictEqual(result?.isOk, true);
+	const result = (await createAndExecuteUseCase(
+		new ValidUserRepository(), 
+		new ValidAuthService()
+	)) as Ok<UserSnapshot,never>;
 	assert.deepEqual(result.value, {
 		email: "amaury",
 		id: "123",

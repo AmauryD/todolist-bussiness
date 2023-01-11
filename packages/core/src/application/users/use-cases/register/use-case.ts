@@ -1,17 +1,12 @@
 import { just } from "true-myth/maybe";
-import { IdGeneratorInterface } from "../../shared/interfaces/id-generator.js";
-import { UseCaseInterface } from "../../shared/interfaces/use-case.js";
-import { UserAlreadyExistsError } from "../../../domain/users/errors/already-exists.js";
-import { UserRepositoryInterface } from "../repositories/user.js";
-import { ValidationToken } from "../../../domain/users/value-objects/validation-token.js";
-import { UserPresenterInterface } from "../presenters/user.js";
-import { UserErrorPresenterInterface } from "../presenters/error/user.js";
-
-
-export interface RegisterUseCaseRequest {
-    username: string;
-    email: string;
-}
+import { IdGeneratorInterface } from "../../../shared/interfaces/id-generator.js";
+import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
+import { UserAlreadyExistsError } from "../../../../domain/users/errors/already-exists.js";
+import { UserRepositoryInterface } from "../../repositories/user.js";
+import { ValidationToken } from "../../../../domain/users/value-objects/validation-token.js";
+import { UserPresenterInterface } from "../../presenters/user.js";
+import { UserErrorPresenterInterface } from "../../presenters/error/user.js";
+import { RegisterUseCaseRequest } from "./request.js";
 
 export class RegisterUseCase<
 	O extends UserPresenterInterface,

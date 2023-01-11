@@ -1,4 +1,5 @@
-import { LoginUseCase, RegisterUseCase, ValidateAccountUseCase, LoginUseCaseRequest, RegisterUseCaseRequest } from "todo-domain";
+import { LoginUseCase, RegisterUseCase, ValidateAccountUseCase, RegisterUseCaseRequest } from "todo-domain";
+import { LoginUseCaseRequest } from "todo-domain";
 import { WebError } from "../index.js";
 import { UserErrorPresenter } from "../presenters/error/user.js";
 import { UserPresenter } from "../presenters/user.js";
