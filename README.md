@@ -10,6 +10,11 @@ Une simple application MVC bien testée aurait été beaucoup plus rapide et eff
 
 Il faut bien évaluer avant chaque projet quelles techniques mettre en place, car même si ces techniques sont beaucoup plus rentables sur des gros projets / projets sur le long terme. Elles demandent plus de temps à mettre en place en début de projet.
 
+### Auto-review, qu'est ce qui était Overkill ?
+
+Le système de presenter sépare bien les couches et exprime la création d'un ViewModel en fonction d'une erreur ou d'un succès du Use-Case.
+Malgré tout, une séparation moins nette en renvoyant un Result/Error avec une snapshot du user aurait mis beaucoup moins de temps à mettre en place.
+
 ## But
 
 Le but des différentes techniques ci-dessous est:

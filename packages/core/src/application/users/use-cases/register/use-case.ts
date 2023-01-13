@@ -4,27 +4,23 @@ import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
 import { UserAlreadyExistsError } from "../../../../domain/users/errors/already-exists.js";
 import { UserRepositoryInterface } from "../../repositories/user.js";
 import { ValidationToken } from "../../../../domain/users/value-objects/validation-token.js";
-import { UserPresenterInterface } from "../../presenters/user.js";
-import { UserErrorPresenterInterface } from "../../presenters/error/user.js";
 import { RegisterUseCaseRequest } from "./request.js";
+import { UserPresenterInterface } from "../../presenters/user.js";
+import { UserErrorPresenterInterface } from "../../../index.js";
 
-export class RegisterUseCase<
-	O extends UserPresenterInterface,
-	OE extends UserErrorPresenterInterface,
-	RT = ReturnType<O["present"]> | ReturnType<OE["present"]>
-> implements UseCaseInterface {
+export class RegisterUseCase implements UseCaseInterface {
 	public constructor(
         public userRepository: UserRepositoryInterface,
-		public userPresenter: O,
-		public userErrorPresenter: OE,
+		public userPresenter: UserPresenterInterface,
+		public userErrorPresenter: UserErrorPresenterInterface,
 		public idGenerator: IdGeneratorInterface
 	) {}
 
-	public async execute(params: RegisterUseCaseRequest): Promise<RT> {
+	public async execute(params: RegisterUseCaseRequest) {
 		const existingEmailUser = await this.userRepository.getUserByEmail(params.email);
 
 		if (existingEmailUser.isJust) {
-			return this.userErrorPresenter.present(new UserAlreadyExistsError()) as RT;
+			return this.userErrorPresenter.present(new UserAlreadyExistsError());
 		}
 
 		const generatedId = this.idGenerator.generate();
@@ -40,6 +36,6 @@ export class RegisterUseCase<
 		return newUser.match({
 			Ok : (value) => this.userPresenter.present(value),
 			Err: (error) => this.userErrorPresenter.present(error),
-		}) as RT;
+		});
 	}
 }

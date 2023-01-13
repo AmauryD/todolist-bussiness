@@ -1,6 +1,6 @@
 import { inject } from "@triptyk/nfw-core";
 import { Controller, GET, POST, UseMiddleware } from "@triptyk/nfw-http";
-import { WebTodoListController as AdapterTodoListController } from "adapters";
+import { TodoListWebCreateController, TodoListWebListController } from "adapters";
 import { RestBody } from "../decorators/rest-body.js";
 import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
 
@@ -10,12 +10,13 @@ import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
 @UseMiddleware(DefaultErrorHandlerMiddleware)
 export class TodoListController {
 	public constructor(
-        @inject(AdapterTodoListController) public todoListAdapter: AdapterTodoListController,
+        @inject(TodoListWebCreateController) public todoListWebCreateController: TodoListWebCreateController,
+		@inject(TodoListWebListController) public todoListWebListController: TodoListWebListController,
 	) {}
 
 	@GET("/")
 	public list() {
-		return this.todoListAdapter.list();
+		return this.todoListWebListController.list();
 	}
 
 	@POST("/")
@@ -23,10 +24,6 @@ export class TodoListController {
 		if (body.isErr){
 			throw body.error;
 		} 
-		const created = await this.todoListAdapter.create(body.value);
-		if (created.isErr) {
-			throw created.error;
-		}
-		return created.value;
+		return this.todoListWebCreateController.create(body.value);
 	}
 }

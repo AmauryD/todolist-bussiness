@@ -1,5 +1,6 @@
 export * from "./todos/errors/todo-list-name-required.js";
 export * from "./todos/errors/todo-title-required.js";
+export * from "./todos/errors/cannot-access-todo-list.js";
 export * from "./todos/events/todo-list-created.js";
 export * from "./todos/entities/todo.js";
 export * from "./todos/entities/todo-list.js";

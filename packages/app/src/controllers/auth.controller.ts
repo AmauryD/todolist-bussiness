@@ -1,14 +1,18 @@
 import { Controller, Param, POST, UseMiddleware } from "@triptyk/nfw-http";
-import { WebAuthController as AuthControllerAdapter } from "adapters";
+import { LoginWebController, RegisterWebController, ValidateAccountWebController } from "adapters";
+import { inject } from "tsyringe";
 import { Body } from "../decorators/json-body.js";
 import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
+
 @Controller({
 	routeName: "/api/v1/auth"
 })
 @UseMiddleware(DefaultErrorHandlerMiddleware)
 export class AuthController {
 	public constructor(
-        public authControllerAdapter: AuthControllerAdapter
+		@inject(RegisterWebController) public registerControllerAdapter: RegisterWebController,
+		@inject(ValidateAccountWebController) public validateControllerAdapter: ValidateAccountWebController,
+		@inject(LoginWebController) public loginControllerAdapter: LoginWebController
 	) {}
 
 	@POST("/register")
@@ -17,16 +21,16 @@ export class AuthController {
 			throw registerRequest.error;
 		}
 		
-		return this.authControllerAdapter.register(registerRequest.value);
+		return this.registerControllerAdapter.register(registerRequest.value);
 	}
 
 	@POST("/login")
 	public login(@Body() loginRequest: any) {
-		return this.authControllerAdapter.login(loginRequest);
+		return this.loginControllerAdapter.login(loginRequest);
 	}
 
 	@POST("/validate-account/:userId/:token")
 	public validateAccount(@Param("userId") userId: string, @Param("token") token: string) {
-		return this.authControllerAdapter.validateAccount(userId, token);
+		return this.validateControllerAdapter.validateAccount(userId, token);
 	}
 }

@@ -1,5 +1,4 @@
 
-import Result, { err, ok } from "true-myth/result";
 import { InvalidCredentialsError } from "../../../../domain/users/errors/invalid-credentials.js";
 import { UserDoesNotExistsError } from "../../../../domain/users/errors/does-not-exists.js";
 import { UserRepositoryInterface } from "../../repositories/user.js";
@@ -8,6 +7,7 @@ import { PasswordNotSetError } from "../../../../domain/users/errors/password-no
 import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
 import { UserPresenterInterface } from "../../presenters/user.js";
 import { LoginUseCaseRequest } from "./request.js";
+import { UserErrorPresenterInterface } from "../../../index.js";
 
 /**
  * Pas besoin de valider le mot de passe ni l'email
@@ -18,26 +18,25 @@ export class LoginUseCase implements UseCaseInterface {
 	public constructor(
 		public userRepository : UserRepositoryInterface,
 		public presenter: UserPresenterInterface,
+		public errorPresenter: UserErrorPresenterInterface,
 		public authService: AuthServiceInterface
 	) {}
 
-	public async execute(request: LoginUseCaseRequest): Promise<Result<unknown,UserDoesNotExistsError | InvalidCredentialsError>> {
+	public async execute(request: LoginUseCaseRequest) {
 		const user = await this.userRepository.getUserByEmail(request.email);
 
 		if (user.isNothing) {
-			return err(new UserDoesNotExistsError());
+			return this.errorPresenter.present(new UserDoesNotExistsError());
 		}
 
 		if (user.value.password.isNothing) {
-			return err(new PasswordNotSetError());
+			return this.errorPresenter.present(new PasswordNotSetError());
 		}
 
 		if (!await this.authService.passwordMatches(request.password, user.value.password.unwrapOr(""))) {
-			return err(new InvalidCredentialsError()); 
+			return this.errorPresenter.present(new InvalidCredentialsError()); 
 		}
 
-		const presented = await this.presenter.present(user.value);
-
-		return ok(presented);
+		return this.presenter.present(user.value);
 	}
 }

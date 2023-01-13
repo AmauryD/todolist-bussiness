@@ -3,7 +3,7 @@ import assert from "node:assert";
 import { it } from "node:test";
 import { Maybe, Result } from "true-myth";
 import { just, nothing, Nothing } from "true-myth/maybe";
-import { Err, ok } from "true-myth/result";
+import { ok } from "true-myth/result";
 import { InvalidValidationTokenError } from "../../../../src/domain/users/errors/invalid-validation-token.js";
 import { UserRepositoryInterface, User, Identifier, ValidateAccountUseCase, UserDoesNotExistsError } from "../../../../src/index.js";
 
@@ -32,29 +32,36 @@ class FakeUserRepository implements UserRepositoryInterface {
 	}
 }
 
+const mirrorPresenter =  {
+	present(error: unknown) {
+		return error;	
+	},
+};
+
 it("Returns error when userId does not exists", async () => {
 	const useCase = new ValidateAccountUseCase(
-		new FakeUserRepository()
+		new FakeUserRepository(),
+		mirrorPresenter,
+		mirrorPresenter
 	);
 	const result = await useCase.execute({
 		userId: "",
 		token: ""
-	}) as Err<never, UserDoesNotExistsError>;
-
-	assert.strictEqual(result?.isErr,true);
-	assert.strictEqual(result?.error.constructor, UserDoesNotExistsError);
+	});
+	assert(result instanceof UserDoesNotExistsError);
 });
 
 it("Returns error when token is invalid", async () => {
 	const useCase = new ValidateAccountUseCase(
-		new FakeUserRepository()
+		new FakeUserRepository(),
+		mirrorPresenter,
+		mirrorPresenter
 	);
 
 	const result = await useCase.execute({
 		userId: "exists",
 		token: ""
-	}) as Err<never, InvalidValidationTokenError>;
-
-	assert.strictEqual(result?.isErr,true);
-	assert.strictEqual(result?.error.constructor, InvalidValidationTokenError);
+	});
+	
+	assert(result instanceof InvalidValidationTokenError);
 });

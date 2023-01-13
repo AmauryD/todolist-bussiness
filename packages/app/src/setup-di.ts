@@ -1,5 +1,5 @@
 import { container } from "@triptyk/nfw-core";
-import { ConfirmationMailFormatter, TodoListsWebPresenter, TodoListWebPresenter, WebAuthController, WebTodoListController } from "adapters";
+import { ConfirmationMailFormatter, RegisterWebController, TodoListsWebPresenter, TodoListWebPresenter, ValidateAccountWebController, LoginWebController, TodoListWebCreateController, TodoListWebListController } from "adapters";
 import { ConfirmationMailListener, CreateTodoListUseCase, ListTodoListsUseCase, LoginUseCase, RegisterUseCase, SendConfirmationMailUseCase, ValidateAccountUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
 import { SQLUserRepository } from "./database/repositories/user.repository.js";
@@ -7,8 +7,7 @@ import { SQLUserRepository } from "./database/repositories/user.repository.js";
 import { AuthService } from "adapters";
 import { UUIDGenerator } from "adapters";
 import { IAmBrokeAFMailService } from "./services/no-money-mail.js";
-import { UserErrorPresenter } from "adapters";
-import { UserPresenter } from "adapters";
+import { UserPresenter, UserErrorPresenter } from "adapters";
 
 export async function setupDI() {
 	registerTodoListAdapter();
@@ -33,6 +32,7 @@ function registerAuthAdapter() {
 	const loginUseCase = new LoginUseCase(
 		userRepository,
 		new UserPresenter(),
+		new UserErrorPresenter(),
 		new AuthService()
 	);
 
@@ -44,14 +44,24 @@ function registerAuthAdapter() {
 	);
 
 	const validateAccountUseCase = new ValidateAccountUseCase(
-		userRepository
+		userRepository,
+		new UserErrorPresenter(),
+		new UserPresenter()
 	);
 
 
-	const authControllerAdapter = new WebAuthController(loginUseCase, registerUseCase, validateAccountUseCase);
+	const authControllerAdapter = new ValidateAccountWebController(validateAccountUseCase);
+	const registerControllerAdapter = new RegisterWebController(registerUseCase);
+	const loginControllerAdapter = new LoginWebController(loginUseCase);
 
-	container.register(WebAuthController, {
+	container.register(ValidateAccountWebController, {
 		useValue: authControllerAdapter
+	});
+	container.register(RegisterWebController, {
+		useValue: registerControllerAdapter
+	});
+	container.register(LoginWebController, {
+		useValue: loginControllerAdapter
 	});
 }
 
@@ -66,10 +76,15 @@ function registerTodoListAdapter() {
 		todoListRepository,
 		new TodoListWebPresenter()
 	);
-	const controller = new WebTodoListController(useCase, createUseCase);
 
-	container.register(WebTodoListController, {
-		useValue: controller
+	const todoListWebCreateController = new TodoListWebCreateController(createUseCase);
+	const todoListWebListController = new TodoListWebListController(useCase);
+
+	container.register(TodoListWebCreateController, {
+		useValue: todoListWebCreateController
+	});
+	container.register(TodoListWebListController, {
+		useValue: todoListWebListController
 	});
 }
 

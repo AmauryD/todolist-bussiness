@@ -1,5 +1,9 @@
-export * from  "./controllers/todo-list.js";
-export * from  "./controllers/auth.js";
+export * from  "./controllers/todo-list/create.js";
+export * from  "./controllers/todo-list/list.js";
+
+export * from  "./controllers/auth/login.js";
+export * from  "./controllers/auth/register.js";
+export * from  "./controllers/auth/validate-account.js";
 
 export * from  "./presenters/todo-list.js";
 export * from  "./presenters/todo-lists.js";

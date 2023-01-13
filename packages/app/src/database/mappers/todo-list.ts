@@ -1,6 +1,6 @@
 import { RequiredEntityData } from "@mikro-orm/core";
 
-import { Identifier, TodoListAggregateRoot } from "todo-domain/index.js";
+import { Identifier, TodoListAggregateRoot } from "todo-domain";
 import Result, { ok } from "true-myth/result";
 import { TodoList } from "../models/todo-list.js";
 import { DataMapper } from "./mapper.js";
