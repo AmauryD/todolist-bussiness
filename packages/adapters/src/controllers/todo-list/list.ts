@@ -1,5 +1,6 @@
 
 import { ListTodoListsUseCase } from "todo-domain";
+import { Maybe } from "true-myth";
 import { TodoListsWebPresenter } from "../../index.js";
 import { throwIfWebErrorOrReturn } from "../../utils/throw-or-return.js";
 
@@ -10,8 +11,8 @@ export class TodoListWebListController {
 		private listTodoListsUseCase: ListTodoListsUseCase
 	) {}
 
-	public async list() {
-		const todos = await this.listTodoListsUseCase.execute() as PresentersResult;
+	public async list(userId?: string) {
+		const todos = await this.listTodoListsUseCase.execute(Maybe.of(userId)) as PresentersResult;
 		return throwIfWebErrorOrReturn(todos);
 	}
 }

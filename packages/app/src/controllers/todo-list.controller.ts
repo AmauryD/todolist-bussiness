@@ -1,5 +1,6 @@
+import { RouterContext } from "@koa/router";
 import { inject } from "@triptyk/nfw-core";
-import { Controller, GET, POST, UseMiddleware } from "@triptyk/nfw-http";
+import { Controller, Ctx, GET, POST, UseMiddleware } from "@triptyk/nfw-http";
 import { TodoListWebCreateController, TodoListWebListController } from "adapters";
 import { RestBody } from "../decorators/rest-body.js";
 import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
@@ -15,8 +16,8 @@ export class TodoListController {
 	) {}
 
 	@GET("/")
-	public list() {
-		return this.todoListWebListController.list();
+	public list(@Ctx() ctx: RouterContext) {
+		return this.todoListWebListController.list(ctx.state.user);
 	}
 
 	@POST("/")

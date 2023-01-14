@@ -3,7 +3,7 @@ import { TodoListRepositoryInterface } from "../../../../src/application/todos/r
 import { Identifier, TodoListAggregateRoot, TodoListProperties } from "../../../../src/domain/index.js";
 
 export class FakeTodoListRepository implements TodoListRepositoryInterface {
-	public async list(): Promise<Result<TodoListAggregateRoot[], never>> {
+	public async listForUser(): Promise<Result<TodoListAggregateRoot[], never>> {
 		const fakeExistingTodo = TodoListAggregateRoot.create({
 			name: "title",
 			id: Identifier.create("1")

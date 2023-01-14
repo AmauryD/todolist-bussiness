@@ -1,5 +1,5 @@
 import { container } from "@triptyk/nfw-core";
-import { ConfirmationMailFormatter, RegisterWebController, TodoListsWebPresenter, TodoListWebPresenter, ValidateAccountWebController, LoginWebController, TodoListWebCreateController, TodoListWebListController } from "adapters";
+import { ConfirmationMailFormatter, RegisterWebController, TodoListsWebPresenter, TodoListWebPresenter, ValidateAccountWebController, LoginWebController, TodoListWebCreateController, TodoListWebListController, TodoListErrorPresenter } from "adapters";
 import { ConfirmationMailListener, CreateTodoListUseCase, ListTodoListsUseCase, LoginUseCase, RegisterUseCase, SendConfirmationMailUseCase, ValidateAccountUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
 import { SQLUserRepository } from "./database/repositories/user.repository.js";
@@ -69,7 +69,8 @@ function registerTodoListAdapter() {
 	const todoListRepository = new SQLTodoListRepository();
 	const useCase = new ListTodoListsUseCase(
 		todoListRepository,
-		new TodoListsWebPresenter()
+		new TodoListsWebPresenter(),
+		new TodoListErrorPresenter()
 	);
 	const createUseCase = new CreateTodoListUseCase(
 		new UUIDGenerator(),

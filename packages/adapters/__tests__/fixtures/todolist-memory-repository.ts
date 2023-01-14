@@ -14,7 +14,7 @@ export class TodoListInMemoryRepository implements TodoListRepositoryInterface {
 		return created;
 	}
     
-	public async list() {
+	public async listForUser() {
 		return ok<TodoListAggregateRoot[],never>(this.todos.map((t) =>t));
 	}
 }

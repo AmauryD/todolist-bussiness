@@ -22,4 +22,6 @@ export * from "./todos/use-cases/list/use-case.js";
 export * from "./users/use-cases/login/request.js";
 export * from "./todos/presenters/todo-list.js";
 export * from "./todos/presenters/todo-lists.js";
+export * from "./todos/errors/user-required.js";
+
 

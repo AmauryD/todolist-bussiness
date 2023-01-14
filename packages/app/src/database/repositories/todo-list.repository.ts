@@ -36,7 +36,7 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 		return todo;
 	}
 	
-	public async list() {
+	public async listForUser() {
 		const todos = await this.ormRepository.findAll();
 		const todoList : TodoListAggregateRoot[] = [];
 
