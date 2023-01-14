@@ -20,8 +20,7 @@ it("Lists todo-lists", async () => {
 
 	const list = await listTodoListsUseCase.execute();
 
-	assert.strictEqual(list.isOk, true);
-	assert.deepStrictEqual(list.unwrapOr([]), [{
+	assert.deepStrictEqual(list, [{
 		id: "1",
 		name: "title",
 		isDone: true,

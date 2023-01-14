@@ -1,4 +1,4 @@
-import { DefaultErrorHandlerMiddleware } from "../../src/error-handlers/default.js";
+import { DefaultErrorHandlerMiddleware } from "../../../src/error-handlers/default.js";
 import { it } from "node:test";
 import assert from "node:assert";
 
