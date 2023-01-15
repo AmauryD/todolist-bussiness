@@ -1,19 +1,23 @@
 
 import { CreateTodoListUseCase } from "todo-domain/index.js";
-import { Result } from "true-myth";
+import { TodoListErrorPresenter } from "../../presenters/error/todo-list.js";
+import { TodoListsWebPresenter } from "../../presenters/todo-lists.js";
+import { throwIfWebErrorOrReturn } from "../../utils/throw-or-return.js";
 
 export interface TodoListWeb {
 	name: string;
 }
+
+type PresentersResult = ReturnType<TodoListsWebPresenter["present"]> | ReturnType<TodoListErrorPresenter["present"]>;
 
 export class TodoListWebCreateController {
 	public constructor(
 		private createTodoListUseCase: CreateTodoListUseCase
 	) {}
 
-	public async create(todoList: TodoListWeb): Promise<Result<unknown, Error>> {
-		const todos = await this.createTodoListUseCase.execute(todoList);
-		return todos;
+	public async create(todoList: TodoListWeb){
+		const todos = await this.createTodoListUseCase.execute(todoList) as PresentersResult;
+		return throwIfWebErrorOrReturn(todos);
 	}
 }
 

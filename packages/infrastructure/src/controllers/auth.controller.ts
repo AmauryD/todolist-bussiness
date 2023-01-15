@@ -17,7 +17,7 @@ export class AuthController {
 	) {}
 
 	@POST("/register")
-	public async register(@Body() registerRequest: any) {
+	public async register(@Body() registerRequest: Result<any, Error>) {
 		if (registerRequest.isErr) {
 			throw registerRequest.error;
 		}

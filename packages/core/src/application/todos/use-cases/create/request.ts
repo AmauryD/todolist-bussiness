@@ -1,3 +1,3 @@
-export interface CreateTodoListUseCaseInputInterface {
+export interface CreateTodoListUseCaseInput {
 	name: string
 }

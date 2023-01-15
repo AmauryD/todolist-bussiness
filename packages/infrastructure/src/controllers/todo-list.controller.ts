@@ -2,6 +2,7 @@ import { RouterContext } from "@koa/router";
 import { inject } from "@triptyk/nfw-core";
 import { Controller, Ctx, GET, POST, UseMiddleware } from "@triptyk/nfw-http";
 import { TodoListWebCreateController, TodoListWebListController } from "adapters";
+import { Result } from "true-myth";
 import { RestBody } from "../decorators/rest-body.js";
 import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
 import { CurrentUserMiddleware } from "../middlewares/current-user.js";
@@ -19,13 +20,11 @@ export class TodoListController {
 	@GET("/")
 	@UseMiddleware(CurrentUserMiddleware)
 	public list(@Ctx() ctx: RouterContext) {
-		console.log(ctx.state.user);
-		
-		return this.todoListWebListController.list(ctx.state.user.id);
+		return this.todoListWebListController.list(ctx.state.user?.id);
 	}
 
 	@POST("/")
-	public async create(@RestBody() body: any) {
+	public async create(@RestBody() body: Result<Record<"name", string>, Error>) {
 		if (body.isErr){
 			throw body.error;
 		} 

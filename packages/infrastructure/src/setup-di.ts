@@ -19,7 +19,7 @@ export async function setupDI() {
 function setupConfirmationMailListener() {
 	const confirmationMailUseCase = new SendConfirmationMailUseCase(
 		new IAmBrokeAFMailService(),
-		new ConfirmationMailFormatter()
+		new ConfirmationMailFormatter("http://localhost:8000")
 	);
 	const listener = new ConfirmationMailListener(
 		confirmationMailUseCase
@@ -83,7 +83,8 @@ function registerTodoListAdapter() {
 	const createUseCase = new CreateTodoListUseCase(
 		new UUIDGenerator(),
 		todoListRepository,
-		new TodoListWebPresenter()
+		new TodoListWebPresenter(),
+		new TodoListErrorPresenter()
 	);
 
 	const todoListWebCreateController = new TodoListWebCreateController(createUseCase);

@@ -2,7 +2,6 @@ import { CreateTodoListUseCase } from "../../../../src/application/todos/use-cas
 import { FakeTodoListRepository } from "./common.js";
 import { test } from "node:test";
 import assert from "node:assert";
-import { unwrapOr } from "true-myth/result";
 import { FakeIdGenerator } from "../../../fixtures/id-generator.js";
 
 
@@ -12,12 +11,17 @@ test("It creates a todo-list", async () => {
 		new FakeTodoListRepository(),
 		{
 			async present(data) { return data.snapshot(); }
+		},
+		{
+			present(error) {
+				return error;
+			},
 		}
 	);
 	const todoSnapshot = await createTodoListUseCase.execute({
 		name: "name"
 	});
-	assert.deepStrictEqual(unwrapOr({},todoSnapshot),{
+	assert.deepStrictEqual(todoSnapshot,{
 		name: "name",
 		id: "1",
 		todos: [],
