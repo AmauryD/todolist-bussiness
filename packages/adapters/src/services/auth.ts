@@ -3,7 +3,7 @@ import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { AuthServiceInterface, Identifier } from "todo-domain";
 
-const ONE_MINUTE = 60;
+const ONE_HOUR = 60 * 60;
 
 export interface JwtTokenOptions {
 	secret: string,
@@ -17,11 +17,10 @@ export class AuthService implements AuthServiceInterface {
 	) {}
 
 	public async generateAccessTokenForUser(id: Identifier) {
-		return jwt.sign({
-			data: id.value
-		}, this.tokenOptions.secret, {
+		return jwt.sign({}, this.tokenOptions.secret, {
+			subject: id.value,
 			issuer: this.tokenOptions.issuer,
-			expiresIn: this.tokenOptions.expirationTimeInHours * ONE_MINUTE
+			expiresIn: this.tokenOptions.expirationTimeInHours * ONE_HOUR
 		});
 	}
 

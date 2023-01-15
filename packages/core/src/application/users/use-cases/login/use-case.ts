@@ -8,7 +8,7 @@ import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
 import { LoginUseCaseInput } from "./request.js";
 import { UserErrorPresenterInterface } from "../../../index.js";
 import { LoggedUserPresenterInterface } from "../../presenters/logged-user.js";
-import { AuthRepositoryInterface } from "../../repositories/auth.repository.js";
+import { AuthRepositoryInterface } from "../../repositories/auth.js";
 
 /**
  * Pas besoin de valider le mot de passe ni l'email

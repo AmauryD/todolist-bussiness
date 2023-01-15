@@ -46,6 +46,7 @@ export class Application {
 			{
 				type: "sqlite",
 				dbName: "todo-list",
+				debug: true,
 				subscribers: [new AfterCreationSubscriber()],
 				entities: [todoSchema, todoListSchema, userSchema, refreshTokenSchema]
 			}

@@ -13,11 +13,14 @@ export * from "./users/presenters/user.js";
 export * from "./users/presenters/error/user.js";
 export * from "./users/use-cases/register/request.js";
 
+
+export * from "./shared/interfaces/hasher.js";
+
 export * from "./shared/interfaces/presenter.js";
 export * from "./shared/interfaces/id-generator.js";
 
 export * from "./todos/repositories/todo-list.js";
-export * from "./users/repositories/auth.repository.js";
+export * from "./users/repositories/auth.js";
 
 export * from "./todos/use-cases/create/use-case.js";
 export * from "./todos/use-cases/list/use-case.js";

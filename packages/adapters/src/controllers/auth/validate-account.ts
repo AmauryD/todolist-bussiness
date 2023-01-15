@@ -9,10 +9,11 @@ export class ValidateAccountWebController {
 		public validateAccountUseCase: ValidateAccountUseCase
 	) {}
 
-	public async validateAccount(userId: string, token: string) {
+	public async validateAccount(userId: string, token: string, password: string) {
 		const validated = await this.validateAccountUseCase.execute({
 			userId,
-			token
+			token,
+			password
 		}) as PresentersResult;
 		return throwIfWebErrorOrReturn(validated);
 	}

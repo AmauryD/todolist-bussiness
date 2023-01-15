@@ -19,10 +19,11 @@ export class SQLUserRepository implements UserRepositoryInterface {
 		return this.getUserByProperty("id", userId.value);
 	}
 
-	public async validateUserAccount(userId: Identifier): Promise<Result<Nothing<unknown>, Error>> {
+	public async validateUserAccount(userId: Identifier, password: string): Promise<Result<Nothing<unknown>, Error>> {
 		await this.ormRepository.nativeUpdate({
-			id: userId.value,
+			id: userId.value
 		}, {
+			password,
 			isValidated: true,
 			validationToken: null
 		});

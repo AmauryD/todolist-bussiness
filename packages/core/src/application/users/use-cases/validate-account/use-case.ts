@@ -4,17 +4,19 @@ import { Identifier, UserDoesNotExistsError, ValidationToken } from "../../../..
 import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
 import { InvalidValidationTokenError } from "../../../../domain/users/errors/invalid-validation-token.js";
 import { UserRepositoryInterface } from "../../repositories/user.js";
-import { ValidateAccountUseCaseParams } from "./request.js";
+import { ValidateAccountUseCaseInput } from "./request.js";
 import { UserErrorPresenterInterface, UserPresenterInterface } from "../../../index.js";
+import { PasswordHashServiceInterface } from "../../../shared/interfaces/hasher.js";
 
 export class ValidateAccountUseCase implements UseCaseInterface {
 	public constructor(
         private userRepository:  UserRepositoryInterface,
 		private errorPresenter: UserErrorPresenterInterface,
-		private presenter: UserPresenterInterface
+		private presenter: UserPresenterInterface,
+		private passwordHasher: PasswordHashServiceInterface
 	) {}
 
-	public async execute(params: ValidateAccountUseCaseParams) {
+	public async execute(params: ValidateAccountUseCaseInput) {
 		const identifier = Identifier.create(params.userId);
 		const user = await this.userRepository.getUserById(
 			identifier
@@ -41,7 +43,8 @@ export class ValidateAccountUseCase implements UseCaseInterface {
 		}
 
 		await this.userRepository.validateUserAccount(
-			user.value.id
+			user.value.id,
+			await this.passwordHasher.hash(params.password)
 		);
 
 		user.value.validateAccount();

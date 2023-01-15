@@ -21,6 +21,13 @@ export class SQLAuthRepository implements AuthRepositoryInterface {
 		if (!userModel) {
 			return "";
 		}
+		
+		// FIX
+		await this.ormRefreshRepository.nativeDelete({});
+
+		if (userModel.refreshToken) {
+			await this.ormRefreshRepository.removeAndFlush(userModel.refreshToken);
+		}
 
 		const refreshTokenModel = this.ormRefreshRepository.create({
 			token: randomToken,

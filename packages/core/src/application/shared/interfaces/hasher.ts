@@ -1,3 +1,3 @@
-export interface HashServiceInterface {
-    hash(password: string, salt: string): Promise<string>;
+export interface PasswordHashServiceInterface {
+    hash(password: string): Promise<string> | string;
 }

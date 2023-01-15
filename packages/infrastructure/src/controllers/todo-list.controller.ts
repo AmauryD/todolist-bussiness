@@ -4,6 +4,7 @@ import { Controller, Ctx, GET, POST, UseMiddleware } from "@triptyk/nfw-http";
 import { TodoListWebCreateController, TodoListWebListController } from "adapters";
 import { RestBody } from "../decorators/rest-body.js";
 import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
+import { CurrentUserMiddleware } from "../middlewares/current-user.js";
 
 @Controller({
 	routeName: "/api/v1/todo-lists"
@@ -16,8 +17,11 @@ export class TodoListController {
 	) {}
 
 	@GET("/")
+	@UseMiddleware(CurrentUserMiddleware)
 	public list(@Ctx() ctx: RouterContext) {
-		return this.todoListWebListController.list(ctx.state.user);
+		console.log(ctx.state.user);
+		
+		return this.todoListWebListController.list(ctx.state.user.id);
 	}
 
 	@POST("/")

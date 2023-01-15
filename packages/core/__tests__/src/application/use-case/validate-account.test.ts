@@ -42,11 +42,17 @@ it("Returns error when userId does not exists", async () => {
 	const useCase = new ValidateAccountUseCase(
 		new FakeUserRepository(),
 		mirrorPresenter,
-		mirrorPresenter
+		mirrorPresenter,
+		{
+			hash(password) {
+				return password;
+			},
+		}
 	);
 	const result = await useCase.execute({
 		userId: "",
-		token: ""
+		token: "",
+		password: ""
 	});
 	assert(result instanceof UserDoesNotExistsError);
 });
@@ -55,12 +61,18 @@ it("Returns error when token is invalid", async () => {
 	const useCase = new ValidateAccountUseCase(
 		new FakeUserRepository(),
 		mirrorPresenter,
-		mirrorPresenter
+		mirrorPresenter,
+		{
+			hash(password) {
+				return password;
+			},
+		}
 	);
 
 	const result = await useCase.execute({
 		userId: "exists",
-		token: ""
+		token: "",
+		password: ""
 	});
 	
 	assert(result instanceof InvalidValidationTokenError);

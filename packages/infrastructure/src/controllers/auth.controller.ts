@@ -1,5 +1,6 @@
 import { Controller, Param, POST, UseMiddleware } from "@triptyk/nfw-http";
 import { LoginWebController, RegisterWebController, ValidateAccountWebController } from "adapters";
+import { Maybe, Result } from "true-myth";
 import { inject } from "tsyringe";
 import { Body } from "../decorators/json-body.js";
 import { DefaultErrorHandlerMiddleware } from "../error-handlers/default.js";
@@ -25,12 +26,19 @@ export class AuthController {
 	}
 
 	@POST("/login")
-	public login(@Body() loginRequest: any) {
-		return this.loginControllerAdapter.login(loginRequest);
+	public login(@Body() loginRequest: Result<any, Error>) {
+		return this.loginControllerAdapter.login(loginRequest.unwrapOr({}));
 	}
 
 	@POST("/validate-account/:userId/:token")
-	public validateAccount(@Param("userId") userId: string, @Param("token") token: string) {
-		return this.validateControllerAdapter.validateAccount(userId, token);
+	public validateAccount(@Param("userId") userId: string, @Param("token") token: string, @Body() body: Result<Record<string, string>, Error>) {
+		if (body.isErr) {
+			throw new Error();
+		}
+		const newPassword = Maybe.of(body.value.password);
+		if (newPassword.isNothing) {
+			throw new Error();
+		}
+		return this.validateControllerAdapter.validateAccount(userId, token, newPassword.value);
 	}
 }
