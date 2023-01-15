@@ -10,8 +10,8 @@
   "type": "module",
   "dependencies": {
     "@koa/router": "12.0.0",
-    "@mikro-orm/core": "~5.5.3",
-    "@mikro-orm/sqlite": "~5.5.3",
+    "@mikro-orm/core": "~5.6.7",
+    "@mikro-orm/sqlite": "~5.6.7",
     "@triptyk/nfw-core": "~4.0.0-alpha.29",
     "@triptyk/nfw-http": "~4.0.0-alpha.29",
     "@triptyk/nfw-mikro-orm": "~4.0.0-alpha.29",
@@ -29,18 +29,18 @@
   "license": "ISC",
   "devDependencies": {
     "@koa/cors": "^4.0.0",
-    "@mikro-orm/seeder": "~5.5.3",
+    "@mikro-orm/seeder": "~5.6.7",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.15",
     "@types/json-api-serializer": "^2.6.3",
     "@types/koa": "2.13.5",
     "@types/koa__cors": "^3.3.0",
     "@types/koa__router": "12.0.0",
-    "@types/node": "^18.11.17",
+    "@types/node": "^18.11.18",
     "json-api-serializer": "^2.6.6",
     "koa-body": "^6.0.1",
     "reflect-metadata": "^0.1.13",
-    "type-fest": "^3.5.0",
+    "type-fest": "^3.5.2",
     "typescript": "^4.9.4"
   },
   "volta": {

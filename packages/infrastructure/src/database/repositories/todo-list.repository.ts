@@ -3,7 +3,7 @@ import { container } from "@triptyk/nfw-core";
 import { TodoListAggregateRoot, TodoListProperties, TodoListRepositoryInterface } from "todo-domain";
 import Result, { ok } from "true-myth/result";
 import { TodoListMapper } from "../mappers/todo-list.js";
-import { TodoList } from "../models/todo-list.js";
+import { TodoListModel } from "../models/todo-list.js";
 
 /**
  * Petit raccourci que j'ai pris, normalement il aurait fallu le faire en deux temps via la couche adapters.
@@ -11,12 +11,11 @@ import { TodoList } from "../models/todo-list.js";
  * Petite explication ici http://www.plainionist.net/Implementing-Clean-Architecture-Frameworks/
  */
 export class SQLTodoListRepository implements TodoListRepositoryInterface {
-	private ormRepository: EntityRepository<TodoList>;
+	private ormRepository: EntityRepository<TodoListModel>;
 	private mapper = new TodoListMapper();
 
 	public constructor() {
-		this.ormRepository = container.resolve(MikroORM).em.getRepository<TodoList>("TodoList");
-		
+		this.ormRepository = container.resolve(MikroORM).em.getRepository<TodoListModel>("TodoList");
 	}
 
 	public async create(structure: TodoListProperties) {

@@ -8,6 +8,8 @@ export * from  "./controllers/auth/validate-account.js";
 export * from  "./presenters/todo-list.js";
 export * from  "./presenters/todo-lists.js";
 export * from  "./presenters/user.js";
+export * from  "./presenters/logged-user.js";
+
 
 export * from  "./presenters/error/user.js";
 export * from  "./presenters/error/todo-list.js";

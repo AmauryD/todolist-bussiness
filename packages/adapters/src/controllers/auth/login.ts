@@ -1,4 +1,4 @@
-import { LoginUseCase, LoginUseCaseRequest } from "todo-domain";
+import { LoginUseCase, LoginUseCaseInput } from "todo-domain";
 import { UserErrorPresenter, UserPresenter } from "../../index.js";
 import { throwIfWebErrorOrReturn } from "../../utils/throw-or-return.js";
 
@@ -9,7 +9,7 @@ export class LoginWebController {
         public loginUseCase: LoginUseCase,
 	) {}
 
-	public async login(loginRequest: LoginUseCaseRequest) {
+	public async login(loginRequest: LoginUseCaseInput) {
 		const logged = await this.loginUseCase.execute(loginRequest) as PresentersResult;
 		return throwIfWebErrorOrReturn(logged);
 	}

@@ -17,11 +17,14 @@ export * from "./shared/interfaces/presenter.js";
 export * from "./shared/interfaces/id-generator.js";
 
 export * from "./todos/repositories/todo-list.js";
+export * from "./users/repositories/auth.repository.js";
+
 export * from "./todos/use-cases/create/use-case.js";
 export * from "./todos/use-cases/list/use-case.js";
 export * from "./users/use-cases/login/request.js";
 export * from "./todos/presenters/todo-list.js";
 export * from "./todos/presenters/todo-lists.js";
+export * from "./users/presenters/logged-user.js";
 export * from "./todos/errors/user-required.js";
 
 

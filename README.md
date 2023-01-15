@@ -350,7 +350,7 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://adevelopersdiscourse.blogspot.com/2020/06/clean-architecture-demystified.html>
 <https://www.infoq.com/articles/ddd-contextmapping/>
 <https://medium.com/unil-ci-software-engineering/clean-domain-driven-design-2236f5430a05>
-https://fullstackmark.com/post/11/better-software-design-with-clean-architecture
+<https://fullstackmark.com/post/11/better-software-design-with-clean-architecture>
 
 ### Youtube
 

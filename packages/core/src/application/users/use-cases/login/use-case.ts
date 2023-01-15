@@ -5,9 +5,10 @@ import { UserRepositoryInterface } from "../../repositories/user.js";
 import { AuthServiceInterface } from "../../services/auth.service.js";
 import { PasswordNotSetError } from "../../../../domain/users/errors/password-not-set.js";
 import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
-import { UserPresenterInterface } from "../../presenters/user.js";
-import { LoginUseCaseRequest } from "./request.js";
+import { LoginUseCaseInput } from "./request.js";
 import { UserErrorPresenterInterface } from "../../../index.js";
+import { LoggedUserPresenterInterface } from "../../presenters/logged-user.js";
+import { AuthRepositoryInterface } from "../../repositories/auth.repository.js";
 
 /**
  * Pas besoin de valider le mot de passe ni l'email
@@ -17,12 +18,13 @@ import { UserErrorPresenterInterface } from "../../../index.js";
 export class LoginUseCase implements UseCaseInterface {
 	public constructor(
 		public userRepository : UserRepositoryInterface,
-		public presenter: UserPresenterInterface,
+		public authRepository : AuthRepositoryInterface,
+		public presenter: LoggedUserPresenterInterface,
 		public errorPresenter: UserErrorPresenterInterface,
 		public authService: AuthServiceInterface
 	) {}
 
-	public async execute(request: LoginUseCaseRequest) {
+	public async execute(request: LoginUseCaseInput) {
 		const user = await this.userRepository.getUserByEmail(request.email);
 
 		if (user.isNothing) {
@@ -37,6 +39,14 @@ export class LoginUseCase implements UseCaseInterface {
 			return this.errorPresenter.present(new InvalidCredentialsError()); 
 		}
 
-		return this.presenter.present(user.value);
+		const [refreshToken, accessToken] = await Promise.all([
+			this.authRepository.generateRefreshTokenForUser(user.value),
+			this.authService.generateAccessTokenForUser(user.value.id)
+		]);
+
+		return this.presenter.present({
+			refreshToken,
+			accessToken
+		});
 	}
 }

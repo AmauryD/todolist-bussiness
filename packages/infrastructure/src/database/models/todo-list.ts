@@ -1,13 +1,13 @@
 import { Collection, EntitySchema, ReferenceType } from "@mikro-orm/core";
 import { Todo } from "./todo.js";
 
-export interface TodoList {
+export interface TodoListModel {
     title: string;
     id: string;
     todos: Collection<Todo>
 }
 
-export const todoListSchema = new EntitySchema<TodoList>({
+export const todoListSchema = new EntitySchema<TodoListModel>({
 	name: "TodoList",
 	properties: {
 		id: { type: "string", primary: true },

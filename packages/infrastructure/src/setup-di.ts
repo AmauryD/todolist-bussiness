@@ -1,5 +1,5 @@
 import { container } from "@triptyk/nfw-core";
-import { ConfirmationMailFormatter, RegisterWebController, TodoListsWebPresenter, TodoListWebPresenter, ValidateAccountWebController, LoginWebController, TodoListWebCreateController, TodoListWebListController, TodoListErrorPresenter } from "adapters";
+import { ConfirmationMailFormatter, RegisterWebController, TodoListsWebPresenter, TodoListWebPresenter, ValidateAccountWebController, LoginWebController, TodoListWebCreateController, TodoListWebListController, TodoListErrorPresenter, LoggedUserPresenter } from "adapters";
 import { ConfirmationMailListener, CreateTodoListUseCase, ListTodoListsUseCase, LoginUseCase, RegisterUseCase, SendConfirmationMailUseCase, ValidateAccountUseCase } from "todo-domain";
 import { SQLTodoListRepository } from "./database/repositories/todo-list.repository.js";
 import { SQLUserRepository } from "./database/repositories/user.repository.js";
@@ -8,6 +8,7 @@ import { AuthService } from "adapters";
 import { UUIDGenerator } from "adapters";
 import { IAmBrokeAFMailService } from "./services/no-money-mail.js";
 import { UserPresenter, UserErrorPresenter } from "adapters";
+import { SQLAuthRepository } from "./database/repositories/auth.repository.js";
 
 export async function setupDI() {
 	registerTodoListAdapter();
@@ -28,12 +29,18 @@ function setupConfirmationMailListener() {
 
 function registerAuthAdapter() {
 	const userRepository = new SQLUserRepository();
+	const authRepository = new SQLAuthRepository();
 
 	const loginUseCase = new LoginUseCase(
 		userRepository,
-		new UserPresenter(),
+		authRepository,
+		new LoggedUserPresenter(),
 		new UserErrorPresenter(),
-		new AuthService()
+		new AuthService({
+			secret: "123456",
+			expirationTimeInHours: 1,
+			issuer: "me"
+		})
 	);
 
 	const registerUseCase = new RegisterUseCase(

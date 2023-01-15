@@ -14,6 +14,7 @@ import {koaBody} from "koa-body";
 import { AuthController } from "./controllers/auth.controller.js";
 import { userSchema } from "./database/models/user.js";
 import { AfterCreationSubscriber } from "./database/subscribers/after.js";
+import { refreshTokenSchema } from "./database/models/refresh-token.js";
 
 @singleton()
 export class Application {
@@ -46,7 +47,7 @@ export class Application {
 				type: "sqlite",
 				dbName: "todo-list",
 				subscribers: [new AfterCreationSubscriber()],
-				entities: [todoSchema, todoListSchema, userSchema]
+				entities: [todoSchema, todoListSchema, userSchema, refreshTokenSchema]
 			}
 		);
 	}
