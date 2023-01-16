@@ -19,7 +19,8 @@ test("It creates a todo-list", async () => {
 		}
 	);
 	const todoSnapshot = await createTodoListUseCase.execute({
-		name: "name"
+		name: "name",
+		userId: "1"
 	});
 	assert.deepStrictEqual(todoSnapshot,{
 		name: "name",

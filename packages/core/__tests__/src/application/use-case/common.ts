@@ -6,7 +6,8 @@ export class FakeTodoListRepository implements TodoListRepositoryInterface {
 	public async listForUser(): Promise<Result<TodoListAggregateRoot[], never>> {
 		const fakeExistingTodo = TodoListAggregateRoot.create({
 			name: "title",
-			id: Identifier.create("1")
+			id: Identifier.create("1"),
+			ownerId: Identifier.create("1")
 		}) as Ok<TodoListAggregateRoot,never>;
 		return ok([fakeExistingTodo.value]);
 	}

@@ -1,5 +1,6 @@
-import { EntitySchema, IdentifiedReference, ReferenceType } from "@mikro-orm/core";
+import { Collection, EntitySchema, IdentifiedReference, ReferenceType } from "@mikro-orm/core";
 import { RefreshTokenModel } from "./refresh-token.js";
+import { TodoListModel } from "./todo-list.js";
 
 export interface UserModel {
     username: string;
@@ -8,6 +9,7 @@ export interface UserModel {
 	validationToken?: string;
 	isValidated: boolean;
 	refreshToken?: IdentifiedReference<RefreshTokenModel>;
+	todoLists: Collection<TodoListModel>;
     id: string;
 }
 
@@ -21,5 +23,6 @@ export const userSchema = new EntitySchema<UserModel>({
 		validationToken: { type: "string", nullable: true },
 		refreshToken: { reference: ReferenceType.ONE_TO_ONE, owner: true, entity: "RefreshToken", inversedBy: "user", nullable: true  },
 		password: { type: "string", nullable: true },
+		todoLists: { reference: ReferenceType.ONE_TO_MANY, entity: "TodoList", mappedBy: "owner" },
 	},
 });

@@ -8,7 +8,8 @@ import { TodoCreatedEvent } from "../events/todo-created.js";
 
 export interface TodoListProperties {
     id: Identifier,
-    name: string
+    name: string,
+	ownerId: Identifier
 }
 
 export interface TodoListSnapshot {
@@ -25,6 +26,10 @@ export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
         private props: TodoListProperties
 	) {
 		super();
+	}
+
+	public get ownerId() {
+		return this.props.ownerId;
 	}
 
 	public get name() {

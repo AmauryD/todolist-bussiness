@@ -1,10 +1,12 @@
-import { Collection, EntitySchema, ReferenceType } from "@mikro-orm/core";
-import { Todo } from "./todo.js";
+import { Collection, EntitySchema, IdentifiedReference, ReferenceType } from "@mikro-orm/core";
+import { TodoModel } from "./todo.js";
+import { UserModel } from "./user.js";
 
 export interface TodoListModel {
     title: string;
     id: string;
-    todos: Collection<Todo>
+    todos: Collection<TodoModel>,
+	owner: IdentifiedReference<UserModel>,
 }
 
 export const todoListSchema = new EntitySchema<TodoListModel>({
@@ -13,5 +15,6 @@ export const todoListSchema = new EntitySchema<TodoListModel>({
 		id: { type: "string", primary: true },
 		title: { type: "string" },
 		todos: { reference: ReferenceType.ONE_TO_MANY, entity: "Todo", mappedBy: "todoList" },
+		owner: { reference: ReferenceType.MANY_TO_ONE, entity: "User", inversedBy: "todoLists" }
 	},
 });

@@ -6,6 +6,7 @@ import { throwIfWebErrorOrReturn } from "../../utils/throw-or-return.js";
 
 export interface TodoListWeb {
 	name: string;
+	userId: string
 }
 
 type PresentersResult = ReturnType<TodoListsWebPresenter["present"]> | ReturnType<TodoListErrorPresenter["present"]>;

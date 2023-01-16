@@ -7,7 +7,8 @@ import { TodoListWebPresenter } from "../../../src/presenters/todo-list.js";
 it("Transforms a TodoListAggregateRoot to a ViewModel", () => {
 	const todoList = TodoListAggregateRoot.create({
 		name: "todo",
-		id: Identifier.create("1")
+		id: Identifier.create("1"),
+		ownerId: Identifier.create("1")
 	}) as Ok<TodoListAggregateRoot, never>;
 	const presenter = new TodoListWebPresenter();
 

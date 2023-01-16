@@ -19,7 +19,8 @@ const todoStructure = {
 beforeEach(() => {
 	const todoListCreationResult = TodoListAggregateRoot.create({
 		id: Identifier.create("1"),
-		name: "Coucou"
+		name: "Coucou",
+		ownerId: Identifier.create("1")
 	}) as Ok<TodoListAggregateRoot, never>;
 	todoList = todoListCreationResult.value;
 });

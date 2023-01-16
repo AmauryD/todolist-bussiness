@@ -9,7 +9,8 @@ export class TodoListMapper implements DataMapper<TodoListAggregateRoot,Required
 	public toDomain(todoList: TodoListModel): Result<TodoListAggregateRoot, Error> {
 		const todo = TodoListAggregateRoot.create({
 			id: Identifier.create(todoList.id),
-			name: todoList.title
+			name: todoList.title,
+			ownerId: Identifier.create(todoList.owner.id)
 		});
 
 		return todo;
@@ -18,7 +19,8 @@ export class TodoListMapper implements DataMapper<TodoListAggregateRoot,Required
 	public toPersistence(todo: TodoListAggregateRoot): Result<RequiredEntityData<TodoListModel>, Error> {
 		return ok({
 			id: todo.id.value,
-			title: todo.name
+			title: todo.name,
+			owner: todo.ownerId.value
 		});
 	}
 }

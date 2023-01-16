@@ -1,3 +1,4 @@
 export interface CreateTodoListUseCaseInput {
-	name: string
+	name: string,
+	userId: string
 }

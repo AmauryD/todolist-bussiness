@@ -4,10 +4,12 @@ import { err, ok } from "true-myth/result";
 import { ValueObject } from "../../shared/value-objects/value-object.js";
 import { ValidationTokenEmptyError } from "../errors/validation-token-empty.js";
 
-export class ValidationToken implements ValueObject {
+export class ValidationToken extends ValueObject {
 	private constructor(
         public readonly value: string
-	) {}
+	) {
+		super();
+	}
 
 	/**
 	 * Why not use IDGenerator ? Because IDgenerator is for changing the behavior of generating resource Identifier.

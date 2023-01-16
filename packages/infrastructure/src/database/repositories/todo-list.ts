@@ -4,6 +4,7 @@ import { TodoListAggregateRoot, TodoListProperties, TodoListRepositoryInterface 
 import Result, { ok } from "true-myth/result";
 import { TodoListMapper } from "../mappers/todo-list.js";
 import { TodoListModel } from "../models/todo-list.js";
+import { UserModel } from "../models/user.js";
 
 /**
  * Petit raccourci que j'ai pris, normalement il aurait fallu le faire en deux temps via la couche adapters.
@@ -12,10 +13,13 @@ import { TodoListModel } from "../models/todo-list.js";
  */
 export class SQLTodoListRepository implements TodoListRepositoryInterface {
 	private ormRepository: EntityRepository<TodoListModel>;
+	private userRepository: EntityRepository<UserModel>;
+
 	private mapper = new TodoListMapper();
 
 	public constructor() {
 		this.ormRepository = container.resolve(MikroORM).em.getRepository<TodoListModel>("TodoList");
+		this.userRepository = container.resolve(MikroORM).em.getRepository<UserModel>("User");
 	}
 
 	public async create(structure: TodoListProperties) {
@@ -27,7 +31,8 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 
 		const todoORM = this.ormRepository.create({
 			title: todo.value.name,
-			id: todo.value.id.value
+			id: todo.value.id.value,
+			owner: await this.userRepository.findOneOrFail(structure.ownerId.value)
 		});
 
 		await this.ormRepository.persistAndFlush(todoORM);
@@ -36,7 +41,9 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 	}
 	
 	public async listForUser() {
-		const todos = await this.ormRepository.findAll();
+		const todos = await this.ormRepository.findAll({
+			populate:  ["owner"]
+		});
 		const todoList : TodoListAggregateRoot[] = [];
 
 		for (const todo of todos) {

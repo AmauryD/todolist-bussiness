@@ -11,6 +11,7 @@ import { CurrentUserMiddleware } from "../middlewares/current-user.js";
 	routeName: "/api/v1/todo-lists"
 })
 @UseMiddleware(DefaultErrorHandlerMiddleware)
+@UseMiddleware(CurrentUserMiddleware)
 export class TodoListController {
 	public constructor(
         @inject(TodoListWebCreateController) public todoListWebCreateController: TodoListWebCreateController,
@@ -18,16 +19,29 @@ export class TodoListController {
 	) {}
 
 	@GET("/")
-	@UseMiddleware(CurrentUserMiddleware)
 	public list(@Ctx() ctx: RouterContext) {
 		return this.todoListWebListController.list(ctx.state.user?.id);
 	}
 
 	@POST("/")
-	public async create(@RestBody() body: Result<Record<"name", string>, Error>) {
+	public async create(@RestBody() body: Result<Record<string, string>, Error>,@Ctx() ctx: RouterContext) {
 		if (body.isErr){
 			throw body.error;
 		} 
-		return this.todoListWebCreateController.create(body.value);
+		return this.todoListWebCreateController.create({
+			userId: ctx.state.user?.id,
+			name: body.value.name
+		});
+	}
+
+	@POST("/:id/todo")
+	public async createTodo(@RestBody() body: Result<Record<string, string>, Error>) {
+		if (body.isErr){
+			throw body.error;
+		} 
+		return this.todoListWebCreateController.create({
+			userId: body.value.userId,
+			name: body.value.name
+		});
 	}
 }

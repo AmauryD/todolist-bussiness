@@ -1,12 +1,12 @@
 import { EntitySchema, ReferenceType } from "@mikro-orm/core";
 
-export interface Todo {
+export interface TodoModel {
     name: string;
     isDone: boolean;
     id: string;
 }
 
-export const todoSchema = new EntitySchema<Todo>({
+export const todoSchema = new EntitySchema<TodoModel>({
 	name: "Todo",
 	properties: {
 		id: { type: "string", primary: true },

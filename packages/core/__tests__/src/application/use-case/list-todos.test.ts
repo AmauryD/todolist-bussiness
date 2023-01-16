@@ -3,7 +3,6 @@ import { FakeTodoListRepository } from "./common.js";
 import { it } from "node:test";
 import assert from "node:assert";
 import { ListTodoListsUseCase } from "../../../../src/application/todos/use-cases/list/use-case.js";
-import { Maybe } from "true-myth";
 
 function createUseCase() {
 	return new ListTodoListsUseCase(
@@ -24,7 +23,9 @@ function createUseCase() {
 it("Lists todo-lists", async () => {
 	const listTodoListsUseCase = createUseCase();
 
-	const list = await listTodoListsUseCase.execute(Maybe.of("1"));
+	const list = await listTodoListsUseCase.execute({
+		userId: "1"
+	});
 
 	assert.deepStrictEqual(list, [{
 		id: "1",
