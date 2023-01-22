@@ -1,7 +1,10 @@
-import { EntityRepository, MikroORM } from "@mikro-orm/core";
+import { EntityRepository, MikroORM, wrap } from "@mikro-orm/core";
 import { container } from "@triptyk/nfw-core";
-import { TodoListAggregateRoot, TodoListProperties, TodoListRepositoryInterface } from "todo-domain";
-import Result, { ok } from "true-myth/result";
+import { TodoListAggregateRoot, TodoListRepositoryInterface } from "todo-domain";
+import { Maybe } from "true-myth";
+import { nothing } from "true-myth/maybe";
+import Result, { Err, ok } from "true-myth/result";
+import { toMaybe } from "true-myth/toolbelt";
 import { TodoListMapper } from "../mappers/todo-list.js";
 import { TodoListModel } from "../models/todo-list.js";
 import { UserModel } from "../models/user.js";
@@ -21,23 +24,42 @@ export class SQLTodoListRepository implements TodoListRepositoryInterface {
 		this.ormRepository = container.resolve(MikroORM).em.getRepository<TodoListModel>("TodoList");
 		this.userRepository = container.resolve(MikroORM).em.getRepository<UserModel>("User");
 	}
+	public async findTodoListById(todoListId: string): Promise<Maybe<TodoListAggregateRoot>> {
+		const todoList = await this.ormRepository.findOne(todoListId);
 
-	public async create(structure: TodoListProperties) {
-		const todo = TodoListAggregateRoot.create(structure);
-
-		if (todo.isErr) {
-			return todo;
+		if (todoList === null) {
+			return nothing();
 		}
 
-		const todoORM = this.ormRepository.create({
-			title: todo.value.name,
-			id: todo.value.id.value,
-			owner: await this.userRepository.findOneOrFail(structure.ownerId.value)
-		});
+		return toMaybe(this.mapper.toDomain(todoList));
+	}
+	
+	public async update(todoList: TodoListAggregateRoot): Promise<void> {
+		const toPersist = this.mapper.toPersistence(todoList);
+
+		if (toPersist.isErr) {
+			throw toPersist.error;
+		}
+
+		const todoORM = await this.ormRepository.findOneOrFail({ id: todoList.id.value });
+
+		const updated = wrap(todoORM).assign(toPersist.value);
+
+		this.ormRepository.persist(updated);
+	}
+
+	public async create(aggregateRoot: TodoListAggregateRoot) {
+		const toPersist = this.mapper.toPersistence(aggregateRoot);
+
+		if (toPersist.isErr) {
+			return toPersist as Err<never, Error>;
+		}
+
+		const todoORM = this.ormRepository.create(toPersist.value);
 
 		await this.ormRepository.persistAndFlush(todoORM);
 
-		return todo;
+		return ok<void, never>(undefined);
 	}
 	
 	public async listForUser() {

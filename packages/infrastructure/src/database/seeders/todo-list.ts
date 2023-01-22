@@ -16,6 +16,7 @@ export class TodoListSeeder extends Seeder {
 			id: "123",
 			owner: user
 		});
+
 		await em.persistAndFlush(firstTodoList);
 	}
 }

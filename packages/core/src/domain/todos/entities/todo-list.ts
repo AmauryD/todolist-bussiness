@@ -7,14 +7,14 @@ import { Identifier } from "../../shared/value-objects/identifier.js";
 import { TodoCreatedEvent } from "../events/todo-created.js";
 
 export interface TodoListProperties {
-    id: Identifier,
-    name: string,
+	id: Identifier,
+	name: string,
 	ownerId: Identifier
 }
 
 export interface TodoListSnapshot {
 	id: string,
-    name: string,
+	name: string,
 	todos: TodoSnapshot[],
 	isDone: boolean
 }
@@ -23,7 +23,7 @@ export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
 	private _todos: Set<Todo> = new Set();
 
 	private constructor(
-        private props: TodoListProperties
+		private props: TodoListProperties
 	) {
 		super();
 	}
@@ -60,7 +60,7 @@ export class TodoListAggregateRoot extends AggregateRoot<TodoListSnapshot> {
 		return ok(todoList);
 	}
 
-	public addTodo(todo: TodoProperties) {
+	public addTodo(todo: TodoProperties){
 		const newTodo = Todo.create(todo);
 		newTodo.map((t) => {
 			this.addEvent(new TodoCreatedEvent(t));

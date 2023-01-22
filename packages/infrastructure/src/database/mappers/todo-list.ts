@@ -20,7 +20,12 @@ export class TodoListMapper implements DataMapper<TodoListAggregateRoot,Required
 		return ok({
 			id: todo.id.value,
 			title: todo.name,
-			owner: todo.ownerId.value
+			owner: todo.ownerId.value,
+			todos: Array.from(todo.todos.values()).map((t) => ({
+				name: t.title,
+				id: t.id.value,
+				isDone: t.isDone,
+			}))
 		});
 	}
 }

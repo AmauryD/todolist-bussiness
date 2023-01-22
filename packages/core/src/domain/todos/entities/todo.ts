@@ -4,14 +4,14 @@ import { Identifier } from "../../shared/value-objects/identifier.js";
 import { TodoTitleRequiredError } from "../errors/todo-title-required.js";
 
 export interface TodoProperties {
-    title: string;
-    isDone: boolean;
-    id: Identifier;
+	title: string;
+	isDone: boolean;
+	id: Identifier;
 }
 
 export interface TodoSnapshot {
 	id: string,
-    title: string,
+	title: string,
 	isDone: boolean
 }
 

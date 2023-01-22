@@ -6,7 +6,7 @@ import { UseCaseInterface } from "../../../shared/interfaces/use-case.js";
 import { CreateTodoListUseCaseInput } from "./input.js";
 import { TodoListErrorPresenterInterface } from "../../presenters/errors/todo-list.js";
 import { TodoListName } from "../../../../domain/todos/value-objects/todo-list-name.js";
-import { Identifier } from "../../../../index.js";
+import { Identifier, TodoListAggregateRoot } from "../../../../index.js";
 
 export class CreateTodoListUseCase implements UseCaseInterface {
 	public constructor(
@@ -24,7 +24,7 @@ export class CreateTodoListUseCase implements UseCaseInterface {
 			return this.todoListErrorPresenter.present(name.error);
 		}
 
-		const todoList =  await this.todoListRepository.create({
+		const todoList = TodoListAggregateRoot.create({
 			name: name.value.value,
 			id: generatedId,
 			ownerId: Identifier.create(todoListInput.userId)
@@ -33,6 +33,8 @@ export class CreateTodoListUseCase implements UseCaseInterface {
 		if (todoList.isErr) {
 			return this.todoListErrorPresenter.present(todoList.error);
 		}
+
+		await this.todoListRepository.create(todoList.value);
 
 		return this.todoListPresenter.present(todoList.value);
 	}

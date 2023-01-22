@@ -1,8 +1,10 @@
-import { Result } from "true-myth";
-import { TodoListAggregateRoot, TodoListProperties } from "../../../domain/todos/entities/todo-list.js";
+import { Maybe, Result } from "true-myth";
+import { TodoListAggregateRoot } from "../../../domain/todos/entities/todo-list.js";
 import { Identifier } from "../../../index.js";
 
 export interface TodoListRepositoryInterface {
-    create(structure: TodoListProperties) :  Promise<Result<TodoListAggregateRoot,Error>>;
-    listForUser(userId: Identifier): Promise<Result<TodoListAggregateRoot[],Error>>;
+	create(structure: TodoListAggregateRoot) :  Promise<Result<void,Error>>;
+	listForUser(userId: Identifier): Promise<Result<TodoListAggregateRoot[],Error>>;
+	findTodoListById(todoListId: string): Promise<Maybe<TodoListAggregateRoot>>;
+	update(todoList: TodoListAggregateRoot): Promise<void>;
 }

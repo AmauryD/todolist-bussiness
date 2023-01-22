@@ -14,7 +14,7 @@ import { CurrentUserMiddleware } from "../middlewares/current-user.js";
 @UseMiddleware(CurrentUserMiddleware)
 export class TodoListController {
 	public constructor(
-        @inject(TodoListWebCreateController) public todoListWebCreateController: TodoListWebCreateController,
+		@inject(TodoListWebCreateController) public todoListWebCreateController: TodoListWebCreateController,
 		@inject(TodoListWebListController) public todoListWebListController: TodoListWebListController,
 	) {}
 

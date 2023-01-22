@@ -2,6 +2,7 @@
   "extends": "./tsconfig.build.json",
   "exclude": ["./examples/*", "./dist", "./packages/frontend"],
   "compilerOptions": {
+    "rootDir": ".",
     "paths": {
       "todo-domain/*": ["./packages/core/src/*"],
       "adapters/*": ["./packages/adapters/src/*"],

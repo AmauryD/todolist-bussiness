@@ -11,10 +11,11 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "unused-imports"],
   rules: {
+    indent: "off",
+    "@typescript-eslint/indent": ["error", "tab"],
     "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/explicit-member-accessibility": "error",
     "@typescript-eslint/member-ordering": "error",
-    indent: ["error", "tab"],
     "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
     semi: ["error", "always"],

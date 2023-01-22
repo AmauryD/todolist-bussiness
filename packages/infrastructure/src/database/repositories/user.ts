@@ -47,7 +47,7 @@ export class SQLUserRepository implements UserRepositoryInterface {
 		
 		DomainEvents.markForDispatch(user);
 
-		await this.ormRepository.persistAndFlush(userORM);
+		this.ormRepository.persist(userORM);
 
 		return ok(user);
 	}

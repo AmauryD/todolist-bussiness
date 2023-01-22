@@ -3,31 +3,33 @@ import { run } from "node:test";
 import chalk from "chalk";
 
 interface TestDetailsParent {
-  duration: number,
-  error: Error,
+	duration: number,
+	error: Error,
 }
 
 interface BaseTest {
-  details: unknown,
-  testNumber: string,
-  name:string
+	details: unknown,
+	testNumber: string,
+	name:string
 }
 
 interface TestDetailsYAML {
-  yaml: string
+	yaml: string
 }
 
 interface TestFail {
-  details: TestDetailsParent | TestDetailsYAML,
-  testNumber: string,
-  name:string
+	details: TestDetailsParent | TestDetailsYAML,
+	testNumber: string,
+	name:string
 }
 
 let failCount = 0;
 
 const stream = run({
-	files: glob.sync("packages/*/__tests__/**/*.test.ts"),
+	files: glob.sync("packages/*/__tests__/**/*.test.ts")
 });
+
+
 
 stream.on("test:diagnostic", (e) => {
 	if (e.includes("node:") || e.includes("node --trace-warnings")) {

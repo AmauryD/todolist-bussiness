@@ -351,6 +351,8 @@ Concretions avec beaucoup de dépendances sont horribles.
 <https://www.infoq.com/articles/ddd-contextmapping/>
 <https://medium.com/unil-ci-software-engineering/clean-domain-driven-design-2236f5430a05>
 <https://fullstackmark.com/post/11/better-software-design-with-clean-architecture>
+<https://vaadin.com/blog/ddd-part-2-tactical-domain-driven-design>
+<https://valerii-udodov.com/posts/event-sourcing/clean-event-driven-architecture/>
 
 ### Youtube
 
